@@ -129,17 +129,20 @@ vim.keymap.set('n', '<leader>cu', '<cmd>TSToolsRemoveUnused<CR>', { desc = 'Remo
 vim.keymap.set('n', '<leader>cr', '<cmd>TSToolsRenameFile<CR>', { desc = 'Rename file' })
 vim.keymap.set('n', '<leader>cf', '<cmd>TSToolsFileReferences<CR>', { desc = 'Find file references' })
 
+vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = true, lsp_fallback = true })<CR>", { desc = 'Format code' })
+
 vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Fuzzy find' })
-vim.keymap.set('n', '<leader>lc', "<cmd>lua require('fzf-lua').commands({ header = false })<CR>", { silent = true, desc = 'Commands' })
-vim.keymap.set('n', '<leader>lb', "<cmd>lua require('fzf-lua').buffers({ header = false })<CR>", { silent = true, desc = 'Buffers' })
-vim.keymap.set('n', '<leader>lm', "<cmd>lua require('fzf-lua').marks({ header = false })<CR>", { silent = true, desc = 'Marks' })
-vim.keymap.set('n', '<leader>lk', "<cmd>lua require('fzf-lua').keymaps({ header = false })<CR>", { silent = true, desc = 'Keymaps' })
-vim.keymap.set('n', '<leader>ld', "<cmd>lua require('fzf-lua').changes({ header = false })<CR>", { silent = true, desc = 'Changes' })
-vim.keymap.set('n', '<leader>lt', "<cmd>lua require('fzf-lua').tabs({ header = false })<CR>", { silent = true, desc = 'Tabs' })
-vim.keymap.set('n', '<leader>lg', "<cmd>lua require('fzf-lua').grep({ header = false })<CR>", { silent = true, desc = 'Grep' })
-vim.keymap.set('n', '<leader>lr', "<cmd>lua require('fzf-lua').lsp_references({ header = false })<CR>", { silent = true, desc = 'References' })
-vim.keymap.set('n', '<leader>lvc', "<cmd>lua require('fzf-lua').git_commits({ header = false })<CR>", { silent = true, desc = 'Git commits' })
-vim.keymap.set('n', '<leader>lvb', "<cmd>lua require('fzf-lua').git_bcommits({ header = false })<CR>", { silent = true, desc = 'Git commits in buffer' })
+vim.keymap.set('n', '<leader>ff', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Files' })
+vim.keymap.set('n', '<leader>fc', "<cmd>lua require('fzf-lua').commands({ header = false })<CR>", { silent = true, desc = 'Commands' })
+vim.keymap.set('n', '<leader>fb', "<cmd>lua require('fzf-lua').buffers({ header = false })<CR>", { silent = true, desc = 'Buffers' })
+vim.keymap.set('n', '<leader>fm', "<cmd>lua require('fzf-lua').marks({ header = false })<CR>", { silent = true, desc = 'Marks' })
+vim.keymap.set('n', '<leader>fk', "<cmd>lua require('fzf-lua').keymaps({ header = false })<CR>", { silent = true, desc = 'Keymaps' })
+vim.keymap.set('n', '<leader>fd', "<cmd>lua require('fzf-lua').changes({ header = false })<CR>", { silent = true, desc = 'Changes' })
+vim.keymap.set('n', '<leader>ft', "<cmd>lua require('fzf-lua').tabs({ header = false })<CR>", { silent = true, desc = 'Tabs' })
+vim.keymap.set('n', '<leader>fg', "<cmd>lua require('fzf-lua').grep({ header = false })<CR>", { silent = true, desc = 'Grep' })
+vim.keymap.set('n', '<leader>fr', "<cmd>lua require('fzf-lua').lsp_references({ header = false })<CR>", { silent = true, desc = 'References' })
+vim.keymap.set('n', '<leader>fvc', "<cmd>lua require('fzf-lua').git_commits({ header = false })<CR>", { silent = true, desc = 'Git commits' })
+vim.keymap.set('n', '<leader>fvb', "<cmd>lua require('fzf-lua').git_bcommits({ header = false })<CR>", { silent = true, desc = 'Git commits in buffer' })
 
 -- vim.keymap.set('n', '<C-j>', '<C-n>')
 -- vim.keymap.set('n', '<C-k>', '<C-p>')
@@ -184,7 +187,7 @@ require('lazy').setup({
     event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
     init = function()
       vim.o.timeout = true
-      vim.o.timeoutlen = 300
+      vim.o.timeoutlen = 0
     end,
     opts = {},
     config = function()
@@ -333,16 +336,6 @@ require('lazy').setup({
   { -- Autoformat
     'stevearc/conform.nvim',
     lazy = false,
-    keys = {
-      {
-        '<leader>f',
-        function()
-          require('conform').format { async = true, lsp_fallback = true }
-        end,
-        mode = '',
-        desc = '[F]ormat buffer',
-      },
-    },
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
