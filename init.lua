@@ -197,6 +197,33 @@ require('lazy').setup({
       vim.o.timeoutlen = 300
     end,
     opts = {},
+    config = function()
+      local wk = require 'which-key'
+
+      wk.register({
+        e = {
+          name = 'Explorer',
+        },
+        s = {
+          name = 'Split',
+        },
+        t = {
+          name = 'Tab',
+        },
+        w = {
+          name = 'Session',
+        },
+        r = {
+          name = 'Rename',
+        },
+        n = {
+          name = 'Swap next',
+        },
+        p = {
+          name = 'Swap previous',
+        },
+      }, { prefix = '<leader>' })
+    end,
   },
 
   { -- LSP Configuration & Plugins
@@ -310,6 +337,7 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
+        ember = {},
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
@@ -927,6 +955,7 @@ require('lazy').setup({
     },
   },
 
+  -- make command line look nice
   {
     'folke/noice.nvim',
     event = 'VeryLazy',
@@ -942,6 +971,18 @@ require('lazy').setup({
       'rcarriga/nvim-notify',
     },
   },
+
+  -- resizing splits
+  {
+    'mrjones2014/smart-splits.nvim',
+    config = function()
+      vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
+      vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
+      vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
+      vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
+    end,
+  },
+
   -- colors hex codes
   {
     'norcalli/nvim-colorizer.lua',
