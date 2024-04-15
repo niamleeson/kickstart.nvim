@@ -232,7 +232,7 @@ require('lazy').setup({
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
-          -- map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          -- map('gd', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
@@ -258,7 +258,7 @@ require('lazy').setup({
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
-        tsserver = {}, -- npm install -g typescript typescript-language-server
+        -- tsserver = {}, -- npm install -g typescript typescript-language-server
         eslint = {}, -- npm i -g vscode-langservers-extracted
         ember = {}, -- npm i -g vscode-langservers-extracted
         html = {}, -- npm i -g vscode-langservers-extracted
@@ -299,6 +299,13 @@ require('lazy').setup({
         },
       }
     end,
+  },
+
+  -- better typescript integration
+  {
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {},
   },
 
   { -- Autoformat
@@ -759,17 +766,17 @@ require('lazy').setup({
   },
 
   -- nicer looking tabs
-  {
-    'akinsho/bufferline.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    version = '*',
-    opts = {
-      options = {
-        mode = 'tabs',
-        separator_style = 'slant',
-      },
-    },
-  },
+  -- {
+  --   'akinsho/bufferline.nvim',
+  --   dependencies = { 'nvim-tree/nvim-web-devicons' },
+  --   version = '*',
+  --   opts = {
+  --     options = {
+  --       mode = 'tabs',
+  --       separator_style = 'slant',
+  --     },
+  --   },
+  -- },
 
   -- nicer looking ui popups NOT WORKING?
   -- {
