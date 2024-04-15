@@ -962,9 +962,7 @@ require('lazy').setup({
   {
     'folke/noice.nvim',
     event = 'VeryLazy',
-    opts = {
-      -- add any options here
-    },
+    opts = {},
     dependencies = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       'MunifTanjim/nui.nvim',
@@ -976,13 +974,20 @@ require('lazy').setup({
   },
 
   -- resizing splits
+  -- {
+  --   'mrjones2014/smart-splits.nvim',
+  --   config = function()
+  --     vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
+  --     vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
+  --     vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
+  --     vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
+  --   end,
+  -- },
   {
-    'mrjones2014/smart-splits.nvim',
+    'nvim-focus/focus.nvim',
+    version = '*',
     config = function()
-      vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
-      vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
-      vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
-      vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
+      require('focus').setup {}
     end,
   },
 
