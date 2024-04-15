@@ -874,6 +874,25 @@ require('lazy').setup({
     },
   },
 
+  -- {
+  --   'hrsh7th/cmp-cmdline',
+  --   config = function()
+  --     require('cmp').setup.cmdline(':', {
+  --       mapping = cmp.mapping.preset.cmdline(),
+  --       sources = cmp.config.sources({
+  --         { name = 'path' },
+  --       }, {
+  --         {
+  --           name = 'cmdline',
+  --           option = {
+  --             ignore_cmds = { 'Man', '!' },
+  --           },
+  --         },
+  --       }),
+  --     })
+  --   end,
+  -- },
+
   -- resizing splits
   -- {
   --   'mrjones2014/smart-splits.nvim',
