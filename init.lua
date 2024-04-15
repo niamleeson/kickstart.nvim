@@ -78,7 +78,7 @@ vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- enable fzf-lua
-vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true, desc = 'Fuzzy find' })
+vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Fuzzy find' })
 
 vim.keymap.set('i', 'jk', '<ESC>', { desc = 'Exit insert mode with jk' })
 
@@ -132,6 +132,9 @@ vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Block Up' })
 -- Keep window centered when going up/down
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
+
+vim.keymap.set('n', '<C-j>', '<C-n>')
+vim.keymap.set('n', '<C-k>', '<C-p>')
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
