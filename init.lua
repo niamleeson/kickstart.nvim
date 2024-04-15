@@ -63,9 +63,6 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- enable fzf-lua
-vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Fuzzy find' })
-
 vim.keymap.set('i', 'jk', '<ESC>', { desc = 'Exit insert mode with jk' })
 
 -- Diagnostic keymaps
@@ -113,6 +110,36 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<C-f>', '<C-f>zz')
 vim.keymap.set('n', '<C-b>', '<C-b>zz')
+
+vim.keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file explorer' }) -- toggle file explorer
+vim.keymap.set('n', '<leader>ef', '<cmd>NvimTreeFocus<CR>', { desc = 'Open file explorer on current file' }) -- toggle file explorer on current file
+vim.keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'Collapse file explorer' }) -- collapse file explorer
+vim.keymap.set('n', '<leader>ek', '<cmd>NvimTreeCollapseKeepBuffers<CR>', { desc = 'Collapse file explorer except open buffers' }) -- refresh file explorer
+vim.keymap.set('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { desc = 'Refresh file explorer' }) -- refresh file explorer
+
+vim.keymap.set('n', '<leader>wr', '<cmd>SessionRestore<CR>', { desc = 'Restore session for cwd' }) -- restore last workspace session for current directory
+vim.keymap.set('n', '<leader>ws', '<cmd>SessionSave<CR>', { desc = 'Save session for auto session root dir' }) -- save workspace session for current working directory
+
+vim.keymap.set('n', 'gd', '<cmd>TSToolsGoToSourceDefinition<CR>', { desc = 'Go to source definition' })
+vim.keymap.set('n', '<leader>cd', '<cmd>TSToolsGoToSourceDefinition<CR>', { desc = 'Go to source definition' })
+vim.keymap.set('n', '<leader>ca', '<cmd>TSToolsAddMissingImports<CR>', { desc = 'Add missing imports' })
+vim.keymap.set('n', '<leader>co', '<cmd>TSToolsOrganizeImports<CR>', { desc = 'Sort imports and remove unused' })
+vim.keymap.set('n', '<leader>cs', '<cmd>TSToolsSortImports<CR>', { desc = 'Sort imports' })
+vim.keymap.set('n', '<leader>cu', '<cmd>TSToolsRemoveUnused<CR>', { desc = 'Remove unused statements' })
+vim.keymap.set('n', '<leader>cr', '<cmd>TSToolsRenameFile<CR>', { desc = 'Rename file' })
+vim.keymap.set('n', '<leader>cf', '<cmd>TSToolsFileReferences<CR>', { desc = 'Find file references' })
+
+vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Fuzzy find' })
+vim.keymap.set('n', '<leader>lc', "<cmd>lua require('fzf-lua').commands({ header = false })<CR>", { silent = true, desc = 'Commands' })
+vim.keymap.set('n', '<leader>lb', "<cmd>lua require('fzf-lua').buffers({ header = false })<CR>", { silent = true, desc = 'Buffers' })
+vim.keymap.set('n', '<leader>lm', "<cmd>lua require('fzf-lua').marks({ header = false })<CR>", { silent = true, desc = 'Marks' })
+vim.keymap.set('n', '<leader>lk', "<cmd>lua require('fzf-lua').keymaps({ header = false })<CR>", { silent = true, desc = 'Keymaps' })
+vim.keymap.set('n', '<leader>ld', "<cmd>lua require('fzf-lua').changes({ header = false })<CR>", { silent = true, desc = 'Changes' })
+vim.keymap.set('n', '<leader>lt', "<cmd>lua require('fzf-lua').tabs({ header = false })<CR>", { silent = true, desc = 'Tabs' })
+vim.keymap.set('n', '<leader>lg', "<cmd>lua require('fzf-lua').grep({ header = false })<CR>", { silent = true, desc = 'Grep' })
+vim.keymap.set('n', '<leader>lr', "<cmd>lua require('fzf-lua').lsp_references({ header = false })<CR>", { silent = true, desc = 'References' })
+vim.keymap.set('n', '<leader>lvc', "<cmd>lua require('fzf-lua').git_commits({ header = false })<CR>", { silent = true, desc = 'Git commits' })
+vim.keymap.set('n', '<leader>lvb', "<cmd>lua require('fzf-lua').git_bcommits({ header = false })<CR>", { silent = true, desc = 'Git commits in buffer' })
 
 -- vim.keymap.set('n', '<C-j>', '<C-n>')
 -- vim.keymap.set('n', '<C-k>', '<C-p>')
@@ -174,16 +201,19 @@ require('lazy').setup({
           name = 'Tab',
         },
         w = {
-          name = 'Session',
+          name = 'Workspace',
         },
         r = {
           name = 'Rename',
         },
-        n = {
-          name = 'Swap next',
+        c = {
+          name = 'Code',
         },
-        p = {
-          name = 'Swap previous',
+        l = {
+          name = 'Fuzzy find',
+          v = {
+            name = 'Git',
+          },
         },
       }, { prefix = '<leader>' })
     end,
@@ -220,24 +250,16 @@ require('lazy').setup({
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          -- map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+          -- map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
           -- Opens a popup that displays documentation about the word under your cursor
           --  See `:help K` for why this keymap.
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
 
-          -- WARN: This is not Goto Definition, this is Goto Declaration.
-          --  For example, in C this would take you to the header.
-          -- map('gd', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-
-          -- The following two autocommands are used to highlight references of the
-          -- word under your cursor when your cursor rests there for a little while.
-          --    See `:help CursorHold` for information about when this is executed
-          --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client.server_capabilities.documentHighlightProvider then
@@ -340,9 +362,9 @@ require('lazy').setup({
         --
         -- use sublist to tell conform to run the first found formatter and stop
         -- javascript = { { "prettierd", "prettier" } },
-        javascript = { 'prettier' },
-        typescript = { 'prettier' },
-        css = { 'prettier' },
+        javascript = { { 'prettierd', 'prettier' } }, -- npm install -g @fsouza/prettierd
+        typescript = { { 'prettierd', 'prettier' } },
+        css = { { 'prettierd', 'prettier' } },
       },
     },
   },
@@ -550,17 +572,17 @@ require('lazy').setup({
               ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class' },
             },
           },
-          swap = {
-            enable = true,
-            swap_next = {
-              ['<leader>na'] = '@parameter.inner', -- swap parameters/argument with next
-              ['<leader>nm'] = '@function.outer', -- swap function with next
-            },
-            swap_previous = {
-              ['<leader>pa'] = '@parameter.inner', -- swap parameters/argument with prev
-              ['<leader>pm'] = '@function.outer', -- swap function with previous
-            },
-          },
+          -- swap = {
+          --   enable = true,
+          --   swap_next = {
+          --     ['<leader>na'] = '@parameter.inner', -- swap parameters/argument with next
+          --     ['<leader>nm'] = '@function.outer', -- swap function with next
+          --   },
+          --   swap_previous = {
+          --     ['<leader>pa'] = '@parameter.inner', -- swap parameters/argument with prev
+          --     ['<leader>pm'] = '@function.outer', -- swap function with previous
+          --   },
+          -- },
           move = {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
@@ -725,10 +747,10 @@ require('lazy').setup({
       -- set keymaps
       local keymap = vim.keymap -- for conciseness
 
-      keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file explorer' }) -- toggle file explorer
-      keymap.set('n', '<leader>ef', '<cmd>NvimTreeFindFileToggle<CR>', { desc = 'Toggle file explorer on current file' }) -- toggle file explorer on current file
-      keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'Collapse file explorer' }) -- collapse file explorer
-      keymap.set('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { desc = 'Refresh file explorer' }) -- refresh file explorer
+      -- keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file explorer' }) -- toggle file explorer
+      -- keymap.set('n', '<leader>ef', '<cmd>NvimTreeFindFileToggle<CR>', { desc = 'Toggle file explorer on current file' }) -- toggle file explorer on current file
+      -- keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'Collapse file explorer' }) -- collapse file explorer
+      -- keymap.set('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { desc = 'Refresh file explorer' }) -- refresh file explorer
     end,
   },
 
@@ -757,11 +779,6 @@ require('lazy').setup({
         auto_restore_enabled = false,
         auto_session_suppress_dirs = { '~/', '~/Dev/', '~/Downloads', '~/Documents', '~/Desktop/' },
       }
-
-      local keymap = vim.keymap
-
-      keymap.set('n', '<leader>wr', '<cmd>SessionRestore<CR>', { desc = 'Restore session for cwd' }) -- restore last workspace session for current directory
-      keymap.set('n', '<leader>ws', '<cmd>SessionSave<CR>', { desc = 'Save session for auto session root dir' }) -- save workspace session for current working directory
     end,
   },
 
