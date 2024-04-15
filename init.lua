@@ -133,8 +133,8 @@ vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Block Up' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 
-vim.keymap.set('n', '<C-j>', '<C-n>')
-vim.keymap.set('n', '<C-k>', '<C-p>')
+-- vim.keymap.set('n', '<C-j>', '<C-n>')
+-- vim.keymap.set('n', '<C-k>', '<C-p>')
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
