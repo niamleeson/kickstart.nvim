@@ -112,7 +112,6 @@ vim.keymap.set('n', '<C-f>', '<C-f>zz')
 vim.keymap.set('n', '<C-b>', '<C-b>zz')
 
 vim.keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file explorer' }) -- toggle file explorer
-vim.keymap.set('n', '<leader>ef', '<cmd>NvimTreeFocus<CR>', { desc = 'Open file explorer on current file' }) -- toggle file explorer on current file
 vim.keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'Collapse file explorer' }) -- collapse file explorer
 vim.keymap.set('n', '<leader>ek', '<cmd>NvimTreeCollapseKeepBuffers<CR>', { desc = 'Collapse file explorer except open buffers' }) -- refresh file explorer
 vim.keymap.set('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { desc = 'Refresh file explorer' }) -- refresh file explorer
@@ -719,6 +718,7 @@ require('lazy').setup({
             },
           },
         },
+        update_focused_file = { enable = true },
         -- disable window_picker for
         -- explorer to work well with
         -- window splits
@@ -924,13 +924,14 @@ require('lazy').setup({
   --     vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
   --   end,
   -- },
-  {
-    'nvim-focus/focus.nvim',
-    version = '*',
-    config = function()
-      require('focus').setup {}
-    end,
-  },
+
+  -- {
+  --   'nvim-focus/focus.nvim',
+  --   version = '*',
+  --   config = function()
+  --     require('focus').setup {}
+  --   end,
+  -- },
 
   -- colors hex codes
   {
