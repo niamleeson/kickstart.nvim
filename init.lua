@@ -460,8 +460,6 @@ require('lazy').setup({
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
-      -- Better Around/Inside textobjects
-      --
       -- Examples:
       --  - va)  - [V]isually select [A]round [)]paren
       --  - yinq - [Y]ank [I]nside [N]ext [']quote
@@ -708,14 +706,6 @@ require('lazy').setup({
           ignore = false,
         },
       }
-
-      -- set keymaps
-      local keymap = vim.keymap -- for conciseness
-
-      -- keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file explorer' }) -- toggle file explorer
-      -- keymap.set('n', '<leader>ef', '<cmd>NvimTreeFindFileToggle<CR>', { desc = 'Toggle file explorer on current file' }) -- toggle file explorer on current file
-      -- keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'Collapse file explorer' }) -- collapse file explorer
-      -- keymap.set('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { desc = 'Refresh file explorer' }) -- refresh file explorer
     end,
   },
 
@@ -747,24 +737,6 @@ require('lazy').setup({
     end,
   },
 
-  -- nicer looking tabs
-  -- {
-  --   'akinsho/bufferline.nvim',
-  --   dependencies = { 'nvim-tree/nvim-web-devicons' },
-  --   version = '*',
-  --   opts = {
-  --     options = {
-  --       mode = 'tabs',
-  --       separator_style = 'slant',
-  --     },
-  --   },
-  -- },
-
-  -- nicer looking ui popups NOT WORKING?
-  -- {
-  --   'stevearc/dressing.nvim',
-  --   event = 'VeryLazy',
-  -- },
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
@@ -867,25 +839,6 @@ require('lazy').setup({
     },
   },
 
-  -- {
-  --   'hrsh7th/cmp-cmdline',
-  --   config = function()
-  --     require('cmp').setup.cmdline(':', {
-  --       mapping = cmp.mapping.preset.cmdline(),
-  --       sources = cmp.config.sources({
-  --         { name = 'path' },
-  --       }, {
-  --         {
-  --           name = 'cmdline',
-  --           option = {
-  --             ignore_cmds = { 'Man', '!' },
-  --           },
-  --         },
-  --       }),
-  --     })
-  --   end,
-  -- },
-
   -- resizing splits
   -- {
   --   'mrjones2014/smart-splits.nvim',
@@ -944,6 +897,22 @@ require('lazy').setup({
       { '<leader>g', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
     },
   },
+
+  {
+    'kevinhwang91/nvim-ufo',
+    requires = 'kevinhwang91/promise-async',
+    config = function()
+      vim.o.foldcolumn = '1' -- '0' is not bad
+      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+
+      vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+      vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+    end,
+  },
+
+  { 'lukas-reineke/indent-blankline.nvim', main = 'ibl', opts = {} },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
