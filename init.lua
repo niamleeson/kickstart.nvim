@@ -278,7 +278,7 @@ require('lazy').setup({
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
-        -- tsserver = {}, -- npm install -g typescript typescript-language-server
+        -- tsserver = {}, -- npm i -g typescript typescript-language-server
         eslint = {}, -- npm i -g vscode-langservers-extracted
         ember = {}, -- npm i -g vscode-langservers-extracted
         html = {}, -- npm i -g vscode-langservers-extracted
@@ -350,7 +350,7 @@ require('lazy').setup({
         --
         -- use sublist to tell conform to run the first found formatter and stop
         -- javascript = { { "prettierd", "prettier" } },
-        javascript = { { 'prettierd', 'prettier' } }, -- npm install -g @fsouza/prettierd
+        javascript = { { 'prettierd', 'prettier' } }, -- npm i -g @fsouza/prettierd
         typescript = { { 'prettierd', 'prettier' } },
         css = { { 'prettierd', 'prettier' } },
       },
