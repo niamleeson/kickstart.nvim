@@ -36,10 +36,6 @@ vim.opt.signcolumn = 'yes'
 -- decrease update time
 vim.opt.updatetime = 250
 
--- decrease mapped sequence wait time
--- displays which-key popup sooner
-vim.opt.timeoutlen = 300
-
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
@@ -932,6 +928,18 @@ require('lazy').setup({
   --     require('focus').setup {}
   --   end,
   -- },
+
+  {
+    'max397574/better-escape.nvim',
+    config = function()
+      require('better_escape').setup {
+        mapping = { 'jk', 'jj' }, -- a table with mappings to use
+        timeout = 300,
+        clear_empty_lines = false, -- clear line after escaping if there is only whitespace
+        keys = '<Esc>', -- keys used for escaping, if it is a function will use the result everytime
+      }
+    end,
+  },
 
   -- colors hex codes
   {
