@@ -155,6 +155,8 @@ vim.keymap.set('n', '<leader><leader>j', "<cmd>lua require('smart-splits').swap_
 vim.keymap.set('n', '<leader><leader>k', "<cmd>lua require('smart-splits').swap_buf_up()<CR>")
 vim.keymap.set('n', '<leader><leader>l', "<cmd>lua require('smart-splits').swap_buf_right()<CR>")
 
+vim.keymap.set('n', '<leader>o', '<cmd>Outline<CR>', { desc = 'Toggle Outline' })
+
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -965,6 +967,17 @@ require('lazy').setup({
     'windwp/nvim-ts-autotag',
     config = function()
       require('nvim-ts-autotag').setup()
+    end,
+  },
+
+  {
+    'hedyhli/outline.nvim',
+    config = function()
+      require('outline').setup {
+        keymaps = {
+          close = { 'q' },
+        },
+      }
     end,
   },
 }, {
