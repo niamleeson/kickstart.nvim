@@ -128,7 +128,7 @@ vim.keymap.set('n', '<leader>fk', "<cmd>lua require('fzf-lua').keymaps({ header 
 vim.keymap.set('n', '<leader>fd', "<cmd>lua require('fzf-lua').changes({ header = false })<CR>", { silent = true, desc = 'Changes' })
 vim.keymap.set('n', '<leader>ft', "<cmd>lua require('fzf-lua').tabs({ header = false })<CR>", { silent = true, desc = 'Tabs' })
 vim.keymap.set('n', '<leader>fu', "<cmd>lua require('fzf-lua').grep_curbuf()<CR>", { silent = true, desc = 'Fuzzy current file' })
-vim.keymap.set('n', '<leader>fi', "<cmd>lua require('fzf-lua').grep_lcurbuf()<CR>", { silent = true, desc = 'Grep current file' })
+vim.keymap.set('n', '<leader>fi', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", { silent = true, desc = 'Grep current file' })
 vim.keymap.set('n', '<leader>ff', "<cmd>lua require('fzf-lua').grep_project({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'Fuzzy or Grep' })
 vim.keymap.set(
   'n',
