@@ -283,19 +283,20 @@ require('lazy').setup({
         ember = {}, -- npm i -g vscode-langservers-extracted
         html = {}, -- npm i -g vscode-langservers-extracted
         cssls = {}, -- npm i -g vscode-langservers-extracted
+        svelte = {}, -- npm install -g svelte-language-server
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
           -- capabilities = {},
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
+          -- settings = {
+          --   Lua = {
+          --     completion = {
+          --       callSnippet = 'Replace',
+          --     },
+          --     -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+          --     -- diagnostics = { disable = { 'missing-fields' } },
+          --   },
+          -- },
         },
       }
 
@@ -366,16 +367,20 @@ require('lazy').setup({
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
       'hrsh7th/nvim-cmp',
+      'hrsh7th/cmp-vsnip',
+      'hrsh7th/vim-vsnip',
     },
     config = function()
-      -- Set up nvim-cmp.
       local cmp = require 'cmp'
 
       cmp.setup {
+        completion = {
+          completeopt = 'menu,menuone,preview,select',
+        },
         snippet = {
           -- REQUIRED - you must specify a snippet engine
           expand = function(args)
-            -- vim.fn['vsnip#anonymous'](args.body) -- For `vsnip` users.
+            vim.fn['vsnip#anonymous'](args.body) -- For `vsnip` users.
             -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
             -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
             -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
@@ -391,7 +396,20 @@ require('lazy').setup({
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ['<Tab>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ['<C-Enter>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          -- add newline if nothing is highlighted, accept if highlighted
+          -- ['<CR>'] = cmp.mapping {
+          --   i = function(fallback)
+          --     if cmp.visible() and cmp.get_active_entry() then
+          --       cmp.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false }
+          --     else
+          --       fallback()
+          --     end
+          --   end,
+          --   s = cmp.mapping.confirm { select = true },
+          --   c = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true },
+          -- },
         },
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
@@ -403,6 +421,10 @@ require('lazy').setup({
           { name = 'buffer' },
         }),
       }
+
+      -- If you want insert `(` after select function or method item
+      -- local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+      -- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
       -- Set configuration for specific filetype.
       cmp.setup.filetype('gitcommit', {
@@ -457,16 +479,16 @@ require('lazy').setup({
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
-  { -- Collection of various small independent plugins/modules
-    'echasnovski/mini.nvim',
-    config = function()
-      -- Examples:
-      --  - va)  - [V]isually select [A]round [)]paren
-      --  - yinq - [Y]ank [I]nside [N]ext [']quote
-      --  - ci'  - [C]hange [I]nside [']quote
-      require('mini.ai').setup { n_lines = 500 }
-    end,
-  },
+  -- { -- Collection of various small independent plugins/modules
+  --   'echasnovski/mini.nvim',
+  --   config = function()
+  --     -- Examples:
+  --     --  - va)  - [V]isually select [A]round [)]paren
+  --     --  - yinq - [Y]ank [I]nside [N]ext [']quote
+  --     --  - ci'  - [C]hange [I]nside [']quote
+  --     require('mini.ai').setup { n_lines = 500 }
+  --   end,
+  -- },
 
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
