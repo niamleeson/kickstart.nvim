@@ -134,8 +134,8 @@ vim.keymap.set('n', '<leader>fm', "<cmd>lua require('fzf-lua').marks({ header = 
 vim.keymap.set('n', '<leader>fk', "<cmd>lua require('fzf-lua').keymaps({ header = false })<CR>", { silent = true, desc = 'Keymaps' })
 vim.keymap.set('n', '<leader>fd', "<cmd>lua require('fzf-lua').changes({ header = false })<CR>", { silent = true, desc = 'Changes' })
 vim.keymap.set('n', '<leader>ft', "<cmd>lua require('fzf-lua').tabs({ header = false })<CR>", { silent = true, desc = 'Tabs' })
-vim.keymap.set('n', '<leader>fg', "<cmd>lua require('fzf-lua').grep({ header = false })<CR>", { silent = true, desc = 'Grep' })
-vim.keymap.set('n', '<leader>fr', "<cmd>lua require('fzf-lua').lsp_references({ header = false })<CR>", { silent = true, desc = 'References' })
+vim.keymap.set('n', '<leader>fg', "<cmd>lua require('fzf-lua').live_grep_glob()<CR>", { silent = true, desc = 'Grep glob' })
+vim.keymap.set('n', '<leader>fr', "<cmd>lua require('fzf-lua').live_grep_resume()<CR>", { silent = true, desc = 'Grep resume' })
 vim.keymap.set('n', '<leader>fvc', "<cmd>lua require('fzf-lua').git_commits({ header = false })<CR>", { silent = true, desc = 'Git commits' })
 vim.keymap.set('n', '<leader>fvb', "<cmd>lua require('fzf-lua').git_bcommits({ header = false })<CR>", { silent = true, desc = 'Git commits in buffer' })
 
@@ -441,6 +441,9 @@ require('lazy').setup({
 
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(':', {
+        completion = {
+          completeopt = 'menu,menuone,preview,noselect',
+        },
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
           { name = 'path' },
