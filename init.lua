@@ -413,7 +413,7 @@ require('lazy').setup({
         },
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
-          -- { name = 'vsnip' }, -- For vsnip users.
+          { name = 'vsnip' }, -- For vsnip users.
           -- { name = 'luasnip' }, -- For luasnip users.
           -- { name = 'ultisnips' }, -- For ultisnips users.
           -- { name = 'snippy' }, -- For snippy users.
@@ -421,10 +421,6 @@ require('lazy').setup({
           { name = 'buffer' },
         }),
       }
-
-      -- If you want insert `(` after select function or method item
-      -- local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-      -- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
       -- Set configuration for specific filetype.
       cmp.setup.filetype('gitcommit', {
@@ -763,6 +759,12 @@ require('lazy').setup({
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = true,
+    -- config = function()
+    --   -- If you want insert `(` after select function or method item
+    --   local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+    --   local cmp = require 'cmp'
+    --   cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+    -- end,
     -- use opts = {} for passing setup options
     -- this is equalent to setup({}) function
   },
@@ -938,11 +940,24 @@ require('lazy').setup({
         end
       end, { desc = 'Peek fold' })
 
-      require('ufo').setup {
-        provider_selector = function(bufnr, filetype, buftype)
-          return { 'lsp', 'indent' }
-        end,
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.foldingRange = {
+        dynamicRegistration = false,
+        lineFoldingOnly = true,
       }
+      local language_servers = require('lspconfig').util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
+      for _, ls in ipairs(language_servers) do
+        require('lspconfig')[ls].setup {
+          capabilities = capabilities,
+          -- you can add other fields for setting up lsp server in this table
+        }
+      end
+      require('ufo').setup()
+      -- require('ufo').setup {
+      --   provider_selector = function(bufnr, filetype, buftype)
+      --     return { 'lsp', 'indent' }
+      --   end,
+      -- }
     end,
   },
 
@@ -952,6 +967,13 @@ require('lazy').setup({
     opts = {},
     config = function()
       require('ibl').setup()
+    end,
+  },
+
+  {
+    'windwp/nvim-ts-autotag',
+    config = function()
+      require('nvim-ts-autotag').setup()
     end,
   },
 }, {
