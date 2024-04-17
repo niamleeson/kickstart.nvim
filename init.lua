@@ -68,8 +68,8 @@ vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, { desc = 'Show diag
 vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Open diagnostic quickfix list' })
 
 -- window management
-vim.keymap.set('n', '<leader>sv', '<C-w>v', { desc = 'Split window vertically' }) -- split window vertically
-vim.keymap.set('n', '<leader>sh', '<C-w>s', { desc = 'Split window horizontally' }) -- split window horizontally
+vim.keymap.set('n', '<leader>sv', '<C-w>s', { desc = 'Split window top and bottom' }) -- split window vertically
+vim.keymap.set('n', '<leader>sh', '<C-w>v', { desc = 'Split window left and right' }) -- split window horizontally
 vim.keymap.set('n', '<leader>se', '<C-w>=', { desc = 'Make splits equal size' }) -- make split windows equal width & height
 vim.keymap.set('n', '<leader>sx', '<cmd>close<CR>', { desc = 'Close current split' }) -- close current split window
 
@@ -91,12 +91,6 @@ vim.keymap.set('n', 'V', 'myV', { noremap = true })
 vim.keymap.set('v', '<Esc>', '<Esc>`y', { noremap = true, silent = true })
 
 vim.keymap.set('n', 'U', '<C-r>', { desc = 'Redo' })
-
--- Keybinds to make split navigation easier.
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Block Down' })
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Block Up' })
@@ -144,13 +138,22 @@ vim.keymap.set('n', '<leader>fr', "<cmd>lua require('fzf-lua').live_grep_resume(
 vim.keymap.set('n', '<leader>fvc', "<cmd>lua require('fzf-lua').git_commits({ header = false })<CR>", { silent = true, desc = 'Git commits' })
 vim.keymap.set('n', '<leader>fvb', "<cmd>lua require('fzf-lua').git_bcommits({ header = false })<CR>", { silent = true, desc = 'Git commits in buffer' })
 
-vim.keymap.set('n', '<A-h>', "<cmd> lua require('smart-splits').resize_left()<CR>")
-vim.keymap.set('n', '<A-j>', "<cmd> lua require('smart-splits').resize_down()<CR>")
-vim.keymap.set('n', '<A-k>', "<cmd> lua require('smart-splits').resize_up()<CR>")
-vim.keymap.set('n', '<A-l>', "<cmd> lua require('smart-splits').resize_right()<CR>")
+vim.keymap.set('n', '<A-h>', "<cmd>lua require('smart-splits').resize_left()<CR>")
+vim.keymap.set('n', '<A-j>', "<cmd>lua require('smart-splits').resize_down()<CR>")
+vim.keymap.set('n', '<A-k>', "<cmd>lua require('smart-splits').resize_up()<CR>")
+vim.keymap.set('n', '<A-l>', "<cmd>lua require('smart-splits').resize_right()<CR>")
 
--- vim.keymap.set('n', '<C-j>', '<C-n>')
--- vim.keymap.set('n', '<C-k>', '<C-p>')
+vim.keymap.set('n', '<C-h>', "<cmd>lua require('smart-splits').move_cursor_left()<CR>")
+vim.keymap.set('n', '<C-j>', "<cmd>lua require('smart-splits').move_cursor_down()<CR>")
+vim.keymap.set('n', '<C-k>', "<cmd>lua require('smart-splits').move_cursor_up()<CR>")
+vim.keymap.set('n', '<C-l>', "<cmd>lua require('smart-splits').move_cursor_right()<CR>")
+vim.keymap.set('n', '<C-\\>', "<cmd>lua require('smart-splits').move_cursor_previous()<CR>")
+
+-- swapping buffers between windows
+vim.keymap.set('n', '<leader><leader>h', "<cmd>lua require('smart-splits').swap_buf_left()<CR>")
+vim.keymap.set('n', '<leader><leader>j', "<cmd>lua require('smart-splits').swap_buf_down()<CR>")
+vim.keymap.set('n', '<leader><leader>k', "<cmd>lua require('smart-splits').swap_buf_up()<CR>")
+vim.keymap.set('n', '<leader><leader>l', "<cmd>lua require('smart-splits').swap_buf_right()<CR>")
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -492,17 +495,6 @@ require('lazy').setup({
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
-  -- { -- Collection of various small independent plugins/modules
-  --   'echasnovski/mini.nvim',
-  --   config = function()
-  --     -- Examples:
-  --     --  - va)  - [V]isually select [A]round [)]paren
-  --     --  - yinq - [Y]ank [I]nside [N]ext [']quote
-  --     --  - ci'  - [C]hange [I]nside [']quote
-  --     require('mini.ai').setup { n_lines = 500 }
-  --   end,
-  -- },
-
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate', -- ensure when treesitter updates, the languages update too
@@ -803,7 +795,6 @@ require('lazy').setup({
   -- },
 
   -- mark files to quickly switch back and forth
-  --
   {
     'theprimeagen/harpoon',
     branch = 'harpoon2',
@@ -883,51 +874,10 @@ require('lazy').setup({
   -- resizing splits
   {
     'mrjones2014/smart-splits.nvim',
-    -- config = function()
-    --   require('smart-splits').setup()
-    --   vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
-    --   vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
-    --   vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
-    --   vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
-    -- end,
+    config = function()
+      require('smart-splits').setup()
+    end,
   },
-
-  -- {
-  --   'nvim-focus/focus.nvim',
-  --   version = '*',
-  --   config = function()
-  --     require('focus').setup()
-  --     local ignore_filetypes = { 'nvim-tree' }
-  --     local ignore_buftypes = { 'nofile', 'prompt', 'popup' }
-  --
-  --     local augroup = vim.api.nvim_create_augroup('FocusDisable', { clear = true })
-  --
-  --     vim.api.nvim_create_autocmd('WinEnter', {
-  --       group = augroup,
-  --       callback = function(_)
-  --         if vim.tbl_contains(ignore_buftypes, vim.bo.buftype) then
-  --           vim.w.focus_disable = true
-  --         else
-  --           vim.w.focus_disable = false
-  --         end
-  --       end,
-  --       desc = 'Disable focus autoresize for BufType',
-  --     })
-  --
-  --     vim.api.nvim_create_autocmd('FileType', {
-  --       group = augroup,
-  --       callback = function(_)
-  --         if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
-  --           vim.b.focus_disable = true
-  --         else
-  --           vim.b.focus_disable = false
-  --         end
-  --       end,
-  --       desc = 'Disable focus autoresize for FileType',
-  --     })
-  --     -- require('focus').setup { excluded_filetypes = { 'NvimTree_*', 'toggleterm' } }
-  --   end,
-  -- },
 
   {
     'max397574/better-escape.nvim',
@@ -962,8 +912,6 @@ require('lazy').setup({
     dependencies = {
       'nvim-lua/plenary.nvim',
     },
-    -- setting the keybinding for LazyGit with 'keys' is recommended in
-    -- order to load the plugin when the command is run for the first time
     keys = {
       { '<leader>g', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
     },
@@ -999,12 +947,8 @@ require('lazy').setup({
           -- you can add other fields for setting up lsp server in this table
         }
       end
+
       require('ufo').setup()
-      -- require('ufo').setup {
-      --   provider_selector = function(bufnr, filetype, buftype)
-      --     return { 'lsp', 'indent' }
-      --   end,
-      -- }
     end,
   },
 
