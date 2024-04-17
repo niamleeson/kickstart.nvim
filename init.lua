@@ -62,10 +62,10 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('i', 'jk', '<ESC>', { desc = 'Exit insert mode with jk' })
 
 -- Diagnostic keymaps
--- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
--- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
--- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
--- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- window management
 vim.keymap.set('n', '<leader>sv', '<C-w>v', { desc = 'Split window vertically' }) -- split window vertically
@@ -139,6 +139,11 @@ vim.keymap.set('n', '<leader>fr', "<cmd>lua require('fzf-lua').live_grep_resume(
 vim.keymap.set('n', '<leader>fvc', "<cmd>lua require('fzf-lua').git_commits({ header = false })<CR>", { silent = true, desc = 'Git commits' })
 vim.keymap.set('n', '<leader>fvb', "<cmd>lua require('fzf-lua').git_bcommits({ header = false })<CR>", { silent = true, desc = 'Git commits in buffer' })
 
+vim.keymap.set('n', '<A-h>', "<cmd> lua require('smart-splits').resize_left()<CR>")
+vim.keymap.set('n', '<A-j>', "<cmd> lua require('smart-splits').resize_down()<CR>")
+vim.keymap.set('n', '<A-k>', "<cmd> lua require('smart-splits').resize_up()<CR>")
+vim.keymap.set('n', '<A-l>', "<cmd> lua require('smart-splits').resize_right()<CR>")
+
 -- vim.keymap.set('n', '<C-j>', '<C-n>')
 -- vim.keymap.set('n', '<C-k>', '<C-p>')
 
@@ -192,6 +197,9 @@ require('lazy').setup({
         e = {
           name = 'Explorer',
         },
+        d = {
+          name = 'Diagnostic',
+        },
         s = {
           name = 'Split',
         },
@@ -207,6 +215,7 @@ require('lazy').setup({
         c = {
           name = 'Code',
         },
+
         f = {
           name = 'Fuzzy find',
           v = {
@@ -867,21 +876,51 @@ require('lazy').setup({
   },
 
   -- resizing splits
-  -- {
-  --   'mrjones2014/smart-splits.nvim',
-  --   config = function()
-  --     vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
-  --     vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
-  --     vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
-  --     vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
-  --   end,
-  -- },
+  {
+    'mrjones2014/smart-splits.nvim',
+    -- config = function()
+    --   require('smart-splits').setup()
+    --   vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
+    --   vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
+    --   vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
+    --   vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
+    -- end,
+  },
 
   -- {
   --   'nvim-focus/focus.nvim',
   --   version = '*',
   --   config = function()
-  --     require('focus').setup {}
+  --     require('focus').setup()
+  --     local ignore_filetypes = { 'nvim-tree' }
+  --     local ignore_buftypes = { 'nofile', 'prompt', 'popup' }
+  --
+  --     local augroup = vim.api.nvim_create_augroup('FocusDisable', { clear = true })
+  --
+  --     vim.api.nvim_create_autocmd('WinEnter', {
+  --       group = augroup,
+  --       callback = function(_)
+  --         if vim.tbl_contains(ignore_buftypes, vim.bo.buftype) then
+  --           vim.w.focus_disable = true
+  --         else
+  --           vim.w.focus_disable = false
+  --         end
+  --       end,
+  --       desc = 'Disable focus autoresize for BufType',
+  --     })
+  --
+  --     vim.api.nvim_create_autocmd('FileType', {
+  --       group = augroup,
+  --       callback = function(_)
+  --         if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+  --           vim.b.focus_disable = true
+  --         else
+  --           vim.b.focus_disable = false
+  --         end
+  --       end,
+  --       desc = 'Disable focus autoresize for FileType',
+  --     })
+  --     -- require('focus').setup { excluded_filetypes = { 'NvimTree_*', 'toggleterm' } }
   --   end,
   -- },
 
@@ -1003,3 +1042,28 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+--[[ wezterm config
+
+-- Pull in the wezterm API
+local wezterm = require("wezterm")
+
+-- This will hold the configuration.
+local config = wezterm.config_builder()
+
+-- This is where you actually apply your config choices
+
+-- For example, changing the color scheme:
+-- config.color_scheme = 'AdventureTime'
+config.font = wezterm.font("VictorMono Nerd Font Mono")
+config.font_size = 14
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
+
+config.use_dead_keys = false
+config.send_composed_key_when_left_alt_is_pressed = false
+config.send_composed_key_when_right_alt_is_pressed = true
+
+-- and finally, return the configuration to wezterm
+return config
+
+--]]
