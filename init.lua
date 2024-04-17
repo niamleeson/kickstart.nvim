@@ -1015,7 +1015,7 @@ local config = wezterm.config_builder()
 
 -- config.color_scheme = 'AdventureTime'
 config.font = wezterm.font("VictorMono Nerd Font Mono")
-config.font_size = 18
+config.font_size = 15
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 config.use_dead_keys = false
@@ -1023,10 +1023,35 @@ config.send_composed_key_when_left_alt_is_pressed = false
 config.send_composed_key_when_right_alt_is_pressed = true
 
 config.keys = {
+	-- {
+	-- 	key = '"',
+	-- 	mods = "CTRL|SHIFT",
+	-- 	action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
+	-- },
 	{
-		key = '"',
-		mods = "CTRL|SHIFT",
-		action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
+		key = "w",
+		mods = "CMD",
+		action = wezterm.action.CloseCurrentPane({ confirm = true }),
+	},
+	{
+		key = "\\",
+		mods = "CTRL",
+		action = wezterm.action_callback(function(_, pane)
+			local tab = pane:tab()
+			local panes = tab:panes_with_info()
+			if #panes == 1 then
+				pane:split({
+					direction = "Right",
+					size = 0.4,
+				})
+			elseif not panes[1].is_zoomed then
+				panes[1].pane:activate()
+				tab:set_zoomed(true)
+			elseif panes[1].is_zoomed then
+				tab:set_zoomed(false)
+				panes[2].pane:activate()
+			end
+		end),
 	},
 }
 
