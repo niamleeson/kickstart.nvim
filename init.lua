@@ -127,15 +127,20 @@ vim.keymap.set('n', '<leader>cf', '<cmd>TSToolsFileReferences<CR>', { desc = 'Fi
 vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = true, lsp_fallback = true })<CR>", { desc = 'Format code' })
 
 vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Find' })
-vim.keymap.set('n', '<leader>ff', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Files' })
 vim.keymap.set('n', '<leader>fc', "<cmd>lua require('fzf-lua').commands({ header = false })<CR>", { silent = true, desc = 'Commands' })
 vim.keymap.set('n', '<leader>fb', "<cmd>lua require('fzf-lua').buffers({ header = false })<CR>", { silent = true, desc = 'Buffers' })
 vim.keymap.set('n', '<leader>fm', "<cmd>lua require('fzf-lua').marks({ header = false })<CR>", { silent = true, desc = 'Marks' })
 vim.keymap.set('n', '<leader>fk', "<cmd>lua require('fzf-lua').keymaps({ header = false })<CR>", { silent = true, desc = 'Keymaps' })
 vim.keymap.set('n', '<leader>fd', "<cmd>lua require('fzf-lua').changes({ header = false })<CR>", { silent = true, desc = 'Changes' })
 vim.keymap.set('n', '<leader>ft', "<cmd>lua require('fzf-lua').tabs({ header = false })<CR>", { silent = true, desc = 'Tabs' })
-vim.keymap.set('n', '<leader>fg', "<cmd>lua require('fzf-lua').live_grep_glob()<CR>", { silent = true, desc = 'Grep glob' })
-vim.keymap.set('n', '<leader>fr', "<cmd>lua require('fzf-lua').live_grep_resume()<CR>", { silent = true, desc = 'Grep resume' })
+vim.keymap.set('n', '<leader>ff', "<cmd>lua require('fzf-lua').grep_project({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'Fuzzy or Grep' })
+vim.keymap.set(
+  'n',
+  '<leader>fg',
+  "<cmd>lua require('fzf-lua').live_grep_glob({ resume = true, cwd = vim.loop.cwd() })<CR>",
+  { silent = true, desc = 'Grep then Fuzzy - chain' }
+)
+vim.keymap.set('n', '<leader>fr', "<cmd>lua require('fzf-lua').live_grep_resume({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'Grep resume' })
 vim.keymap.set('n', '<leader>fvc', "<cmd>lua require('fzf-lua').git_commits({ header = false })<CR>", { silent = true, desc = 'Git commits' })
 vim.keymap.set('n', '<leader>fvb', "<cmd>lua require('fzf-lua').git_bcommits({ header = false })<CR>", { silent = true, desc = 'Git commits in buffer' })
 
@@ -1045,23 +1050,67 @@ require('lazy').setup({
 
 --[[ wezterm config
 
--- Pull in the wezterm API
-local wezterm = require("wezterm")
+- Pull in the wezterm API
+local w = require("wezterm")
 
 -- This will hold the configuration.
-local config = wezterm.config_builder()
+local config = w.config_builder()
 
--- This is where you actually apply your config choices
-
--- For example, changing the color scheme:
 -- config.color_scheme = 'AdventureTime'
-config.font = wezterm.font("VictorMono Nerd Font Mono")
-config.font_size = 14
+config.font = w.font("VictorMono Nerd Font Mono")
+config.font_size = 18
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 config.use_dead_keys = false
 config.send_composed_key_when_left_alt_is_pressed = false
 config.send_composed_key_when_right_alt_is_pressed = true
+
+-- if you are *NOT* lazy-loading smart-splits.nvim (recommended)
+local function is_vim(pane)
+  -- this is set by the plugin, and unset on ExitPre in Neovim
+  return pane:get_user_vars().IS_NVIM == 'true'
+end
+
+local direction_keys = {
+  h = 'Left',
+  j = 'Down',
+  k = 'Up',
+  l = 'Right',
+}
+
+local function split_nav(resize_or_move, key)
+  return {
+    key = key,
+    mods = resize_or_move == 'resize' and 'META' or 'CTRL',
+    action = w.action_callback(function(win, pane)
+      if is_vim(pane) then
+        -- pass the keys through to vim/nvim
+        win:perform_action({
+          SendKey = { key = key, mods = resize_or_move == 'resize' and 'META' or 'CTRL' },
+        }, pane)
+      else
+        if resize_or_move == 'resize' then
+          win:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
+        else
+          win:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
+        end
+      end
+    end),
+  }
+end
+
+config.keys = {
+    -- move between split panes
+    split_nav('move', 'h'),
+    split_nav('move', 'j'),
+    split_nav('move', 'k'),
+    split_nav('move', 'l'),
+    -- resize panes
+    split_nav('resize', 'h'),
+    split_nav('resize', 'j'),
+    split_nav('resize', 'k'),
+    split_nav('resize', 'l'),
+  },
 
 -- and finally, return the configuration to wezterm
 return config
