@@ -126,7 +126,7 @@ vim.keymap.set('n', '<leader>cf', '<cmd>TSToolsFileReferences<CR>', { desc = 'Fi
 
 vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = true, lsp_fallback = true })<CR>", { desc = 'Format code' })
 
-vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Fuzzy find' })
+vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Find' })
 vim.keymap.set('n', '<leader>ff', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Files' })
 vim.keymap.set('n', '<leader>fc', "<cmd>lua require('fzf-lua').commands({ header = false })<CR>", { silent = true, desc = 'Commands' })
 vim.keymap.set('n', '<leader>fb', "<cmd>lua require('fzf-lua').buffers({ header = false })<CR>", { silent = true, desc = 'Buffers' })
@@ -796,14 +796,14 @@ require('lazy').setup({
     end,
     keys = {
       {
-        '<leader>A',
+        '<leader>a',
         function()
           require('harpoon'):list():append()
         end,
         desc = 'harpoon file',
       },
       {
-        '<leader>a',
+        '<leader>h',
         function()
           local harpoon = require 'harpoon'
           harpoon.ui:toggle_quick_menu(harpoon:list())
