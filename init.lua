@@ -1018,6 +1018,17 @@ require('lazy').setup({
 
   -- quickfix list experience enhancement
   { 'kevinhwang91/nvim-bqf' },
+
+  {
+    'nvimdev/dashboard-nvim',
+    event = 'VimEnter',
+    config = function()
+      require('dashboard').setup {
+        -- config
+      }
+    end,
+    dependencies = { { 'nvim-tree/nvim-web-devicons' } },
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
