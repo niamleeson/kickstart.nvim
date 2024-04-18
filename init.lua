@@ -122,13 +122,15 @@ vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = t
 
 vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Find' })
 vim.keymap.set('n', '<leader>fc', "<cmd>lua require('fzf-lua').commands({ header = false })<CR>", { silent = true, desc = 'Commands' })
-vim.keymap.set('n', '<leader>fb', "<cmd>lua require('fzf-lua').buffers({ header = false })<CR>", { silent = true, desc = 'Buffers' })
+vim.keymap.set('n', '<leader>fu', "<cmd>lua require('fzf-lua').buffers({ header = false })<CR>", { silent = true, desc = 'Buffers' })
 vim.keymap.set('n', '<leader>fm', "<cmd>lua require('fzf-lua').marks({ header = false })<CR>", { silent = true, desc = 'Marks' })
 vim.keymap.set('n', '<leader>fk', "<cmd>lua require('fzf-lua').keymaps({ header = false })<CR>", { silent = true, desc = 'Keymaps' })
-vim.keymap.set('n', '<leader>fd', "<cmd>lua require('fzf-lua').changes({ header = false })<CR>", { silent = true, desc = 'Changes' })
 vim.keymap.set('n', '<leader>ft', "<cmd>lua require('fzf-lua').tabs({ header = false })<CR>", { silent = true, desc = 'Tabs' })
-vim.keymap.set('n', '<leader>fu', "<cmd>lua require('fzf-lua').grep_curbuf()<CR>", { silent = true, desc = 'Fuzzy current file' })
-vim.keymap.set('n', '<leader>fi', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", { silent = true, desc = 'Grep current file' })
+vim.keymap.set('v', '<leader>fv', "<cmd>lua require('fzf-lua').grep_visual({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'Selection' })
+vim.keymap.set('n', '<leader>fw', "<cmd>lua require('fzf-lua').grep_cword({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'Current word' })
+vim.keymap.set('n', '<leader>fW', "<cmd>lua require('fzf-lua').grep_cWORD({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'Current WORD' })
+vim.keymap.set('n', '<leader>fb', "<cmd>lua require('fzf-lua').grep_curbuf()<CR>", { silent = true, desc = 'Current file fuzzy' })
+vim.keymap.set('n', '<leader>fi', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", { silent = true, desc = 'Current file grep' })
 vim.keymap.set('n', '<leader>ff', "<cmd>lua require('fzf-lua').grep_project({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'Fuzzy or Grep' })
 vim.keymap.set(
   'n',
