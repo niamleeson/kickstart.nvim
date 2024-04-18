@@ -1047,12 +1047,13 @@ local config = wezterm.config_builder()
 
 -- config.color_scheme = 'AdventureTime'
 config.font = wezterm.font("VictorMono Nerd Font Mono")
-config.font_size = 15
+config.font_size = 16
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 config.use_dead_keys = false
 config.send_composed_key_when_left_alt_is_pressed = false
 config.send_composed_key_when_right_alt_is_pressed = true
+config.window_close_confirmation = "NeverPrompt"
 
 config.keys = {
 	-- {
@@ -1063,7 +1064,7 @@ config.keys = {
 	{
 		key = "w",
 		mods = "CMD",
-		action = wezterm.action.CloseCurrentPane({ confirm = true }),
+		action = wezterm.action.CloseCurrentPane({ confirm = false }),
 	},
 	{
 		key = "\\",
