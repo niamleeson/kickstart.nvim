@@ -1012,6 +1012,12 @@ require('lazy').setup({
     'nvim-pack/nvim-spectre',
     dependencies = 'nvim-lua/plenary.nvim',
   },
+
+  -- allows targeting quotes, parens, commas from outside
+  { 'wellle/targets.vim' },
+
+  -- quickfix list experience enhancement
+  { 'kevinhwang91/nvim-bqf' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
