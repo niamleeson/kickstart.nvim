@@ -174,6 +174,8 @@ vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search(
   desc = 'Search on current file',
 })
 
+vim.keymap.set('n', '<leader>n', '<cmd>NoNeckPain<CR>', { desc = 'No neck pain' })
+
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -1036,6 +1038,14 @@ require('lazy').setup({
       }
     end,
     dependencies = { { 'nvim-tree/nvim-web-devicons' } },
+  },
+  {
+    'shortcuts/no-neck-pain.nvim',
+    config = function()
+      require('no-neck-pain').setup {
+        width = 150,
+      }
+    end,
   },
 }, {
   ui = {
