@@ -59,12 +59,10 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.keymap.set('i', 'jk', '<ESC>', { desc = 'Exit insert mode with jk' })
-
 vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = 'Save' }) -- toggle file explorer
 
-vim.keymap.set('n', '<C-k>', '<C-p>', { silent = true })
-vim.keymap.set('n', '<C-j>', '<C-n>', { silent = true })
+-- vim.keymap.set('n', '<C-k>', '<C-p>', { silent = true })
+-- vim.keymap.set('n', '<C-j>', '<C-n>', { silent = true })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous Diagnostic message' })
@@ -76,13 +74,13 @@ vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Open diag
 vim.keymap.set('n', '<leader>sv', '<C-w>s', { desc = 'Split window top and bottom' }) -- split window vertically
 vim.keymap.set('n', '<leader>sh', '<C-w>v', { desc = 'Split window left and right' }) -- split window horizontally
 vim.keymap.set('n', '<leader>se', '<C-w>=', { desc = 'Make splits equal size' }) -- make split windows equal width & height
-vim.keymap.set('n', '<leader>sx', '<cmd>close<CR>', { desc = 'Close current split' }) -- close current split window
+vim.keymap.set('n', '<leader>sq', '<cmd>close<CR>', { desc = 'Close current split' }) -- close current split window
 
-vim.keymap.set('n', '<leader>to', '<cmd>tabnew<CR>', { desc = 'Open new tab' }) -- open new tab
-vim.keymap.set('n', '<leader>tx', '<cmd>tabclose<CR>', { desc = 'Close current tab' }) -- close current tab
-vim.keymap.set('n', '<leader>tn', '<cmd>tabn<CR>', { desc = 'Go to next tab' }) --  go to next tab
-vim.keymap.set('n', '<leader>tp', '<cmd>tabp<CR>', { desc = 'Go to previous tab' }) --  go to previous tab
-vim.keymap.set('n', '<leader>tf', '<cmd>tabnew %<CR>', { desc = 'Open current buffer in new tab' }) --  move current buffer to new tab
+-- vim.keymap.set('n', '<leader>to', '<cmd>tabnew<CR>', { desc = 'Open new tab' }) -- open new tab
+-- vim.keymap.set('n', '<leader>tq', '<cmd>tabclose<CR>', { desc = 'Close current tab' }) -- close current tab
+-- vim.keymap.set('n', '<leader>tn', '<cmd>tabn<CR>', { desc = 'Go to next tab' }) --  go to next tab
+-- vim.keymap.set('n', '<leader>tp', '<cmd>tabp<CR>', { desc = 'Go to previous tab' }) --  go to previous tab
+-- vim.keymap.set('n', '<leader>tf', '<cmd>tabnew %<CR>', { desc = 'Open current buffer in new tab' }) --  move current buffer to new tab
 
 vim.keymap.set('x', 'p', '"_dP', { desc = 'Paste in visual mode' })
 
@@ -91,10 +89,11 @@ vim.keymap.set('v', '<', '<gv', { desc = 'Stay in unindent mode' })
 vim.keymap.set('v', '>', '>gv', { desc = 'Stay in indent mode' })
 
 -- store location when starting visual mode so when you cancel out, it goes back to where it started
-vim.keymap.set('n', 'v', 'myv', { noremap = true })
-vim.keymap.set('n', 'V', 'myV', { noremap = true })
-vim.keymap.set('v', '<Esc>', '<Esc>`y', { noremap = true, silent = true })
+-- vim.keymap.set('n', 'v', 'myv', { noremap = true })
+-- vim.keymap.set('n', 'V', 'myV', { noremap = true })
+-- vim.keymap.set('v', '<Esc>', '<Esc>`y', { noremap = true, silent = true })
 
+-- Redo
 vim.keymap.set('n', 'U', '<C-r>', { desc = 'Redo' })
 
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Block Down' })
@@ -156,7 +155,6 @@ vim.keymap.set('n', '<C-h>', "<cmd>lua require('smart-splits').move_cursor_left(
 vim.keymap.set('n', '<C-j>', "<cmd>lua require('smart-splits').move_cursor_down()<CR>")
 vim.keymap.set('n', '<C-k>', "<cmd>lua require('smart-splits').move_cursor_up()<CR>")
 vim.keymap.set('n', '<C-l>', "<cmd>lua require('smart-splits').move_cursor_right()<CR>")
-vim.keymap.set('n', '<C-\\>', "<cmd>lua require('smart-splits').move_cursor_previous()<CR>")
 
 -- swapping buffers between windows
 vim.keymap.set('n', '<leader><leader>h', "<cmd>lua require('smart-splits').swap_buf_left()<CR>")
@@ -167,7 +165,7 @@ vim.keymap.set('n', '<leader><leader>l', "<cmd>lua require('smart-splits').swap_
 vim.keymap.set('n', '<leader>o', '<cmd>Outline<CR>', { desc = 'Toggle Outline' })
 
 vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
-  desc = 'Toggle Spectre',
+  desc = 'Spectre',
 })
 vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
   desc = 'Search current word',
@@ -442,8 +440,8 @@ require('lazy').setup({
         mapping = cmp.mapping.preset.insert {
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ['<C-j>'] = cmp.mapping.select_next_item()
-          ['<C-k>'] = cmp.mapping.select_prev_item()
+          ['<C-j>'] = cmp.mapping.select_next_item(),
+          ['<C-k>'] = cmp.mapping.select_prev_item(),
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.abort(),
           ['<Tab>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
@@ -624,27 +622,6 @@ require('lazy').setup({
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
-      -- Telescope is a fuzzy finder that comes with a lot of different things that
-      -- it can fuzzy find! It's more than just a "file finder", it can search
-      -- many different aspects of Neovim, your workspace, LSP, and more!
-      --
-      -- The easiest way to use Telescope, is to start by doing something like:
-      --  :Telescope help_tags
-      --
-      -- After running this command, a window will open up and you're able to
-      -- type in the prompt window. You'll see a list of `help_tags` options and
-      -- a corresponding preview of the help.
-      --
-      -- Two important keymaps to use while in Telescope are:
-      --  - Insert mode: <c-/>
-      --  - Normal mode: ?
-      --
-      -- This opens a window that shows you all of the keymaps for the current
-      -- Telescope picker. This is really useful to discover what Telescope can
-      -- do as well as how to actually do it!
-
-      -- [[ Configure Telescope ]]
-      -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
         extensions = {
           ['ui-select'] = {
@@ -658,16 +635,16 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>vh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-      vim.keymap.set('n', '<leader>vk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>vf', builtin.find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>vs', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-      vim.keymap.set('n', '<leader>vw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>vg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-      vim.keymap.set('n', '<leader>vd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      vim.keymap.set('n', '<leader>vr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>v.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>th', '<cmd>lua telescope.builtin.help_tags<CR>', { desc = 'Search Help' })
+      vim.keymap.set('n', '<leader>tk', '<cmd>lua telescope.builtin.keymaps<CR>', { desc = 'Search K]eymaps' })
+      vim.keymap.set('n', '<leader>tf', '<cmd>lua telescope.builtin.find_files<CR>', { desc = 'Search Files' })
+      vim.keymap.set('n', '<leader>ts', '<cmd>lua telescope.builtin.builtin<CR>', { desc = 'Search Select Telescope' })
+      vim.keymap.set('n', '<leader>tw', '<cmd>lua telescope.builtin.grep_string<CR>', { desc = 'Search current Word' })
+      vim.keymap.set('n', '<leader>tg', '<cmd>lua telescope.builtin.live_grep<CR>', { desc = 'Search by Grep' })
+      vim.keymap.set('n', '<leader>td', '<cmd>lua telescope.builtin.diagnostics<CR>', { desc = 'Search Diagnostics' })
+      vim.keymap.set('n', '<leader>tr', '<cmd>lua telescope.builtin.resume<CR>', { desc = 'Search Resume' })
+      vim.keymap.set('n', '<leader>t.', '<cmd>lua telescope.builtin.oldfiles<CR>', { desc = 'Search Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader>tb', builtin.buffers, { desc = 'Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -770,48 +747,11 @@ require('lazy').setup({
     },
   },
 
-  -- restore session
-  {
-    'rmagatti/auto-session',
-    config = function()
-      local auto_session = require 'auto-session'
-
-      auto_session.setup {
-        auto_restore_enabled = false,
-        auto_session_suppress_dirs = { '~/', '~/Dev/', '~/Downloads', '~/Documents', '~/Desktop/' },
-      }
-    end,
-  },
-
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     config = true,
-    -- config = function()
-    --   -- If you want insert `(` after select function or method item
-    --   local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-    --   local cmp = require 'cmp'
-    --   cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-    -- end,
-    -- use opts = {} for passing setup options
-    -- this is equalent to setup({}) function
   },
-
-  -- easy way to substitute word/line with what's in yank
-  -- {
-  --   'gbprod/substitute.nvim',
-  --   event = { 'BufReadPre', 'BufNewFile' },
-  --   config = function()
-  --     local substitute = require 'substitute'
-  --
-  --     substitute.setup()
-  --
-  --     vim.keymap.set('n', 's', substitute.operator, { desc = 'Substitute with motion' })
-  --     vim.keymap.set('n', 'ss', substitute.line, { desc = 'Substitute line' })
-  --     vim.keymap.set('n', 'S', substitute.eol, { desc = 'Substitute to end of line' })
-  --     vim.keymap.set('x', 's', substitute.visual, { desc = 'Substitute in visual mode' })
-  --   end,
-  -- },
 
   -- mark files to quickly switch back and forth
   {
@@ -888,11 +828,7 @@ require('lazy').setup({
     event = 'VeryLazy',
     opts = {},
     dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       'MunifTanjim/nui.nvim',
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
       'rcarriga/nvim-notify',
     },
   },
@@ -909,10 +845,10 @@ require('lazy').setup({
     'max397574/better-escape.nvim',
     config = function()
       require('better_escape').setup {
-        mapping = { 'jk', 'jj' }, -- a table with mappings to use
+        mapping = { 'jk', 'jj' },
         timeout = 300,
-        clear_empty_lines = false, -- clear line after escaping if there is only whitespace
-        keys = '<Esc>', -- keys used for escaping, if it is a function will use the result everytime
+        clear_empty_lines = false,
+        keys = '<Esc>',
       }
     end,
   },
@@ -1024,7 +960,7 @@ require('lazy').setup({
   { 'wellle/targets.vim' },
 
   -- quickfix list experience enhancement
-  { 'kevinhwang91/nvim-bqf' },
+  -- { 'kevinhwang91/nvim-bqf' },
 
   {
     'nvimdev/dashboard-nvim',
