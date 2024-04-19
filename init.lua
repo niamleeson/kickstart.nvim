@@ -538,19 +538,31 @@ require('lazy').setup({
     end,
   },
 
+  -- {
+  --   'catppuccin/nvim',
+  --   lazy = false,
+  --   name = 'catppuccin',
+  --   priority = 1000,
+  --   opts = {
+  --     flavour = 'mocha',
+  --   },
+  --   init = function()
+  --     -- colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+  --     vim.cmd.colorscheme 'catppuccin-mocha'
+  --   end,
+  -- },
+
   {
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    priority = 1000,
-    opts = {
-      flavour = 'mocha',
-    },
-    init = function()
-      -- colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
-      vim.cmd.colorscheme 'catppuccin-mocha'
+    'projekt0n/github-nvim-theme',
+    lazy = false,
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      require('github-theme').setup {}
+
+      vim.cmd 'colorscheme github_dark_dimmed'
     end,
   },
-  --
+
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
