@@ -96,10 +96,10 @@ vim.keymap.set('n', 'J', 'mzJ`z')
 vim.keymap.set('n', 'Q', '<nop>')
 
 -- quickfixlist shortcuts
-vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz')
-vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz')
-vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
-vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
+-- vim.keymap.set('n', '<C-k>', '<cmd>cprev<CR>zz')
+-- vim.keymap.set('n', '<C-j>', '<cmd>cnext<CR>zz')
+-- vim.keymap.set('n', '<leader>k', '<cmd>lprev<CR>zz')
+-- vim.keymap.set('n', '<leader>j', '<cmd>lnext<CR>zz')
 
 -- replace word on cursor
 vim.keymap.set('n', '<leader>0', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
@@ -173,6 +173,8 @@ vim.keymap.set(
   { silent = true, desc = 'grep to fuzzy' }
 )
 vim.keymap.set('n', '<leader>fr', "<cmd>lua require('fzf-lua').live_grep_resume({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'resume' })
+vim.keymap.set('n', '<leader>fs', "<cmd>lua require('fzf-lua').lsp_document_symbols()<CR>", { silent = true, desc = 'symbols' })
+vim.keymap.set('n', '<leader>fw', "<cmd>lua require('fzf-lua').lsp_workspace_symbols()<CR>", { silent = true, desc = 'workspace symbols' })
 vim.keymap.set('n', '<leader>fvc', "<cmd>lua require('fzf-lua').git_commits({ header = false })<CR>", { silent = true, desc = 'git commits' })
 vim.keymap.set('n', '<leader>fvb', "<cmd>lua require('fzf-lua').git_bcommits({ header = false })<CR>", { silent = true, desc = 'git commits current file' })
 
