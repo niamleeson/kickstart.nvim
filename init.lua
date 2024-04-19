@@ -642,7 +642,13 @@ require('lazy').setup({
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       -- calling `setup` is optional for customization
-      require('fzf-lua').setup {}
+      require('fzf-lua').setup {
+        files = {
+          actions = {
+            ['default'] = require('fzf-lua.actions').file_edit,
+          },
+        },
+      }
     end,
   },
 
@@ -990,6 +996,15 @@ require('lazy').setup({
         mappings = {
           enabled = true,
         },
+      }
+    end,
+  },
+
+  {
+    'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup {
+        log_level = 'error',
       }
     end,
   },
