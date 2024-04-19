@@ -59,7 +59,7 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = 'save' }) -- toggle file explorer
+vim.keymap.set('n', '<leader>wa', '<cmd>w<CR>', { desc = 'save' }) -- toggle file explorer
 
 vim.keymap.set('n', '<leader>;', ':', { desc = 'command' })
 
