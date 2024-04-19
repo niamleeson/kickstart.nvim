@@ -90,6 +90,20 @@ vim.keymap.set('n', 'U', '<C-r>', { desc = 'redo' })
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'move block down' })
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'move block up' })
 
+-- keep cursor when using J
+vim.keymap.set('n', 'J', 'mzJ`z')
+
+vim.keymap.set('n', 'Q', '<nop>')
+
+-- quickfixlist shortcuts
+vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz')
+vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz')
+vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz')
+vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz')
+
+-- replace word on cursor
+vim.keymap.set('n', '<leader>0', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+
 -- Keep window centered when going up/down
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
@@ -115,9 +129,11 @@ vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = t
 vim.keymap.set('n', '<leader>th', "<cmd>lua require('telescope.builtin').help_tags()<CR>", { desc = 'help' })
 vim.keymap.set('n', '<leader>tk', "<cmd>lua require('telescope.builtin').keymaps()<CR>", { desc = 'keymaps' })
 vim.keymap.set('n', '<leader>tf', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
-vim.keymap.set('n', '<leader>ts', "<cmd>lua require('telescope.builtin').builtin()<CR>", { desc = 'telescope builtin' })
-vim.keymap.set('n', '<leader>tw', "<cmd>lua require('telescope.builtin').grep_string()<CR>", { desc = 'current word' })
-vim.keymap.set('n', '<leader>tg', "<cmd>lua require('telescope.builtin').live_grep()<CR>", { desc = 'grep' })
+vim.keymap.set('n', '<leader>ti', "<cmd>lua require('telescope.builtin').builtin()<CR>", { desc = 'telescope builtin' })
+vim.keymap.set('n', '<leader>ts', "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", { desc = 'symbols' })
+vim.keymap.set('n', '<leader>tw', "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", { desc = 'workspace symbols' })
+vim.keymap.set('n', '<leader>tg', "<cmd>lua require('telescope.builtin').grep_string()<CR>", { desc = 'current word' })
+vim.keymap.set('n', '<leader>tl', "<cmd>lua require('telescope.builtin').live_grep()<CR>", { desc = 'grep' })
 vim.keymap.set('n', '<leader>td', "<cmd>lua require('telescope.builtin').diagnostics()<CR>", { desc = 'diagnostics' })
 vim.keymap.set('n', '<leader>tr', "<cmd>lua require('telescope.builtin').resume()<CR>", { desc = 'resume' })
 vim.keymap.set('n', '<leader>t.', "<cmd>lua require('telescope.builtin').oldfiles()<CR>", { desc = 'recent files ("." for repeat)' })
