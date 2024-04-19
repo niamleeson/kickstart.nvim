@@ -952,7 +952,7 @@ require('lazy').setup({
   { 'wellle/targets.vim' },
 
   -- quickfix list experience enhancement
-  -- { 'kevinhwang91/nvim-bqf' },
+  { 'kevinhwang91/nvim-bqf' },
 
   {
     'nvimdev/dashboard-nvim',
