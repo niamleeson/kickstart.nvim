@@ -61,9 +61,6 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = 'Save' }) -- toggle file explorer
 
--- vim.keymap.set('n', '<C-k>', '<C-p>', { silent = true })
--- vim.keymap.set('n', '<C-j>', '<C-n>', { silent = true })
-
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous Diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next Diagnostic message' })
@@ -75,12 +72,6 @@ vim.keymap.set('n', '<leader>sv', '<C-w>s', { desc = 'Split window top and botto
 vim.keymap.set('n', '<leader>sh', '<C-w>v', { desc = 'Split window left and right' }) -- split window horizontally
 vim.keymap.set('n', '<leader>se', '<C-w>=', { desc = 'Make splits equal size' }) -- make split windows equal width & height
 vim.keymap.set('n', '<leader>sq', '<cmd>close<CR>', { desc = 'Close current split' }) -- close current split window
-
--- vim.keymap.set('n', '<leader>to', '<cmd>tabnew<CR>', { desc = 'Open new tab' }) -- open new tab
--- vim.keymap.set('n', '<leader>tq', '<cmd>tabclose<CR>', { desc = 'Close current tab' }) -- close current tab
--- vim.keymap.set('n', '<leader>tn', '<cmd>tabn<CR>', { desc = 'Go to next tab' }) --  go to next tab
--- vim.keymap.set('n', '<leader>tp', '<cmd>tabp<CR>', { desc = 'Go to previous tab' }) --  go to previous tab
--- vim.keymap.set('n', '<leader>tf', '<cmd>tabnew %<CR>', { desc = 'Open current buffer in new tab' }) --  move current buffer to new tab
 
 vim.keymap.set('x', 'p', '"_dP', { desc = 'Paste in visual mode' })
 
@@ -110,9 +101,6 @@ vim.keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'Collaps
 vim.keymap.set('n', '<leader>ek', '<cmd>NvimTreeCollapseKeepBuffers<CR>', { desc = 'Collapse file explorer except open buffers' }) -- refresh file explorer
 vim.keymap.set('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { desc = 'Refresh file explorer' }) -- refresh file explorer
 
--- vim.keymap.set('n', '<leader>wr', '<cmd>SessionRestore<CR>', { desc = 'Restore session for cwd' }) -- restore last workspace session for current directory
--- vim.keymap.set('n', '<leader>ws', '<cmd>SessionSave<CR>', { desc = 'Save session for auto session root dir' }) -- save workspace session for current working directory
-
 vim.keymap.set('n', 'gd', '<cmd>TSToolsGoToSourceDefinition<CR>', { desc = 'Go to source definition' })
 vim.keymap.set('n', '<leader>cd', '<cmd>TSToolsGoToSourceDefinition<CR>', { desc = 'Go to source definition' })
 vim.keymap.set('n', '<leader>ca', '<cmd>TSToolsAddMissingImports<CR>', { desc = 'Add missing imports' })
@@ -123,6 +111,32 @@ vim.keymap.set('n', '<leader>cr', '<cmd>TSToolsRenameFile<CR>', { desc = 'Rename
 vim.keymap.set('n', '<leader>cf', '<cmd>TSToolsFileReferences<CR>', { desc = 'Find file references' })
 
 vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = true, lsp_fallback = true })<CR>", { desc = 'Format code' })
+
+vim.keymap.set('n', '<leader>th', "<cmd>lua require('telescope.builtin').help_tags()<CR>", { desc = 'Help' })
+vim.keymap.set('n', '<leader>tk', "<cmd>lua require('telescope.builtin').keymaps()<CR>", { desc = 'Keymaps' })
+vim.keymap.set('n', '<leader>tf', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'Files' })
+vim.keymap.set('n', '<leader>ts', "<cmd>lua require('telescope.builtin').builtin()<CR>", { desc = 'Telescope builtin' })
+vim.keymap.set('n', '<leader>tw', "<cmd>lua require('telescope.builtin').grep_string()<CR>", { desc = 'Current word' })
+vim.keymap.set('n', '<leader>tg', "<cmd>lua require('telescope.builtin').live_grep()<CR>", { desc = 'Grep' })
+vim.keymap.set('n', '<leader>td', "<cmd>lua require('telescope.builtin').diagnostics()<CR>", { desc = 'Diagnostics' })
+vim.keymap.set('n', '<leader>tr', "<cmd>lua require('telescope.builtin').resume()<CR>", { desc = 'Resume' })
+vim.keymap.set('n', '<leader>t.', "<cmd>lua require('telescope.builtin').oldfiles()<CR>", { desc = 'Recent files ("." for repeat)' })
+vim.keymap.set('n', '<leader>tb', "<cmd>lua require('telescope.builtin').buffers()<CR>", { desc = 'Buffers' })
+vim.keymap.set('n', '<leader>t/', function()
+  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+    winblend = 10,
+    previewer = false,
+  })
+end, { desc = 'Fuzzy current buffer' })
+vim.keymap.set('n', '<leader>t/', function()
+  require('telescope.builtin').live_grep {
+    grep_open_files = true,
+    prompt_title = 'Grep open files',
+  }
+end, { desc = 'Search open files' })
+vim.keymap.set('n', '<leader>tn', function()
+  require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' }
+end, { desc = 'Search neovim files' })
 
 vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Find' })
 vim.keymap.set('n', '<leader>fmc', "<cmd>lua require('fzf-lua').commands({ header = false })<CR>", { silent = true, desc = 'Commands' })
@@ -152,15 +166,9 @@ vim.keymap.set('n', '<A-k>', "<cmd>lua require('smart-splits').resize_up()<CR>")
 vim.keymap.set('n', '<A-l>', "<cmd>lua require('smart-splits').resize_right()<CR>")
 
 vim.keymap.set('n', '<C-h>', "<cmd>lua require('smart-splits').move_cursor_left()<CR>")
-vim.keymap.set('n', '<C-j>', "<cmd>lua require('smart-splits').move_cursor_down()<CR>")
-vim.keymap.set('n', '<C-k>', "<cmd>lua require('smart-splits').move_cursor_up()<CR>")
+-- vim.keymap.set('n', '<C-j>', "<cmd>lua require('smart-splits').move_cursor_down()<CR>")
+-- vim.keymap.set('n', '<C-k>', "<cmd>lua require('smart-splits').move_cursor_up()<CR>")
 vim.keymap.set('n', '<C-l>', "<cmd>lua require('smart-splits').move_cursor_right()<CR>")
-
--- swapping buffers between windows
-vim.keymap.set('n', '<leader><leader>h', "<cmd>lua require('smart-splits').swap_buf_left()<CR>")
-vim.keymap.set('n', '<leader><leader>j', "<cmd>lua require('smart-splits').swap_buf_down()<CR>")
-vim.keymap.set('n', '<leader><leader>k', "<cmd>lua require('smart-splits').swap_buf_up()<CR>")
-vim.keymap.set('n', '<leader><leader>l', "<cmd>lua require('smart-splits').swap_buf_right()<CR>")
 
 vim.keymap.set('n', '<leader>o', '<cmd>Outline<CR>', { desc = 'Toggle Outline' })
 
@@ -236,7 +244,7 @@ require('lazy').setup({
           name = 'Split',
         },
         t = {
-          name = 'Tab',
+          name = 'Telescope',
         },
         r = {
           name = 'Rename',
@@ -632,42 +640,6 @@ require('lazy').setup({
 
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
-
-      -- See `:help telescope.builtin`
-      local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>th', '<cmd>lua telescope.builtin.help_tags<CR>', { desc = 'Search Help' })
-      vim.keymap.set('n', '<leader>tk', '<cmd>lua telescope.builtin.keymaps<CR>', { desc = 'Search K]eymaps' })
-      vim.keymap.set('n', '<leader>tf', '<cmd>lua telescope.builtin.find_files<CR>', { desc = 'Search Files' })
-      vim.keymap.set('n', '<leader>ts', '<cmd>lua telescope.builtin.builtin<CR>', { desc = 'Search Select Telescope' })
-      vim.keymap.set('n', '<leader>tw', '<cmd>lua telescope.builtin.grep_string<CR>', { desc = 'Search current Word' })
-      vim.keymap.set('n', '<leader>tg', '<cmd>lua telescope.builtin.live_grep<CR>', { desc = 'Search by Grep' })
-      vim.keymap.set('n', '<leader>td', '<cmd>lua telescope.builtin.diagnostics<CR>', { desc = 'Search Diagnostics' })
-      vim.keymap.set('n', '<leader>tr', '<cmd>lua telescope.builtin.resume<CR>', { desc = 'Search Resume' })
-      vim.keymap.set('n', '<leader>t.', '<cmd>lua telescope.builtin.oldfiles<CR>', { desc = 'Search Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader>tb', builtin.buffers, { desc = 'Find existing buffers' })
-
-      -- Slightly advanced example of overriding default behavior and theme
-      vim.keymap.set('n', '<leader>/', function()
-        -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          winblend = 10,
-          previewer = false,
-        })
-      end, { desc = '[/] Fuzzily search in current buffer' })
-
-      -- It's also possible to pass additional configuration options.
-      --  See `:help telescope.builtin.live_grep()` for information about particular keys
-      vim.keymap.set('n', '<leader>s/', function()
-        builtin.live_grep {
-          grep_open_files = true,
-          prompt_title = 'Live Grep in Open Files',
-        }
-      end, { desc = '[S]earch [/] in Open Files' })
-
-      -- Shortcut for searching your Neovim configuration files
-      vim.keymap.set('n', '<leader>sn', function()
-        builtin.find_files { cwd = vim.fn.stdpath 'config' }
-      end, { desc = '[S]earch [N]eovim files' })
     end,
   },
 
