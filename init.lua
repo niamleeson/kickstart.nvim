@@ -102,8 +102,10 @@ vim.keymap.set('n', 'Q', '<nop>')
 -- vim.keymap.set('n', '<C-j>', '<cmd>cnext<CR>zz')
 -- vim.keymap.set('n', '<leader>k', '<cmd>lprev<CR>zz')
 -- vim.keymap.set('n', '<leader>j', '<cmd>lnext<CR>zz')
-vim.keymap.set('n', '[q', '<cmd>cprev<CR>zz')
-vim.keymap.set('n', ']q', '<cmd>cnext<CR>zz')
+vim.keymap.set('n', '[q', '<cmd>cprev<CR>zz', { desc = 'prev quickfix' })
+vim.keymap.set('n', ']q', '<cmd>cnext<CR>zz', { desc = 'next quickfix' })
+vim.keymap.set('n', '[b', '<cmd>bprev<CR>zz', { desc = 'prev quickfix' })
+vim.keymap.set('n', ']b', '<cmd>bnext<CR>zz', { desc = 'next quickfix' })
 
 -- replace word on cursor
 vim.keymap.set('n', '<leader>0', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
@@ -172,12 +174,7 @@ vim.keymap.set('n', '<leader>fhW', "<cmd>lua require('fzf-lua').grep_cWORD({ cwd
 vim.keymap.set('n', '<leader>fcf', "<cmd>lua require('fzf-lua').grep_curbuf()<CR>", { silent = true, desc = 'current file fuzzy' })
 vim.keymap.set('n', '<leader>fcg', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", { silent = true, desc = 'current file grep' })
 vim.keymap.set('n', '<leader>ff', "<cmd>lua require('fzf-lua').grep_project({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'fuzzy or Grep' })
-vim.keymap.set(
-  'n',
-  '<leader>fg',
-  "<cmd>lua require('fzf-lua').live_grep_glob({ resume = true, cwd = vim.loop.cwd() })<CR>",
-  { silent = true, desc = 'grep to fuzzy' }
-)
+vim.keymap.set('n', '<leader>fg', "<cmd>lua require('fzf-lua').live_grep_glob({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'grep to fuzzy' })
 vim.keymap.set('n', '<leader>fr', "<cmd>lua require('fzf-lua').live_grep_resume({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'resume' })
 vim.keymap.set('n', '<leader>fs', "<cmd>lua require('fzf-lua').lsp_document_symbols()<CR>", { silent = true, desc = 'symbols' })
 vim.keymap.set('n', '<leader>fw', "<cmd>lua require('fzf-lua').lsp_workspace_symbols()<CR>", { silent = true, desc = 'workspace symbols' })
