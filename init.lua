@@ -59,25 +59,25 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = 'Save' }) -- toggle file explorer
+vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = 'save' }) -- toggle file explorer
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous Diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next Diagnostic message' })
-vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, { desc = 'Show diagnostic error messages' })
-vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Open diagnostic quickfix list' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'go to previous diagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'go to next diagnostic message' })
+vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, { desc = 'show diagnostic error messages' })
+vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'open diagnostic quickfix list' })
 
 -- window management
-vim.keymap.set('n', '<leader>sv', '<C-w>s', { desc = 'Split window top and bottom' }) -- split window vertically
-vim.keymap.set('n', '<leader>sh', '<C-w>v', { desc = 'Split window left and right' }) -- split window horizontally
-vim.keymap.set('n', '<leader>se', '<C-w>=', { desc = 'Make splits equal size' }) -- make split windows equal width & height
-vim.keymap.set('n', '<leader>sq', '<cmd>close<CR>', { desc = 'Close current split' }) -- close current split window
+vim.keymap.set('n', '<leader>sv', '<C-w>s', { desc = 'split window top and bottom' }) -- split window vertically
+vim.keymap.set('n', '<leader>sh', '<C-w>v', { desc = 'split window left and right' }) -- split window horizontally
+vim.keymap.set('n', '<leader>se', '<C-w>=', { desc = 'make splits equal size' }) -- make split windows equal width & height
+vim.keymap.set('n', '<leader>sq', '<cmd>close<CR>', { desc = 'close current split' }) -- close current split window
 
-vim.keymap.set('x', 'p', '"_dP', { desc = 'Paste in visual mode' })
+vim.keymap.set('x', 'p', '"_dP', { desc = 'paste in visual mode' })
 
 -- Stay in indent mode
-vim.keymap.set('v', '<', '<gv', { desc = 'Stay in unindent mode' })
-vim.keymap.set('v', '>', '>gv', { desc = 'Stay in indent mode' })
+vim.keymap.set('v', '<', '<gv', { desc = 'stay in unindent mode' })
+vim.keymap.set('v', '>', '>gv', { desc = 'stay in indent mode' })
 
 -- store location when starting visual mode so when you cancel out, it goes back to where it started
 -- vim.keymap.set('n', 'v', 'myv', { noremap = true })
@@ -85,10 +85,10 @@ vim.keymap.set('v', '>', '>gv', { desc = 'Stay in indent mode' })
 -- vim.keymap.set('v', '<Esc>', '<Esc>`y', { noremap = true, silent = true })
 
 -- Redo
-vim.keymap.set('n', 'U', '<C-r>', { desc = 'Redo' })
+vim.keymap.set('n', 'U', '<C-r>', { desc = 'redo' })
 
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move Block Down' })
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move Block Up' })
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'move block down' })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'move block up' })
 
 -- Keep window centered when going up/down
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
@@ -96,69 +96,69 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<C-f>', '<C-f>zz')
 vim.keymap.set('n', '<C-b>', '<C-b>zz')
 
-vim.keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file explorer' }) -- toggle file explorer
-vim.keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'Collapse file explorer' }) -- collapse file explorer
-vim.keymap.set('n', '<leader>ek', '<cmd>NvimTreeCollapseKeepBuffers<CR>', { desc = 'Collapse file explorer except open buffers' }) -- refresh file explorer
-vim.keymap.set('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { desc = 'Refresh file explorer' }) -- refresh file explorer
+vim.keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'toggle file explorer' }) -- toggle file explorer
+vim.keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'collapse file explorer' }) -- collapse file explorer
+vim.keymap.set('n', '<leader>ek', '<cmd>NvimTreeCollapseKeepBuffers<CR>', { desc = 'collapse file explorer except open buffers' }) -- refresh file explorer
+vim.keymap.set('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { desc = 'refresh file explorer' }) -- refresh file explorer
 
-vim.keymap.set('n', 'gd', '<cmd>TSToolsGoToSourceDefinition<CR>', { desc = 'Go to source definition' })
-vim.keymap.set('n', '<leader>cd', '<cmd>TSToolsGoToSourceDefinition<CR>', { desc = 'Go to source definition' })
-vim.keymap.set('n', '<leader>ca', '<cmd>TSToolsAddMissingImports<CR>', { desc = 'Add missing imports' })
-vim.keymap.set('n', '<leader>co', '<cmd>TSToolsOrganizeImports<CR>', { desc = 'Sort imports and remove unused' })
-vim.keymap.set('n', '<leader>cs', '<cmd>TSToolsSortImports<CR>', { desc = 'Sort imports' })
-vim.keymap.set('n', '<leader>cu', '<cmd>TSToolsRemoveUnused<CR>', { desc = 'Remove unused statements' })
-vim.keymap.set('n', '<leader>cr', '<cmd>TSToolsRenameFile<CR>', { desc = 'Rename file' })
-vim.keymap.set('n', '<leader>cf', '<cmd>TSToolsFileReferences<CR>', { desc = 'Find file references' })
+vim.keymap.set('n', 'gd', '<cmd>TSToolsGoToSourceDefinition<CR>', { desc = 'go to source definition' })
+vim.keymap.set('n', '<leader>cd', '<cmd>TSToolsGoToSourceDefinition<CR>', { desc = 'go to source definition' })
+vim.keymap.set('n', '<leader>ca', '<cmd>TSToolsAddMissingImports<CR>', { desc = 'add missing imports' })
+vim.keymap.set('n', '<leader>co', '<cmd>TSToolsOrganizeImports<CR>', { desc = 'sort imports and remove unused' })
+vim.keymap.set('n', '<leader>cs', '<cmd>TSToolsSortImports<CR>', { desc = 'sort imports' })
+vim.keymap.set('n', '<leader>cu', '<cmd>TSToolsRemoveUnused<CR>', { desc = 'remove unused statements' })
+vim.keymap.set('n', '<leader>cr', '<cmd>TSToolsRenameFile<CR>', { desc = 'rename file' })
+vim.keymap.set('n', '<leader>cf', '<cmd>TSToolsFileReferences<CR>', { desc = 'find file references' })
 
-vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = true, lsp_fallback = true })<CR>", { desc = 'Format code' })
+vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = true, lsp_fallback = true })<CR>", { desc = 'format code' })
 
-vim.keymap.set('n', '<leader>th', "<cmd>lua require('telescope.builtin').help_tags()<CR>", { desc = 'Help' })
-vim.keymap.set('n', '<leader>tk', "<cmd>lua require('telescope.builtin').keymaps()<CR>", { desc = 'Keymaps' })
-vim.keymap.set('n', '<leader>tf', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'Files' })
-vim.keymap.set('n', '<leader>ts', "<cmd>lua require('telescope.builtin').builtin()<CR>", { desc = 'Telescope builtin' })
-vim.keymap.set('n', '<leader>tw', "<cmd>lua require('telescope.builtin').grep_string()<CR>", { desc = 'Current word' })
-vim.keymap.set('n', '<leader>tg', "<cmd>lua require('telescope.builtin').live_grep()<CR>", { desc = 'Grep' })
-vim.keymap.set('n', '<leader>td', "<cmd>lua require('telescope.builtin').diagnostics()<CR>", { desc = 'Diagnostics' })
-vim.keymap.set('n', '<leader>tr', "<cmd>lua require('telescope.builtin').resume()<CR>", { desc = 'Resume' })
-vim.keymap.set('n', '<leader>t.', "<cmd>lua require('telescope.builtin').oldfiles()<CR>", { desc = 'Recent files ("." for repeat)' })
-vim.keymap.set('n', '<leader>tb', "<cmd>lua require('telescope.builtin').buffers()<CR>", { desc = 'Buffers' })
+vim.keymap.set('n', '<leader>th', "<cmd>lua require('telescope.builtin').help_tags()<CR>", { desc = 'help' })
+vim.keymap.set('n', '<leader>tk', "<cmd>lua require('telescope.builtin').keymaps()<CR>", { desc = 'keymaps' })
+vim.keymap.set('n', '<leader>tf', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
+vim.keymap.set('n', '<leader>ts', "<cmd>lua require('telescope.builtin').builtin()<CR>", { desc = 'telescope builtin' })
+vim.keymap.set('n', '<leader>tw', "<cmd>lua require('telescope.builtin').grep_string()<CR>", { desc = 'current word' })
+vim.keymap.set('n', '<leader>tg', "<cmd>lua require('telescope.builtin').live_grep()<CR>", { desc = 'grep' })
+vim.keymap.set('n', '<leader>td', "<cmd>lua require('telescope.builtin').diagnostics()<CR>", { desc = 'diagnostics' })
+vim.keymap.set('n', '<leader>tr', "<cmd>lua require('telescope.builtin').resume()<CR>", { desc = 'resume' })
+vim.keymap.set('n', '<leader>t.', "<cmd>lua require('telescope.builtin').oldfiles()<CR>", { desc = 'recent files ("." for repeat)' })
+vim.keymap.set('n', '<leader>tb', "<cmd>lua require('telescope.builtin').buffers()<CR>", { desc = 'buffers' })
 vim.keymap.set('n', '<leader>t/', function()
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
     previewer = false,
   })
-end, { desc = 'Fuzzy current buffer' })
+end, { desc = 'fuzzy current buffer' })
 vim.keymap.set('n', '<leader>t/', function()
   require('telescope.builtin').live_grep {
     grep_open_files = true,
-    prompt_title = 'Grep open files',
+    prompt_title = 'grep open files',
   }
-end, { desc = 'Search open files' })
+end, { desc = 'search open files' })
 vim.keymap.set('n', '<leader>tn', function()
   require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' }
-end, { desc = 'Search neovim files' })
+end, { desc = 'search neovim files' })
 
-vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'Find' })
-vim.keymap.set('n', '<leader>fmc', "<cmd>lua require('fzf-lua').commands({ header = false })<CR>", { silent = true, desc = 'Commands' })
-vim.keymap.set('n', '<leader>fmb', "<cmd>lua require('fzf-lua').buffers({ header = false })<CR>", { silent = true, desc = 'Buffers' })
-vim.keymap.set('n', '<leader>fmm', "<cmd>lua require('fzf-lua').marks({ header = false })<CR>", { silent = true, desc = 'Marks' })
-vim.keymap.set('n', '<leader>fmk', "<cmd>lua require('fzf-lua').keymaps({ header = false })<CR>", { silent = true, desc = 'Keymaps' })
-vim.keymap.set('n', '<leader>fmt', "<cmd>lua require('fzf-lua').tabs({ header = false })<CR>", { silent = true, desc = 'Tabs' })
-vim.keymap.set('v', '<leader>fhv', "<cmd>lua require('fzf-lua').grep_visual({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'Selection' })
-vim.keymap.set('n', '<leader>fhw', "<cmd>lua require('fzf-lua').grep_cword({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'Current word' })
-vim.keymap.set('n', '<leader>fhW', "<cmd>lua require('fzf-lua').grep_cWORD({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'Current WORD' })
-vim.keymap.set('n', '<leader>fcf', "<cmd>lua require('fzf-lua').grep_curbuf()<CR>", { silent = true, desc = 'Current file fuzzy' })
-vim.keymap.set('n', '<leader>fcg', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", { silent = true, desc = 'Current file grep' })
-vim.keymap.set('n', '<leader>ff', "<cmd>lua require('fzf-lua').grep_project({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'Fuzzy or Grep' })
+vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'find' })
+vim.keymap.set('n', '<leader>fmc', "<cmd>lua require('fzf-lua').commands({ header = false })<CR>", { silent = true, desc = 'commands' })
+vim.keymap.set('n', '<leader>fmb', "<cmd>lua require('fzf-lua').buffers({ header = false })<CR>", { silent = true, desc = 'buffers' })
+vim.keymap.set('n', '<leader>fmm', "<cmd>lua require('fzf-lua').marks({ header = false })<CR>", { silent = true, desc = 'marks' })
+vim.keymap.set('n', '<leader>fmk', "<cmd>lua require('fzf-lua').keymaps({ header = false })<CR>", { silent = true, desc = 'keymaps' })
+vim.keymap.set('n', '<leader>fmt', "<cmd>lua require('fzf-lua').tabs({ header = false })<CR>", { silent = true, desc = 'tabs' })
+vim.keymap.set('v', '<leader>fhv', "<cmd>lua require('fzf-lua').grep_visual({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'selection' })
+vim.keymap.set('n', '<leader>fhw', "<cmd>lua require('fzf-lua').grep_cword({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'current word' })
+vim.keymap.set('n', '<leader>fhW', "<cmd>lua require('fzf-lua').grep_cWORD({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'current WORD' })
+vim.keymap.set('n', '<leader>fcf', "<cmd>lua require('fzf-lua').grep_curbuf()<CR>", { silent = true, desc = 'current file fuzzy' })
+vim.keymap.set('n', '<leader>fcg', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", { silent = true, desc = 'current file grep' })
+vim.keymap.set('n', '<leader>ff', "<cmd>lua require('fzf-lua').grep_project({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'fuzzy or Grep' })
 vim.keymap.set(
   'n',
   '<leader>fg',
   "<cmd>lua require('fzf-lua').live_grep_glob({ resume = true, cwd = vim.loop.cwd() })<CR>",
-  { silent = true, desc = 'Grep to Fuzzy' }
+  { silent = true, desc = 'grep to fuzzy' }
 )
-vim.keymap.set('n', '<leader>fr', "<cmd>lua require('fzf-lua').live_grep_resume({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'Resume' })
-vim.keymap.set('n', '<leader>fvc', "<cmd>lua require('fzf-lua').git_commits({ header = false })<CR>", { silent = true, desc = 'Git commits' })
-vim.keymap.set('n', '<leader>fvb', "<cmd>lua require('fzf-lua').git_bcommits({ header = false })<CR>", { silent = true, desc = 'Git commits current file' })
+vim.keymap.set('n', '<leader>fr', "<cmd>lua require('fzf-lua').live_grep_resume({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'resume' })
+vim.keymap.set('n', '<leader>fvc', "<cmd>lua require('fzf-lua').git_commits({ header = false })<CR>", { silent = true, desc = 'git commits' })
+vim.keymap.set('n', '<leader>fvb', "<cmd>lua require('fzf-lua').git_bcommits({ header = false })<CR>", { silent = true, desc = 'git commits current file' })
 
 vim.keymap.set('n', '<A-h>', "<cmd>lua require('smart-splits').resize_left()<CR>")
 vim.keymap.set('n', '<A-j>', "<cmd>lua require('smart-splits').resize_down()<CR>")
@@ -170,22 +170,22 @@ vim.keymap.set('n', '<C-h>', "<cmd>lua require('smart-splits').move_cursor_left(
 -- vim.keymap.set('n', '<C-k>', "<cmd>lua require('smart-splits').move_cursor_up()<CR>")
 vim.keymap.set('n', '<C-l>', "<cmd>lua require('smart-splits').move_cursor_right()<CR>")
 
-vim.keymap.set('n', '<leader>o', '<cmd>Outline<CR>', { desc = 'Toggle Outline' })
+vim.keymap.set('n', '<leader>o', '<cmd>Outline<CR>', { desc = 'toggle outline' })
 
-vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
-  desc = 'Spectre',
+vim.keymap.set('n', '<leader>ss', '<cmd>lua require("spectre").toggle()<CR>', {
+  desc = 'spectre',
 })
 vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-  desc = 'Search current word',
+  desc = 'search current word',
 })
 vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-  desc = 'Search current word',
+  desc = 'search current word',
 })
 vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-  desc = 'Search on current file',
+  desc = 'search on current file',
 })
 
-vim.keymap.set('n', '<leader>n', '<cmd>NoNeckPain<CR>', { desc = 'No neck pain' })
+vim.keymap.set('n', '<leader>n', '<cmd>NoNeckPain<CR>', { desc = 'no neck pain' })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -235,36 +235,36 @@ require('lazy').setup({
 
       wk.register({
         e = {
-          name = 'Explorer',
+          name = 'explorer',
         },
         d = {
-          name = 'Diagnostic',
+          name = 'diagnostic',
         },
         s = {
-          name = 'Split',
+          name = 'split, spectre',
         },
         t = {
-          name = 'Telescope',
+          name = 'telescope',
         },
         r = {
-          name = 'Rename',
+          name = 'rename',
         },
         c = {
-          name = 'Code',
+          name = 'code',
         },
         f = {
-          name = 'Fuzzy find',
+          name = 'fuzzy find',
           m = {
-            name = 'Misc',
+            name = 'misc',
           },
           c = {
-            name = 'Current file',
+            name = 'current file',
           },
           v = {
-            name = 'Git',
+            name = 'git',
           },
           h = {
-            name = 'More Grep',
+            name = 'more grep',
           },
         },
       }, { prefix = '<leader>' })
@@ -711,8 +711,8 @@ require('lazy').setup({
     opts = {},
     -- stylua: ignore
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "flash treesitter" },
       -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
       -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
     --   { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
