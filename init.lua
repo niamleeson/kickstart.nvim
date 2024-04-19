@@ -63,6 +63,9 @@ vim.keymap.set('i', 'jk', '<ESC>', { desc = 'Exit insert mode with jk' })
 
 vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = 'Save' }) -- toggle file explorer
 
+vim.keymap.set('n', '<C-k>', '<C-p>', { silent = true })
+vim.keymap.set('n', '<C-j>', '<C-n>', { silent = true })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous Diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next Diagnostic message' })
@@ -236,9 +239,6 @@ require('lazy').setup({
         },
         t = {
           name = 'Tab',
-        },
-        w = {
-          name = 'Workspace',
         },
         r = {
           name = 'Rename',
@@ -971,6 +971,13 @@ require('lazy').setup({
         end,
         desc = 'harpoon to file 5',
       },
+      {
+        '<leader>6',
+        function()
+          require('harpoon'):list():select(6)
+        end,
+        desc = 'harpoon to file 6',
+      },
     },
   },
 
@@ -1128,6 +1135,7 @@ require('lazy').setup({
     end,
     dependencies = { { 'nvim-tree/nvim-web-devicons' } },
   },
+
   {
     'shortcuts/no-neck-pain.nvim',
     config = function()
