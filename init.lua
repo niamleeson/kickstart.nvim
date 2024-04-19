@@ -117,11 +117,13 @@ vim.keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'collaps
 vim.keymap.set('n', '<leader>ek', '<cmd>NvimTreeCollapseKeepBuffers<CR>', { desc = 'collapse file explorer except open buffers' }) -- refresh file explorer
 vim.keymap.set('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { desc = 'refresh file explorer' }) -- refresh file explorer
 
-vim.keymap.set('n', 'gd', '<cmd>TSToolsGoToSourceDefinition<CR>', { desc = 'go to source definition' })
+vim.keymap.set('n', 'gd', function()
+  vim.lsp.buf.definition()
+end, { desc = 'go to source definition' })
 vim.keymap.set('n', '<leader>cd', '<cmd>TSToolsGoToSourceDefinition<CR>', { desc = 'go to source definition' })
 vim.keymap.set('n', '<leader>ca', '<cmd>TSToolsAddMissingImports<CR>', { desc = 'add missing imports' })
-vim.keymap.set('n', '<leader>co', '<cmd>TSToolsOrganizeImports<CR>', { desc = 'sort imports and remove unused' })
-vim.keymap.set('n', '<leader>cs', '<cmd>TSToolsSortImports<CR>', { desc = 'sort imports' })
+vim.keymap.set('n', '<leader>co', '<cmd>TSToolsOrganizeImports<cr>', { desc = 'sort imports and remove unused' })
+vim.keymap.set('n', '<leader>ci', '<cmd>TSToolsSortImports<CR>', { desc = 'sort imports' })
 vim.keymap.set('n', '<leader>cu', '<cmd>TSToolsRemoveUnused<CR>', { desc = 'remove unused statements' })
 vim.keymap.set('n', '<leader>cr', '<cmd>TSToolsRenameFile<CR>', { desc = 'rename file' })
 vim.keymap.set('n', '<leader>cf', '<cmd>TSToolsFileReferences<CR>', { desc = 'find file references' })
@@ -538,30 +540,30 @@ require('lazy').setup({
     end,
   },
 
-  -- {
-  --   'catppuccin/nvim',
-  --   lazy = false,
-  --   name = 'catppuccin',
-  --   priority = 1000,
-  --   opts = {
-  --     flavour = 'mocha',
-  --   },
-  --   init = function()
-  --     -- colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
-  --     vim.cmd.colorscheme 'catppuccin-mocha'
-  --   end,
-  -- },
-
   {
-    'projekt0n/github-nvim-theme',
+    'catppuccin/nvim',
     lazy = false,
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      require('github-theme').setup {}
-
-      vim.cmd 'colorscheme github_dark_dimmed'
+    name = 'catppuccin',
+    priority = 1000,
+    opts = {
+      flavour = 'mocha',
+    },
+    init = function()
+      -- colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+      vim.cmd.colorscheme 'catppuccin-mocha'
     end,
   },
+
+  -- {
+  --   'projekt0n/github-nvim-theme',
+  --   lazy = false,
+  --   priority = 1000, -- make sure to load this before all the other start plugins
+  --   config = function()
+  --     require('github-theme').setup {}
+  --
+  --     vim.cmd 'colorscheme github_dark_dimmed'
+  --   end,
+  -- },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
