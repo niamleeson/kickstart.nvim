@@ -985,7 +985,14 @@ require('lazy').setup({
     'shortcuts/no-neck-pain.nvim',
     config = function()
       require('no-neck-pain').setup {
-        width = 170,
+        autocmds = {
+          enableOnVimEnter = true,
+          enableOnTapEnter = true,
+        },
+        width = 150,
+        mappings = {
+          enabled = true,
+        },
       }
     end,
   },
