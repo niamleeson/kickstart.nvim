@@ -669,10 +669,14 @@ require('lazy').setup({
     config = function()
       -- calling `setup` is optional for customization
       require('fzf-lua').setup {
+        -- fzf_opts = {
+        -- ['--keep-right'] = true,
+        -- },
         files = {
           actions = {
             ['default'] = require('fzf-lua.actions').file_edit,
           },
+          -- path_shorten = true,
         },
       }
     end,
