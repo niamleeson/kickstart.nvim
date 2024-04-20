@@ -200,6 +200,17 @@ vim.keymap.set('n', '<leader>' .. fzf .. 'r', "<cmd>lua require('fzf-lua').live_
 --   { silent = true, desc = 'git commits current file' }
 -- )
 
+vim.keymap.set('n', '<leader>a', '<cmd>lua require("harpoon"):list():add()<CR>', { desc = 'harpoon file' })
+vim.keymap.set('n', '<leader>h', '<cmd>lua require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())<CR>', { desc = 'harpoon quick menu' })
+vim.keymap.set('n', '[h', '<cmd>lua require("harpoon"):list():prev()<CR>', { desc = 'prev harpoon' })
+vim.keymap.set('n', ']h', '<cmd>lua require("harpoon"):list():next()<CR>', { desc = 'next harpoon' })
+vim.keymap.set('n', '<leader>1', '<cmd>lua require("harpoon"):list():select(1)<CR>', { desc = 'harpoon to file 1' })
+vim.keymap.set('n', '<leader>2', '<cmd>lua require("harpoon"):list():select(2)<CR>', { desc = 'harpoon to file 2' })
+vim.keymap.set('n', '<leader>3', '<cmd>lua require("harpoon"):list():select(3)<CR>', { desc = 'harpoon to file 3' })
+vim.keymap.set('n', '<leader>4', '<cmd>lua require("harpoon"):list():select(4)<CR>', { desc = 'harpoon to file 4' })
+vim.keymap.set('n', '<leader>5', '<cmd>lua require("harpoon"):list():select(5)<CR>', { desc = 'harpoon to file 5' })
+vim.keymap.set('n', '<leader>6', '<cmd>lua require("harpoon"):list():select(6)<CR>', { desc = 'harpoon to file 6' })
+
 vim.keymap.set('n', '<A-h>', "<cmd>lua require('smart-splits').resize_left()<CR>")
 vim.keymap.set('n', '<A-j>', "<cmd>lua require('smart-splits').resize_down()<CR>")
 vim.keymap.set('n', '<A-k>', "<cmd>lua require('smart-splits').resize_up()<CR>")
@@ -766,6 +777,7 @@ require('lazy').setup({
 
   {
     'nvim-tree/nvim-tree.lua',
+    event = 'VeryLazy',
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
       local nvimtree = require 'nvim-tree'
@@ -837,71 +849,12 @@ require('lazy').setup({
 
   -- mark files to quickly switch back and forth
   {
-    'theprimeagen/harpoon',
+    'ThePrimeagen/harpoon',
     branch = 'harpoon2',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       require('harpoon'):setup()
     end,
-    keys = {
-      {
-        '<leader>a',
-        function()
-          require('harpoon'):list():append()
-        end,
-        desc = 'harpoon file',
-      },
-      {
-        '<leader>h',
-        function()
-          local harpoon = require 'harpoon'
-          harpoon.ui:toggle_quick_menu(harpoon:list())
-        end,
-        desc = 'harpoon quick menu',
-      },
-      {
-        '<leader>1',
-        function()
-          require('harpoon'):list():select(1)
-        end,
-        desc = 'harpoon to file 1',
-      },
-      {
-        '<leader>2',
-        function()
-          require('harpoon'):list():select(2)
-        end,
-        desc = 'harpoon to file 2',
-      },
-      {
-        '<leader>3',
-        function()
-          require('harpoon'):list():select(3)
-        end,
-        desc = 'harpoon to file 3',
-      },
-      {
-        '<leader>4',
-        function()
-          require('harpoon'):list():select(4)
-        end,
-        desc = 'harpoon to file 4',
-      },
-      {
-        '<leader>5',
-        function()
-          require('harpoon'):list():select(5)
-        end,
-        desc = 'harpoon to file 5',
-      },
-      {
-        '<leader>6',
-        function()
-          require('harpoon'):list():select(6)
-        end,
-        desc = 'harpoon to file 6',
-      },
-    },
   },
 
   -- make command line look nice
@@ -918,6 +871,7 @@ require('lazy').setup({
   -- resizing splits
   {
     'mrjones2014/smart-splits.nvim',
+    event = 'VeryLazy',
     config = function()
       require('smart-splits').setup()
     end,
@@ -945,6 +899,7 @@ require('lazy').setup({
 
   {
     'kdheepak/lazygit.nvim',
+    event = 'VeryLazy',
     cmd = {
       'LazyGit',
       'LazyGitConfig',
@@ -960,6 +915,7 @@ require('lazy').setup({
 
   {
     'kevinhwang91/nvim-ufo',
+    event = 'BufRead',
     dependencies = 'kevinhwang91/promise-async',
     config = function()
       vim.o.foldcolumn = '1' -- '0' is not bad
@@ -1004,6 +960,7 @@ require('lazy').setup({
 
   {
     'windwp/nvim-ts-autotag',
+    event = 'VeryLazy',
     config = function()
       require('nvim-ts-autotag').setup()
     end,
@@ -1011,6 +968,7 @@ require('lazy').setup({
 
   {
     'hedyhli/outline.nvim',
+    event = 'VeryLazy',
     config = function()
       require('outline').setup {
         keymaps = {
@@ -1032,6 +990,7 @@ require('lazy').setup({
 
   {
     'nvim-pack/nvim-spectre',
+    event = 'VeryLazy',
     dependencies = 'nvim-lua/plenary.nvim',
   },
 
@@ -1039,7 +998,7 @@ require('lazy').setup({
   { 'wellle/targets.vim' },
 
   -- quickfix list experience enhancement
-  { 'kevinhwang91/nvim-bqf' },
+  { 'kevinhwang91/nvim-bqf', event = 'VeryLazy' },
 
   {
     'nvimdev/dashboard-nvim',
