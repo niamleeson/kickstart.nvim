@@ -59,7 +59,7 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.keymap.set('n', '<leader>wa', '<cmd>w<CR>', { desc = 'save' }) -- toggle file explorer
+vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' }) -- toggle file explorer
 
 vim.keymap.set('n', '<leader>;', ':', { desc = 'command' })
 
@@ -208,6 +208,36 @@ vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search(
 
 vim.keymap.set('n', '<leader>n', '<cmd>NoNeckPain<CR>', { desc = 'no neck pain' })
 
+vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<CR>', { desc = 'LazyGit' })
+vim.keymap.set('n', ']c', function()
+  if vim.wo.diff then
+    vim.cmd.normal { ']c', bang = true }
+  else
+    require('gitsigns').nav_hunk 'next'
+  end
+end, { desc = 'go to next change' })
+
+vim.keymap.set('n', '[c', function()
+  if vim.wo.diff then
+    vim.cmd.normal { '[c', bang = true }
+  else
+    require('gitsigns').nav_hunk 'prev'
+  end
+end, { desc = 'go to next change' })
+vim.keymap.set('n', '<leader>gs', '<cmd>lua require("gitsigns").stage_hunk()<CR>', { desc = 'stage hunk' })
+vim.keymap.set('n', '<leader>gr', '<cmd>lua require("gitsigns").reset_hunk()<CR>', { desc = 'reset hunk' })
+vim.keymap.set('v', '<leader>gs', '<cmd>lua require("gitsigns").stage_hunk { vim.fn.line ".", vim.fn.line "v" }<CR>', { desc = 'stage hunk' })
+vim.keymap.set('v', '<leader>gr', '<cmd>lua require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" }<CR>', { desc = 'reset hunk' })
+vim.keymap.set('n', '<leader>gS', '<cmd>lua require("gitsigns").stage_buffer()<CR>', { desc = 'stage buffer' })
+vim.keymap.set('n', '<leader>gu', '<cmd>lua require("gitsigns").undo_stage_hunk()<CR>', { desc = 'undo stage hunk' })
+vim.keymap.set('n', '<leader>gR', '<cmd>lua require("gitsigns").reset_buffer()<CR>', { desc = 'reset buffer' })
+vim.keymap.set('n', '<leader>gp', '<cmd>lua require("gitsigns").preview_hunk()<CR>', { desc = 'perview hunk' })
+vim.keymap.set('n', '<leader>gb', '<cmd>lua require("gitsigns").blame_line { full = true }<CR>', { desc = 'blame line' })
+vim.keymap.set('n', '<leader>gb', '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', { desc = 'toggle blame' })
+vim.keymap.set('n', '<leader>gd', '<cmd>lua require("gitsigns").diffthis()<CR>', { desc = 'diff this' })
+-- vim.keymap.set('n', '<leader>hD', '<cmd>lua require("gitsigns").diffthis "~"()<CR>', { desc = 'diff this ~' })
+vim.keymap.set('n', '<leader>gd', '<cmd>lua require("gitsigns").toggle_deleted()<CR>', { desc = 'toggle diff' })
+
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -234,13 +264,7 @@ require('lazy').setup({
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
+      current_line_blame = true,
     },
   },
   { -- Useful plugin to show you pending keybinds.
@@ -884,9 +908,6 @@ require('lazy').setup({
     -- optional for floating window border decoration
     dependencies = {
       'nvim-lua/plenary.nvim',
-    },
-    keys = {
-      { '<leader>g', '<cmd>LazyGit<cr>', desc = 'lazygit' },
     },
   },
 
