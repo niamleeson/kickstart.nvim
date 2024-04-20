@@ -88,7 +88,7 @@ vim.keymap.set('v', '>', '>gv', { desc = 'stay in indent mode' })
 -- vim.keymap.set('n', 'V', 'myV', { noremap = true })
 -- vim.keymap.set('v', '<Esc>', '<Esc>`y', { noremap = true, silent = true })
 
--- Redo
+-- redo
 vim.keymap.set('n', 'U', '<C-r>', { desc = 'redo' })
 
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'move block down' })
@@ -100,14 +100,10 @@ vim.keymap.set('n', 'J', 'mzJ`z')
 vim.keymap.set('n', 'Q', '<nop>')
 
 -- quickfixlist shortcuts
--- vim.keymap.set('n', '<C-k>', '<cmd>cprev<CR>zz')
--- vim.keymap.set('n', '<C-j>', '<cmd>cnext<CR>zz')
--- vim.keymap.set('n', '<leader>k', '<cmd>lprev<CR>zz')
--- vim.keymap.set('n', '<leader>j', '<cmd>lnext<CR>zz')
 vim.keymap.set('n', '[q', '<cmd>cprev<CR>zz', { desc = 'prev quickfix' })
 vim.keymap.set('n', ']q', '<cmd>cnext<CR>zz', { desc = 'next quickfix' })
-vim.keymap.set('n', '[b', '<cmd>bprev<CR>zz', { desc = 'prev quickfix' })
-vim.keymap.set('n', ']b', '<cmd>bnext<CR>zz', { desc = 'next quickfix' })
+vim.keymap.set('n', '[b', '<cmd>bprev<CR>zz', { desc = 'prev buffer' })
+vim.keymap.set('n', ']b', '<cmd>bnext<CR>zz', { desc = 'next buffer' })
 
 -- replace word on cursor
 vim.keymap.set('n', '<leader>0', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
@@ -118,10 +114,20 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<C-f>', '<C-f>zz')
 vim.keymap.set('n', '<C-b>', '<C-b>zz')
 
+-- vim.keymap.set('n', 'f', function()
+--   require('flash').jump()
+-- end, { noremap = true, desc = 'flash' })
+vim.keymap.set('n', '<leader><leader>', '<cmd>lua require("flash").jump()<CR>', { noremap = true, desc = 'flash' })
+-- vim.keymap.set('v', 'f', function()
+--   require('flash').jump()
+-- end, { noremap = true, desc = 'flash' })
+
 vim.keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'toggle file explorer' }) -- toggle file explorer
 vim.keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'collapse file explorer' }) -- collapse file explorer
 vim.keymap.set('n', '<leader>ek', '<cmd>NvimTreeCollapseKeepBuffers<CR>', { desc = 'collapse file explorer except open buffers' }) -- refresh file explorer
 vim.keymap.set('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { desc = 'refresh file explorer' }) -- refresh file explorer
+
+vim.keymap.set('n', '<leader>ch', '<cmd>lua vim.lsp.buf.hover()<CR>', { desc = 'hover documentation' })
 
 vim.keymap.set('n', 'gd', function()
   vim.lsp.buf.definition()
@@ -380,9 +386,9 @@ require('lazy').setup({
           --
           -- In this case, we create a function that lets us more easily define mappings specific
           -- for LSP related items. It sets the mode, buffer and description for us each time.
-          local map = function(keys, func, desc)
-            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-          end
+          -- local map = function(keys, func, desc)
+          --   vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+          -- end
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
@@ -394,7 +400,7 @@ require('lazy').setup({
 
           -- Opens a popup that displays documentation about the word under your cursor
           --  See `:help K` for why this keymap.
-          map('K', vim.lsp.buf.hover, 'Hover Documentation')
+          -- map('K', vim.lsp.buf.hover, 'Hover Documentation')
 
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -422,20 +428,7 @@ require('lazy').setup({
         html = {}, -- npm i -g vscode-langservers-extracted
         cssls = {}, -- npm i -g vscode-langservers-extracted
         svelte = {}, -- npm install -g svelte-language-server
-        lua_ls = {
-          -- cmd = {...},
-          -- filetypes = { ...},
-          -- capabilities = {},
-          -- settings = {
-          --   Lua = {
-          --     completion = {
-          --       callSnippet = 'Replace',
-          --     },
-          --     -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-          --     -- diagnostics = { disable = { 'missing-fields' } },
-          --   },
-          -- },
-        },
+        lua_ls = {},
       }
 
       require('mason').setup()
@@ -486,7 +479,7 @@ require('lazy').setup({
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
-        --
+
         -- use sublist to tell conform to run the first found formatter and stop
         -- javascript = { { "prettierd", "prettier" } },
         javascript = { { 'prettierd', 'prettier' } }, -- npm i -g @fsouza/prettierd
@@ -817,10 +810,10 @@ require('lazy').setup({
     opts = {},
     -- stylua: ignore
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "flash" },
-      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "flash treesitter" },
-      -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-      -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+    -- { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "flash" },
+    -- { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "flash treesitter" },
+    -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+    -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
     --   { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
     },
   },
