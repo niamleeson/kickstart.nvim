@@ -1035,6 +1035,39 @@ require('lazy').setup({
       }
     end,
   },
+
+  {
+    'andrewferrier/debugprint.nvim',
+    opts = {
+      keymaps = {
+        normal = {
+          plain_below = 'ccp',
+          plain_above = 'ccP',
+          variable_below = 'ccv',
+          variable_above = 'ccV',
+          variable_below_alwaysprompt = nil,
+          variable_above_alwaysprompt = nil,
+          textobj_below = 'cco',
+          textobj_above = 'ccO',
+          toggle_comment_debug_prints = 'cct',
+          delete_debug_prints = 'ccd',
+        },
+        visual = {
+          variable_below = 'ccv',
+          variable_above = 'ccV',
+        },
+      },
+      commands = {
+        toggle_comment_debug_prints = 'ToggleCommentDebugPrints',
+        delete_debug_prints = 'DeleteDebugPrints',
+      },
+    },
+    dependencies = {
+      'echasnovski/mini.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    version = '*',
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
