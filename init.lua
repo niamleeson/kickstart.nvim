@@ -1041,20 +1041,20 @@ require('lazy').setup({
     opts = {
       keymaps = {
         normal = {
-          plain_below = 'ccp',
-          plain_above = 'ccP',
-          variable_below = 'ccv',
-          variable_above = 'ccV',
+          plain_below = '<leader>ccp',
+          plain_above = '<leader>ccP',
+          variable_below = '<leader>ccv',
+          variable_above = '<leader>ccV',
           variable_below_alwaysprompt = nil,
           variable_above_alwaysprompt = nil,
-          textobj_below = 'cco',
-          textobj_above = 'ccO',
-          toggle_comment_debug_prints = 'cct',
-          delete_debug_prints = 'ccd',
+          textobj_below = '<leader>cco',
+          textobj_above = '<leader>ccO',
+          toggle_comment_debug_prints = '<leader>cct',
+          delete_debug_prints = '<leader>ccd',
         },
         visual = {
-          variable_below = 'ccv',
-          variable_above = 'ccV',
+          variable_below = '<leader>ccv',
+          variable_above = '<leader>ccV',
         },
       },
       commands = {
