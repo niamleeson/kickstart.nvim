@@ -114,13 +114,8 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<C-f>', '<C-f>zz')
 vim.keymap.set('n', '<C-b>', '<C-b>zz')
 
--- vim.keymap.set('n', 'f', function()
---   require('flash').jump()
--- end, { noremap = true, desc = 'flash' })
 vim.keymap.set('n', '<leader><leader>', '<cmd>lua require("flash").jump()<CR>', { noremap = true, desc = 'flash' })
--- vim.keymap.set('v', 'f', function()
---   require('flash').jump()
--- end, { noremap = true, desc = 'flash' })
+vim.keymap.set('v', '<leader><leader>', '<cmd>lua require("flash").jump()<CR>', { noremap = true, desc = 'flash' })
 
 vim.keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'toggle file explorer' }) -- toggle file explorer
 vim.keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'collapse file explorer' }) -- collapse file explorer
