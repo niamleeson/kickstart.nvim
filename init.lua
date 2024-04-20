@@ -248,6 +248,43 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Add console.log with cursor on ) if the line is just spaces or tabs
+vim.keymap.set('n', '<leader>cc', function()
+  local word = vim.fn.expand '<cword>'
+  local line = vim.fn.getline '.'
+  local indent = string.match(line, '^%s*')
+
+  if line:match '^%s*$' then
+    vim.cmd('normal! I' .. indent .. 'console.log();')
+    vim.cmd 'normal! h'
+  else
+    vim.cmd 'normal! o'
+    vim.cmd('normal! i' .. indent .. 'console.log("' .. word .. ':", ' .. word .. ');')
+  end
+end, { desc = 'Add console.log' })
+
+vim.keymap.set('n', '<leader>cD', function()
+  vim.cmd '%s/console\\.log(\\(.*\\));//'
+end, { desc = 'Remove console.log' })
+
+-- Add "await this.pauseTest();" depending on whether the current line has text or not
+vim.keymap.set('n', '<leader>cpt', function()
+  local line = vim.fn.getline '.'
+  local indent = string.match(line, '^%s*')
+
+  if line:match '^%s*$' then
+    vim.cmd('normal! I' .. indent .. 'await this.pauseTest();')
+  else
+    vim.cmd 'normal! o'
+    vim.cmd('normal! i' .. indent .. 'await this.pauseTest();')
+  end
+end, { desc = 'Add pauseTest' })
+
+-- Delete all instances of "await this.pauseTest();" and remove the line
+vim.keymap.set('n', '<leader>cpd', function()
+  vim.cmd 'g/await\\s*this\\.pauseTest();/d'
+end, { desc = 'Delete pauseTest' })
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -1034,39 +1071,6 @@ require('lazy').setup({
         log_level = 'error',
       }
     end,
-  },
-
-  {
-    'andrewferrier/debugprint.nvim',
-    opts = {
-      keymaps = {
-        normal = {
-          plain_below = '<leader>ccp',
-          plain_above = '<leader>ccP',
-          variable_below = '<leader>ccv',
-          variable_above = '<leader>ccV',
-          variable_below_alwaysprompt = nil,
-          variable_above_alwaysprompt = nil,
-          textobj_below = '<leader>cco',
-          textobj_above = '<leader>ccO',
-          toggle_comment_debug_prints = '<leader>cct',
-          delete_debug_prints = '<leader>ccd',
-        },
-        visual = {
-          variable_below = '<leader>ccv',
-          variable_above = '<leader>ccV',
-        },
-      },
-      commands = {
-        toggle_comment_debug_prints = 'ToggleCommentDebugPrints',
-        delete_debug_prints = 'DeleteDebugPrints',
-      },
-    },
-    dependencies = {
-      'echasnovski/mini.nvim',
-      'nvim-treesitter/nvim-treesitter',
-    },
-    version = '*',
   },
 }, {
   ui = {
