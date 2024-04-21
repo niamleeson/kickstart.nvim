@@ -134,6 +134,13 @@ vim.keymap.set('n', '<leader>ci', '<cmd>TSToolsSortImports<CR>', { desc = 'sort 
 vim.keymap.set('n', '<leader>cu', '<cmd>TSToolsRemoveUnused<CR>', { desc = 'remove unused statements' })
 vim.keymap.set('n', '<leader>cr', '<cmd>TSToolsRenameFile<CR>', { desc = 'rename file' })
 vim.keymap.set('n', '<leader>cf', '<cmd>TSToolsFileReferences<CR>', { desc = 'find file references' })
+vim.keymap.set('n', '<leader>cx', function()
+  if vim.diagnostic.get(0, {}) ~= nil then
+    vim.diagnostic.disable()
+  else
+    vim.diagnostic.enable()
+  end
+end, { desc = 'disable diagnostic' })
 
 vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = true, lsp_fallback = true })<CR>", { desc = 'format code' })
 
@@ -445,7 +452,7 @@ require('lazy').setup({
 
       local servers = {
         -- tsserver = {}, -- npm i -g typescript typescript-language-server
-        eslint = {}, -- npm i -g vscode-langservers-extracted
+        -- eslint = {}, -- npm i -g vscode-langservers-extracted
         ember = {}, -- npm install -g @lifeart/ember-language-server
         html = {}, -- npm i -g vscode-langservers-extracted
         cssls = {}, -- npm i -g vscode-langservers-extracted
