@@ -759,6 +759,14 @@ require('lazy').setup({
     },
     config = function()
       require('telescope').setup {
+        defaults = {
+          path_display = {
+            shorten = 3,
+          },
+          layout_config = {
+            width = { padding = 0 },
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
