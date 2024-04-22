@@ -520,6 +520,7 @@ require('lazy').setup({
 
   {
     'hrsh7th/nvim-cmp',
+    event = 'VeryLazy',
     dependencies = {
       'neovim/nvim-lspconfig',
       'hrsh7th/cmp-nvim-lsp',
@@ -1044,6 +1045,7 @@ require('lazy').setup({
 
   {
     'rmagatti/auto-session',
+    event = 'VeryLazy',
     config = function()
       require('auto-session').setup {
         log_level = 'error',
