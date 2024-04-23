@@ -802,18 +802,16 @@ require('lazy').setup({
     end,
   },
 
-  { 'junegunn/fzf', build = './install --bin' },
+  -- { 'junegunn/fzf', build = './install --bin' },
 
   {
     'ibhagwan/fzf-lua',
-    -- optional for icon support
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      -- calling `setup` is optional for customization
       require('fzf-lua').setup {
-        -- fzf_opts = {
-        -- ['--keep-right'] = true,
-        -- },
+        fzf_opts = {
+          ['--history'] = vim.fn.shellescape(vim.fn.stdpath 'data' .. '/fzf_files_hist'),
+        },
         winopts = {
           fullscreen = true,
           preview = {
