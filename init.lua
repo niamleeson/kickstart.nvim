@@ -146,7 +146,6 @@ vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = t
 
 local tele = 'f'
 local fzf = 't'
--- vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({ header = false })<CR>", { silent = true, desc = 'find' })
 vim.keymap.set('n', '<leader>p', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
 
 vim.keymap.set('n', '<leader>' .. tele .. 'h', "<cmd>lua require('telescope.builtin').help_tags()<CR>", { desc = 'help' })
@@ -170,34 +169,25 @@ vim.keymap.set('n', '<leader>' .. tele .. ';', "<cmd>lua require('telescope.buil
 vim.keymap.set('n', '<leader>' .. tele .. '/', "<cmd>lua require('telescope.builtin').search_history()<CR>", { desc = 'search history' })
 vim.keymap.set('n', '<leader>' .. tele .. 't', "<cmd>lua require('telescope.builtin').treesitter()<CR>", { desc = 'treesitter' })
 vim.keymap.set('n', '<leader>' .. tele .. 'c', "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", { desc = 'current buffer' })
+
+vim.keymap.set('n', '<leader>' .. fzf .. 'p', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true, desc = 'files' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').grep_project()<CR>", { silent = true, desc = 'fuzzy' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'g', "<cmd>lua require('fzf-lua').live_grep_glob()<CR>", { silent = true, desc = 'grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'r', "<cmd>lua require('fzf-lua').live_grep_resume({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'resume' })
+vim.keymap.set('v', '<leader>' .. fzf .. 'v', "<cmd>lua require('fzf-lua').grep_visual({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'selection' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'w', "<cmd>lua require('fzf-lua').grep_cword({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'current word' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'W', "<cmd>lua require('fzf-lua').grep_cWORD({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'current WORD' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'cf', "<cmd>lua require('fzf-lua').grep_curbuf()<CR>", { silent = true, desc = 'current file fuzzy' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'cg', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", { silent = true, desc = 'current file grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 's', "<cmd>lua require('fzf-lua').lsp_document_symbols()<CR>", { silent = true, desc = 'symbols' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'mc', "<cmd>lua require('fzf-lua').commands()<CR>", { silent = true, desc = 'commands' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'mb', "<cmd>lua require('fzf-lua').buffers()<CR>", { silent = true, desc = 'buffers' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'mm', "<cmd>lua require('fzf-lua').marks()<CR>", { silent = true, desc = 'marks' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'mk', "<cmd>lua require('fzf-lua').keymaps()<CR>", { silent = true, desc = 'keymaps' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'mt', "<cmd>lua require('fzf-lua').tabs()<CR>", { silent = true, desc = 'tabs' })
 -- vim.keymap.set('n', '<leader>' .. tele .. 'n', function()
 --   require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' }
 -- end, { desc = 'neovim files' })
-
--- vim.keymap.set('n', '<leader>' .. fzf .. 'mc', "<cmd>lua require('fzf-lua').commands({ header = false })<CR>", { silent = true, desc = 'commands' })
--- vim.keymap.set('n', '<leader>' .. fzf .. 'mb', "<cmd>lua require('fzf-lua').buffers({ header = false })<CR>", { silent = true, desc = 'buffers' })
--- vim.keymap.set('n', '<leader>' .. fzf .. 'mm', "<cmd>lua require('fzf-lua').marks({ header = false })<CR>", { silent = true, desc = 'marks' })
--- vim.keymap.set('n', '<leader>' .. fzf .. 'mk', "<cmd>lua require('fzf-lua').keymaps({ header = false })<CR>", { silent = true, desc = 'keymaps' })
--- vim.keymap.set('n', '<leader>' .. fzf .. 'mt', "<cmd>lua require('fzf-lua').tabs({ header = false })<CR>", { silent = true, desc = 'tabs' })
-vim.keymap.set('v', '<leader>' .. fzf .. 'hv', "<cmd>lua require('fzf-lua').grep_visual({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'selection' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'hw', "<cmd>lua require('fzf-lua').grep_cword({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'current word' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'hW', "<cmd>lua require('fzf-lua').grep_cWORD({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'current WORD' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'cf', "<cmd>lua require('fzf-lua').grep_curbuf()<CR>", { silent = true, desc = 'current file fuzzy' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'cg', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", { silent = true, desc = 'current file grep' })
-vim.keymap.set(
-  'n',
-  '<leader>' .. fzf .. 'f',
-  "<cmd>lua require('fzf-lua').grep_project({ cwd = vim.loop.cwd() })<CR>",
-  { silent = true, desc = 'fuzzy or Grep' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>' .. fzf .. 'g',
-  "<cmd>lua require('fzf-lua').live_grep_glob({ cwd = vim.loop.cwd() })<CR>",
-  { silent = true, desc = 'grep to fuzzy' }
-)
-vim.keymap.set('n', '<leader>' .. fzf .. 'r', "<cmd>lua require('fzf-lua').live_grep_resume({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'resume' })
--- vim.keymap.set('n', '<leader>' .. fzf .. 's', "<cmd>lua require('fzf-lua').lsp_document_symbols()<CR>", { silent = true, desc = 'symbols' })
 -- vim.keymap.set('n', '<leader>' .. fzf .. 'w', "<cmd>lua require('fzf-lua').lsp_workspace_symbols()<CR>", { silent = true, desc = 'workspace symbols' })
 -- vim.keymap.set('n', '<leader>' .. fzf .. 'vc', "<cmd>lua require('fzf-lua').git_commits({ header = false })<CR>", { silent = true, desc = 'git commits' })
 -- vim.keymap.set(
@@ -381,9 +371,6 @@ require('lazy').setup({
           },
           v = {
             name = 'git',
-          },
-          h = {
-            name = 'more grep',
           },
         },
       }, { prefix = '<leader>' })
@@ -732,11 +719,17 @@ require('lazy').setup({
         -- fzf_opts = {
         -- ['--keep-right'] = true,
         -- },
+        winopts = {
+          fullscreen = true,
+          preview = {
+            horizontal = 'right:50%',
+          },
+        },
         files = {
           actions = {
             ['default'] = require('fzf-lua.actions').file_edit,
           },
-          -- path_shorten = true,
+          path_shorten = 4,
         },
       }
     end,
@@ -762,7 +755,7 @@ require('lazy').setup({
       require('telescope').setup {
         defaults = {
           path_display = {
-            shorten = 3,
+            shorten = 4,
           },
           layout_config = {
             width = { padding = 0 },
