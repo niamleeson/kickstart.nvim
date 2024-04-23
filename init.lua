@@ -146,7 +146,8 @@ vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = t
 
 local tele = 't'
 local fzf = 'f'
-vim.keymap.set('n', '<leader>p', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
+vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true, desc = 'files' })
+-- vim.keymap.set('n', '<leader>p', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
 
 vim.keymap.set('n', '<leader>' .. tele .. 'h', "<cmd>lua require('telescope.builtin').help_tags()<CR>", { desc = 'help' })
 vim.keymap.set('n', '<leader>' .. tele .. 'k', "<cmd>lua require('telescope.builtin').keymaps()<CR>", { desc = 'keymaps' })
@@ -155,7 +156,7 @@ vim.keymap.set('n', '<leader>' .. tele .. 'i', "<cmd>lua require('telescope.buil
 vim.keymap.set('n', '<leader>' .. tele .. 'y', "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", { desc = 'symbols' })
 vim.keymap.set('n', '<leader>' .. tele .. 'Y', "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", { desc = 'workspace symbols' })
 vim.keymap.set('n', '<leader>' .. tele .. 'w', "<cmd>lua require('telescope.builtin').grep_string()<CR>", { desc = 'current word' })
-vim.keymap.set('n', '<leader>' .. tele .. 's', "<cmd>lua require('telescope.builtin').live_grep()<CR>", { desc = 'search' })
+vim.keymap.set('n', '<leader>' .. tele .. 's', "<cmd>lua require('telescope.builtin').live_grep()<CR>", { desc = 'live grep' })
 vim.keymap.set(
   'n',
   '<leader>' .. tele .. 'o',
@@ -170,9 +171,9 @@ vim.keymap.set('n', '<leader>' .. tele .. '/', "<cmd>lua require('telescope.buil
 vim.keymap.set('n', '<leader>' .. tele .. 't', "<cmd>lua require('telescope.builtin').treesitter()<CR>", { desc = 'treesitter' })
 vim.keymap.set('n', '<leader>' .. tele .. 'c', "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", { desc = 'current buffer' })
 
-vim.keymap.set('n', '<leader>' .. fzf .. 'p', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true, desc = 'files' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').grep_project()<CR>", { silent = true, desc = 'fuzzy' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'g', "<cmd>lua require('fzf-lua').live_grep_glob()<CR>", { silent = true, desc = 'grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true, desc = 'files' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'g', "<cmd>lua require('fzf-lua').grep_project()<CR>", { silent = true, desc = 'grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'l', "<cmd>lua require('fzf-lua').live_grep_glob()<CR>", { silent = true, desc = 'live grep' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'r', "<cmd>lua require('fzf-lua').live_grep_resume({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'resume' })
 vim.keymap.set('v', '<leader>' .. fzf .. 'v', "<cmd>lua require('fzf-lua').grep_visual({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'selection' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'w', "<cmd>lua require('fzf-lua').grep_cword({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'current word' })
