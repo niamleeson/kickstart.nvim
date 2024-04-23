@@ -173,14 +173,9 @@ vim.keymap.set('n', '<leader>' .. tele .. 'c', "<cmd>lua require('telescope.buil
 
 vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').files({debug=true})<CR>", { silent = true, desc = 'files' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'o', "<cmd>lua require('fzf-lua').oldfiles({debug=true})<CR>", { silent = true, desc = 'old files' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'g', "<cmd>lua require('fzf-lua').grep_project({debug=true,resume=true})<CR>", { silent = true, desc = 'grep' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'l', "<cmd>lua require('fzf-lua').live_grep_glob({debug=true,resume=true})<CR>", { silent = true, desc = 'live grep' })
-vim.keymap.set(
-  'n',
-  '<leader>' .. fzf .. 'r',
-  "<cmd>lua require('fzf-lua').live_grep_resume({debug=true,cwd=vim.loop.cwd()})<CR>",
-  { silent = true, desc = 'resume' }
-)
+vim.keymap.set('n', '<leader>' .. fzf .. 'g', "<cmd>lua require('fzf-lua').grep_project({debug=true})<CR>", { silent = true, desc = 'grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'l', "<cmd>lua require('fzf-lua').live_grep_glob({debug=true})<CR>", { silent = true, desc = 'live grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'r', "<cmd>lua require('fzf-lua').resume({debug=true})<CR>", { silent = true, desc = 'resume' })
 vim.keymap.set(
   'v',
   '<leader>' .. fzf .. 'v',
