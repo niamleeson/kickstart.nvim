@@ -146,7 +146,7 @@ vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = t
 
 local tele = 't'
 local fzf = 'f'
-vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true, desc = 'files' })
+vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({debug=true})<CR>", { silent = true, desc = 'files' })
 -- vim.keymap.set('n', '<leader>p', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
 
 vim.keymap.set('n', '<leader>' .. tele .. 'h', "<cmd>lua require('telescope.builtin').help_tags()<CR>", { desc = 'help' })
@@ -171,16 +171,36 @@ vim.keymap.set('n', '<leader>' .. tele .. '/', "<cmd>lua require('telescope.buil
 vim.keymap.set('n', '<leader>' .. tele .. 't', "<cmd>lua require('telescope.builtin').treesitter()<CR>", { desc = 'treesitter' })
 vim.keymap.set('n', '<leader>' .. tele .. 'c', "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", { desc = 'current buffer' })
 
-vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true, desc = 'files' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'o', "<cmd>lua require('fzf-lua').oldfiles()<CR>", { silent = true, desc = 'old files' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'g', "<cmd>lua require('fzf-lua').grep_project({resume=true})<CR>", { silent = true, desc = 'grep' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'l', "<cmd>lua require('fzf-lua').live_grep_glob({resume=true})<CR>", { silent = true, desc = 'live grep' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'r', "<cmd>lua require('fzf-lua').live_grep_resume({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'resume' })
-vim.keymap.set('v', '<leader>' .. fzf .. 'v', "<cmd>lua require('fzf-lua').grep_visual({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'selection' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'w', "<cmd>lua require('fzf-lua').grep_cword({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'current word' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'W', "<cmd>lua require('fzf-lua').grep_cWORD({ cwd = vim.loop.cwd() })<CR>", { silent = true, desc = 'current WORD' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'cf', "<cmd>lua require('fzf-lua').grep_curbuf()<CR>", { silent = true, desc = 'current file fuzzy' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'cg', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", { silent = true, desc = 'current file grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').files({debug=true})<CR>", { silent = true, desc = 'files' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'o', "<cmd>lua require('fzf-lua').oldfiles({debug=true})<CR>", { silent = true, desc = 'old files' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'g', "<cmd>lua require('fzf-lua').grep_project({debug=true,resume=true})<CR>", { silent = true, desc = 'grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'l', "<cmd>lua require('fzf-lua').live_grep_glob({debug=true,resume=true})<CR>", { silent = true, desc = 'live grep' })
+vim.keymap.set(
+  'n',
+  '<leader>' .. fzf .. 'r',
+  "<cmd>lua require('fzf-lua').live_grep_resume({debug=true,cwd=vim.loop.cwd()})<CR>",
+  { silent = true, desc = 'resume' }
+)
+vim.keymap.set(
+  'v',
+  '<leader>' .. fzf .. 'v',
+  "<cmd>lua require('fzf-lua').grep_visual({debug=true,cwd=vim.loop.cwd()})<CR>",
+  { silent = true, desc = 'selection' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>' .. fzf .. 'w',
+  "<cmd>lua require('fzf-lua').grep_cword({debug=true,cwd=vim.loop.cwd()})<CR>",
+  { silent = true, desc = 'current word' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>' .. fzf .. 'W',
+  "<cmd>lua require('fzf-lua').grep_cWORD({debug=true,cwd=vim.loop.cwd()})<CR>",
+  { silent = true, desc = 'current WORD' }
+)
+vim.keymap.set('n', '<leader>' .. fzf .. 'cf', "<cmd>lua require('fzf-lua').grep_curbuf({debug=true})<CR>", { silent = true, desc = 'current file fuzzy' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'cg', "<cmd>lua require('fzf-lua').lgrep_curbuf({debug=true})<CR>", { silent = true, desc = 'current file grep' })
 vim.keymap.set('n', '<leader>' .. fzf .. 's', "<cmd>lua require('fzf-lua').lsp_document_symbols()<CR>", { silent = true, desc = 'symbols' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mc', "<cmd>lua require('fzf-lua').commands()<CR>", { silent = true, desc = 'commands' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mb', "<cmd>lua require('fzf-lua').buffers()<CR>", { silent = true, desc = 'buffers' })
@@ -677,11 +697,6 @@ require('lazy').setup({
             lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
             keymaps = {
               -- You can use the capture groups defined in textobjects.scm
-              ['a='] = { query = '@assignment.outer', desc = 'select outer part of an assignment' },
-              ['i='] = { query = '@assignment.inner', desc = 'select inner part of an assignment' },
-              ['l='] = { query = '@assignment.lhs', desc = 'select left hand side of an assignment' },
-              ['r='] = { query = '@assignment.rhs', desc = 'select right hand side of an assignment' },
-
               ['aa'] = { query = '@parameter.outer', desc = 'select outer part of a parameter/argument' },
               ['ia'] = { query = '@parameter.inner', desc = 'select inner part of a parameter/argument' },
 
@@ -810,22 +825,40 @@ require('lazy').setup({
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('fzf-lua').setup {
+        -- global history
         -- fzf_opts = {
-        --   ['--history'] = vim.fn.stdpath 'data' .. '/fzf_files_hist',
+        --   ['--history'] = vim.fn.stdpath 'data' .. '/fzf-lua-history',
         -- },
+        keymap = {
+          builtin = {
+            ['<F12>'] = 'toggle-help',
+            ['<F11>'] = 'toggle-preview',
+          },
+        },
+        grep = {
+          fzf_opts = {
+            ['--history'] = vim.fn.stdpath 'data' .. '/fzf-lua-grep-history',
+          },
+        },
+        files = {
+          path_shorten = 4,
+          fzf_opts = {
+            ['--history'] = vim.fn.stdpath 'data' .. '/fzf-lua-files-history',
+          },
+        },
         winopts = {
           fullscreen = true,
           preview = {
-            horizontal = 'right:50%',
+            layout = 'vertical',
+            vertical = 'down:50%',
+            horizontal = 'right:40%',
+            title_pos = 'left',
           },
         },
         actions = {
           files = {
             ['default'] = require('fzf-lua.actions').file_edit,
           },
-        },
-        files = {
-          path_shorten = 4,
         },
         previewers = {
           builtin = {
@@ -834,6 +867,7 @@ require('lazy').setup({
             end,
           },
         },
+        file_ignore_patterns = { '%.lock$', '%.lua$', '%.vim$' },
       }
     end,
   },
