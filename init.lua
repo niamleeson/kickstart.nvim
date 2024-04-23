@@ -1095,7 +1095,15 @@ require('lazy').setup({
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
       vim.opt.termguicolors = true
-      require('bufferline').setup {}
+      require('bufferline').setup {
+        options = {
+          custom_filter = function(buf)
+            if vim.fn.bufname(buf) ~= 'NvimTree' and vim.fn.bufname(buf) ~= '' then
+              return true
+            end
+          end,
+        },
+      }
     end,
   },
 
@@ -1138,15 +1146,15 @@ require('lazy').setup({
     end,
   },
 
-  {
-    'rmagatti/auto-session',
-    event = 'VeryLazy',
-    config = function()
-      require('auto-session').setup {
-        log_level = 'error',
-      }
-    end,
-  },
+  -- {
+  --   'rmagatti/auto-session',
+  --   event = 'VeryLazy',
+  --   config = function()
+  --     require('auto-session').setup {
+  --       log_level = 'error',
+  --     }
+  --   end,
+  -- },
 
   {
     'utilyre/barbecue.nvim',
@@ -1157,16 +1165,6 @@ require('lazy').setup({
       'nvim-tree/nvim-web-devicons', -- optional dependency
     },
     opts = {},
-  },
-
-  {
-    'rmagatti/auto-session',
-    config = function()
-      require('auto-session').setup {
-        log_level = 'error',
-        auto_session_suppress_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
-      }
-    end,
   },
 
   -- plugin end
