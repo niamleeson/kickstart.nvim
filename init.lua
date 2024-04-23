@@ -691,8 +691,8 @@ require('lazy').setup({
               ['al'] = { query = '@loop.outer', desc = 'select outer part of a loop' },
               ['il'] = { query = '@loop.inner', desc = 'select inner part of a loop' },
 
-              ['ac'] = { query = '@call.outer', desc = 'select outer part of a function call' },
-              ['ic'] = { query = '@call.inner', desc = 'select inner part of a function call' },
+              -- ['ac'] = { query = '@call.outer', desc = 'select outer part of a function call' },
+              -- ['ic'] = { query = '@call.inner', desc = 'select inner part of a function call' },
 
               ['af'] = { query = '@function.outer', desc = 'select outer part of a method/function definition' },
               ['if'] = { query = '@function.inner', desc = 'select inner part of a method/function definition' },
@@ -716,7 +716,7 @@ require('lazy').setup({
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
-              [']c'] = { query = '@call.outer', desc = 'call start' },
+              -- [']c'] = { query = '@call.outer', desc = 'call start' },
               [']f'] = { query = '@function.outer', desc = 'function start' },
               [']k'] = { query = '@class.outer', desc = 'class start' },
               [']i'] = { query = '@conditional.outer', desc = 'if start' },
@@ -728,21 +728,21 @@ require('lazy').setup({
               [']z'] = { query = '@fold', query_group = 'folds', desc = 'fold' },
             },
             goto_next_end = {
-              [']C'] = { query = '@call.outer', desc = 'call end' },
+              -- [']C'] = { query = '@call.outer', desc = 'call end' },
               [']F'] = { query = '@function.outer', desc = 'function end' },
               [']K'] = { query = '@class.outer', desc = 'class end' },
               [']I'] = { query = '@conditional.outer', desc = 'if end' },
               [']L'] = { query = '@loop.outer', desc = 'loop end' },
             },
             goto_previous_start = {
-              ['[c'] = { query = '@call.outer', desc = 'call start' },
+              -- ['[c'] = { query = '@call.outer', desc = 'call start' },
               ['[f'] = { query = '@function.outer', desc = 'function start' },
               ['[k'] = { query = '@class.outer', desc = 'class start' },
               ['[i'] = { query = '@conditional.outer', desc = 'if start' },
               ['[l'] = { query = '@loop.outer', desc = 'loop start' },
             },
             goto_previous_end = {
-              ['[C'] = { query = '@call.outer', desc = 'call end' },
+              -- ['[C'] = { query = '@call.outer', desc = 'call end' },
               ['[F'] = { query = '@function.outer', desc = 'function def end' },
               ['[K'] = { query = '@class.outer', desc = 'class end' },
               ['[I'] = { query = '@conditional.outer', desc = 'if end' },
