@@ -820,11 +820,20 @@ require('lazy').setup({
             horizontal = 'right:50%',
           },
         },
-        files = {
-          actions = {
+        actions = {
+          files = {
             ['default'] = require('fzf-lua.actions').file_edit,
           },
+        },
+        files = {
           path_shorten = 4,
+        },
+        previewers = {
+          builtin = {
+            title_fnamemodify = function(s)
+              return s
+            end,
+          },
         },
       }
     end,
