@@ -663,7 +663,7 @@ require('lazy').setup({
       require('nvim-treesitter.configs').setup(opts)
     end,
   },
-  
+
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
     lazy = true,
@@ -1139,6 +1139,17 @@ require('lazy').setup({
         log_level = 'error',
       }
     end,
+  },
+
+  {
+    'utilyre/barbecue.nvim',
+    name = 'barbecue',
+    version = '*',
+    dependencies = {
+      'SmiteshP/nvim-navic',
+      'nvim-tree/nvim-web-devicons', -- optional dependency
+    },
+    opts = {},
   },
 }, {
   ui = {
