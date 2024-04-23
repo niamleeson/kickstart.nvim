@@ -1158,6 +1158,16 @@ require('lazy').setup({
     },
     opts = {},
   },
+
+  {
+    'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup {
+        log_level = 'error',
+        auto_session_suppress_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
+      }
+    end,
+  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
