@@ -66,8 +66,8 @@ vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' }) -- toggle fil
 vim.keymap.set('n', '<leader>;', ':', { desc = 'command' })
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'go to next diagnostic message' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'prev diagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'next diagnostic message' })
 vim.keymap.set('n', '<leader>de', vim.diagnostic.open_float, { desc = 'show diagnostic error messages' })
 vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'open diagnostic quickfix list' })
 
@@ -243,7 +243,7 @@ vim.keymap.set('n', ']c', function()
   else
     require('gitsigns').nav_hunk 'next'
   end
-end, { desc = 'go to next change' })
+end, { desc = 'next change' })
 
 vim.keymap.set('n', '[c', function()
   if vim.wo.diff then
@@ -251,7 +251,7 @@ vim.keymap.set('n', '[c', function()
   else
     require('gitsigns').nav_hunk 'prev'
   end
-end, { desc = 'go to next change' })
+end, { desc = 'prev change' })
 vim.keymap.set('n', '<leader>gs', '<cmd>lua require("gitsigns").stage_hunk()<CR>', { desc = 'stage hunk' })
 vim.keymap.set('n', '<leader>gr', '<cmd>lua require("gitsigns").reset_hunk()<CR>', { desc = 'reset hunk' })
 vim.keymap.set('v', '<leader>gs', '<cmd>lua require("gitsigns").stage_hunk { vim.fn.line ".", vim.fn.line "v" }<CR>', { desc = 'stage hunk' })
@@ -378,107 +378,89 @@ require('lazy').setup({
     end,
   },
 
-  -- { -- LSP Configuration & Plugins
-  --   'neovim/nvim-lspconfig',
-  --   dependencies = {
-  --     -- Automatically install LSPs and related tools to stdpath for Neovim
-  --     'williamboman/mason.nvim',
-  --     'williamboman/mason-lspconfig.nvim',
-  --     'WhoIsSethDaniel/mason-tool-installer.nvim',
-  --
-  --     -- Useful status updates for LSP.
-  --     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-  --     -- { 'j-hui/fidget.nvim', opts = {} },
-  --
-  --     -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
-  --     -- used for completion, annotations and signatures of Neovim apis
-  --     { 'folke/neodev.nvim', opts = {} },
-  --   },
-  --   config = function()
-  --     vim.api.nvim_create_autocmd('LspAttach', {
-  --       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
-  --       callback = function(event)
-  --         -- NOTE: Remember that Lua is a real programming language, and as such it is possible
-  --         -- to define small helper and utility functions so you don't have to repeat yourself.
-  --         --
-  --         -- In this case, we create a function that lets us more easily define mappings specific
-  --         -- for LSP related items. It sets the mode, buffer and description for us each time.
-  --         -- local map = function(keys, func, desc)
-  --         --   vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-  --         -- end
-  --
-  --         -- Rename the variable under your cursor.
-  --         --  Most Language Servers support renaming across files, etc.
-  --         -- map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  --
-  --         -- Execute a code action, usually your cursor needs to be on top of an error
-  --         -- or a suggestion from your LSP for this to activate.
-  --         -- map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-  --
-  --         -- Opens a popup that displays documentation about the word under your cursor
-  --         --  See `:help K` for why this keymap.
-  --         -- map('K', vim.lsp.buf.hover, 'Hover Documentation')
-  --
-  --         -- When you move your cursor, the highlights will be cleared (the second autocommand).
-  --         local client = vim.lsp.get_client_by_id(event.data.client_id)
-  --         if client and client.server_capabilities.documentHighlightProvider then
-  --           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-  --             buffer = event.buf,
-  --             callback = vim.lsp.buf.document_highlight,
-  --           })
-  --
-  --           vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-  --             buffer = event.buf,
-  --             callback = vim.lsp.buf.clear_references,
-  --           })
-  --         end
-  --       end,
-  --     })
-  --
-  --     local capabilities = vim.lsp.protocol.make_client_capabilities()
-  --     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-  --
-  --     local servers = {
-  --       -- tsserver = {}, -- npm i -g typescript typescript-language-server
-  --       -- eslint = {}, -- npm i -g vscode-langservers-extracted
-  --       ember = {}, -- npm install -g @lifeart/ember-language-server
-  --       html = {}, -- npm i -g vscode-langservers-extracted
-  --       cssls = {}, -- npm i -g vscode-langservers-extracted
-  --       svelte = {}, -- npm install -g svelte-language-server
-  --       lua_ls = {},
-  --     }
-  --
-  --     require('mason').setup()
-  --
-  --     local ensure_installed = vim.tbl_keys(servers or {})
-  --     vim.list_extend(ensure_installed, {
-  --       'stylua', -- Used to format Lua code
-  --     })
-  --     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-  --
-  --     require('mason-lspconfig').setup {
-  --       handlers = {
-  --         function(server_name)
-  --           local server = servers[server_name] or {}
-  --
-  --           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-  --
-  --           require('lspconfig')[server_name].setup(server)
-  --         end,
-  --       },
-  --     }
-  --   end,
-  -- },
+  { -- LSP Configuration & Plugins
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      -- Automatically install LSPs and related tools to stdpath for Neovim
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
 
-  {
-    'nvimdev/lspsaga.nvim',
-      config = function()
-        require('lspsaga').setup {}
-      end,
-      dependencies = {
-        'nvim-treesitter/nvim-treesitter',
-        'nvim-tree/nvim-web-devicons',
-      },
+      -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
+      -- used for completion, annotations and signatures of Neovim apis
+      { 'folke/neodev.nvim', opts = {} },
+    },
+    config = function()
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+        callback = function(event)
+          -- In this case, we create a function that lets us more easily define mappings specific
+          -- for LSP related items. It sets the mode, buffer and description for us each time.
+          -- local map = function(keys, func, desc)
+          --   vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+          -- end
+
+          -- Rename the variable under your cursor.
+          --  Most Language Servers support renaming across files, etc.
+          -- map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+
+          -- Execute a code action, usually your cursor needs to be on top of an error
+          -- or a suggestion from your LSP for this to activate.
+          -- map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+
+          -- Opens a popup that displays documentation about the word under your cursor
+          --  See `:help K` for why this keymap.
+          -- map('K', vim.lsp.buf.hover, 'Hover Documentation')
+
+          -- When you move your cursor, the highlights will be cleared (the second autocommand).
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if client and client.server_capabilities.documentHighlightProvider then
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+              buffer = event.buf,
+              callback = vim.lsp.buf.document_highlight,
+            })
+
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+              buffer = event.buf,
+              callback = vim.lsp.buf.clear_references,
+            })
+          end
+        end,
+      })
+
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+      local servers = {
+        -- tsserver = {}, -- npm i -g typescript typescript-language-server
+        -- eslint = {}, -- npm i -g vscode-langservers-extracted
+        ember = {}, -- npm install -g @lifeart/ember-language-server
+        html = {}, -- npm i -g vscode-langservers-extracted
+        cssls = {}, -- npm i -g vscode-langservers-extracted
+        svelte = {}, -- npm install -g svelte-language-server
+        lua_ls = {},
+      }
+
+      require('mason').setup()
+
+      local ensure_installed = vim.tbl_keys(servers or {})
+      vim.list_extend(ensure_installed, {
+        'stylua', -- Used to format Lua code
+      })
+      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+      require('mason-lspconfig').setup {
+        handlers = {
+          function(server_name)
+            local server = servers[server_name] or {}
+
+            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+
+            require('lspconfig')[server_name].setup(server)
+          end,
+        },
+      }
+    end,
   },
 
   -- better typescript integration
@@ -679,6 +661,107 @@ require('lazy').setup({
     },
     config = function(_, opts)
       require('nvim-treesitter.configs').setup(opts)
+    end,
+  },
+  
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    lazy = true,
+    config = function()
+      -- -@diagnostic disable-next-line: missing-fields
+      require('nvim-treesitter.configs').setup {
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+            keymaps = {
+              -- You can use the capture groups defined in textobjects.scm
+              ['a='] = { query = '@assignment.outer', desc = 'select outer part of an assignment' },
+              ['i='] = { query = '@assignment.inner', desc = 'select inner part of an assignment' },
+              ['l='] = { query = '@assignment.lhs', desc = 'select left hand side of an assignment' },
+              ['r='] = { query = '@assignment.rhs', desc = 'select right hand side of an assignment' },
+
+              ['aa'] = { query = '@parameter.outer', desc = 'select outer part of a parameter/argument' },
+              ['ia'] = { query = '@parameter.inner', desc = 'select inner part of a parameter/argument' },
+
+              ['ai'] = { query = '@conditional.outer', desc = 'select outer part of a conditional' },
+              ['ii'] = { query = '@conditional.inner', desc = 'select inner part of a conditional' },
+
+              ['al'] = { query = '@loop.outer', desc = 'select outer part of a loop' },
+              ['il'] = { query = '@loop.inner', desc = 'select inner part of a loop' },
+
+              ['ac'] = { query = '@call.outer', desc = 'select outer part of a function call' },
+              ['ic'] = { query = '@call.inner', desc = 'select inner part of a function call' },
+
+              ['af'] = { query = '@function.outer', desc = 'select outer part of a method/function definition' },
+              ['if'] = { query = '@function.inner', desc = 'select inner part of a method/function definition' },
+
+              ['ak'] = { query = '@class.outer', desc = 'select outer part of a class' },
+              ['ik'] = { query = '@class.inner', desc = 'select inner part of a class' },
+            },
+          },
+          -- swap = {
+          --   enable = true,
+          --   swap_next = {
+          --     ['<leader>na'] = '@parameter.inner', -- swap parameters/argument with next
+          --     ['<leader>nm'] = '@function.outer', -- swap function with next
+          --   },
+          --   swap_previous = {
+          --     ['<leader>pa'] = '@parameter.inner', -- swap parameters/argument with prev
+          --     ['<leader>pm'] = '@function.outer', -- swap function with previous
+          --   },
+          -- },
+          move = {
+            enable = true,
+            set_jumps = true, -- whether to set jumps in the jumplist
+            goto_next_start = {
+              [']c'] = { query = '@call.outer', desc = 'call start' },
+              [']f'] = { query = '@function.outer', desc = 'function start' },
+              [']k'] = { query = '@class.outer', desc = 'class start' },
+              [']i'] = { query = '@conditional.outer', desc = 'if start' },
+              [']l'] = { query = '@loop.outer', desc = 'loop start' },
+
+              -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+              -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+              [']p'] = { query = '@scope', query_group = 'locals', desc = 'next scope' },
+              [']z'] = { query = '@fold', query_group = 'folds', desc = 'fold' },
+            },
+            goto_next_end = {
+              [']C'] = { query = '@call.outer', desc = 'call end' },
+              [']F'] = { query = '@function.outer', desc = 'function end' },
+              [']K'] = { query = '@class.outer', desc = 'class end' },
+              [']I'] = { query = '@conditional.outer', desc = 'if end' },
+              [']L'] = { query = '@loop.outer', desc = 'loop end' },
+            },
+            goto_previous_start = {
+              ['[c'] = { query = '@call.outer', desc = 'call start' },
+              ['[f'] = { query = '@function.outer', desc = 'function start' },
+              ['[k'] = { query = '@class.outer', desc = 'class start' },
+              ['[i'] = { query = '@conditional.outer', desc = 'if start' },
+              ['[l'] = { query = '@loop.outer', desc = 'loop start' },
+            },
+            goto_previous_end = {
+              ['[C'] = { query = '@call.outer', desc = 'call end' },
+              ['[F'] = { query = '@function.outer', desc = 'function def end' },
+              ['[K'] = { query = '@class.outer', desc = 'class end' },
+              ['[I'] = { query = '@conditional.outer', desc = 'if end' },
+              ['[L'] = { query = '@loop.outer', desc = 'loop end' },
+            },
+          },
+        },
+      }
+
+      local ts_repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
+
+      -- vim way: ; goes to the direction you were moving.
+      vim.keymap.set({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
+      vim.keymap.set({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_opposite)
+
+      -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
+      vim.keymap.set({ 'n', 'x', 'o' }, 'f', ts_repeat_move.builtin_f)
+      vim.keymap.set({ 'n', 'x', 'o' }, 'F', ts_repeat_move.builtin_F)
+      vim.keymap.set({ 'n', 'x', 'o' }, 't', ts_repeat_move.builtin_t)
+      vim.keymap.set({ 'n', 'x', 'o' }, 'T', ts_repeat_move.builtin_T)
     end,
   },
 
