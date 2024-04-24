@@ -194,8 +194,8 @@ vim.keymap.set(
   "<cmd>lua require('fzf-lua').grep_cWORD({debug=true,cwd=vim.loop.cwd()})<CR>",
   { silent = true, desc = 'current WORD' }
 )
-vim.keymap.set('n', '<leader>' .. fzf .. 'cf', "<cmd>lua require('fzf-lua').grep_curbuf({debug=true})<CR>", { silent = true, desc = 'current file fuzzy' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'cg', "<cmd>lua require('fzf-lua').lgrep_curbuf({debug=true})<CR>", { silent = true, desc = 'current file grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'cg', "<cmd>lua require('fzf-lua').grep_curbuf({debug=true})<CR>", { silent = true, desc = 'current file grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'cl', "<cmd>lua require('fzf-lua').lgrep_curbuf({debug=true})<CR>", { silent = true, desc = 'current file live grep' })
 vim.keymap.set('n', '<leader>' .. fzf .. 's', "<cmd>lua require('fzf-lua').lsp_document_symbols()<CR>", { silent = true, desc = 'symbols' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'e', "<cmd>lua require('fzf-lua').lsp_references()<CR>", { silent = true, desc = 'references' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mc', "<cmd>lua require('fzf-lua').commands()<CR>", { silent = true, desc = 'commands' })
