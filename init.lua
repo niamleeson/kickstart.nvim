@@ -510,6 +510,8 @@ require('lazy').setup({
         -- javascript = { { "prettierd", "prettier" } },
         javascript = { { 'prettierd', 'prettier' } }, -- npm i -g @fsouza/prettierd
         typescript = { { 'prettierd', 'prettier' } },
+        typescriptreact = { { 'prettierd', 'prettier' } },
+        javascriptreact = { { 'prettierd', 'prettier' } },
         css = { { 'prettierd', 'prettier' } },
       },
     },
