@@ -829,6 +829,12 @@ require('lazy').setup({
             ['<F12>'] = 'toggle-help',
             ['<F11>'] = 'toggle-preview',
           },
+          fzf = {
+            ['down'] = 'next-history',
+            ['up'] = 'prev-history',
+            ['ctrl-n'] = 'down',
+            ['ctrl-p'] = 'up',
+          },
         },
         grep = {
           fzf_opts = {
