@@ -115,7 +115,8 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<C-f>', '<C-f>zz')
 vim.keymap.set('n', '<C-b>', '<C-b>zz')
 
-vim.keymap.set('n', '<leader><leader>', '<cmd>lua require("flash").jump()<CR>', { noremap = true, desc = 'flash' })
+vim.keymap.set({ 'n', 'x', 'o' }, 'f', '<cmd>lua require("flash").jump()<CR>', { noremap = true, desc = 'flash' })
+-- vim.keymap.set('n', '<leader><leader>', '<cmd>lua require("flash").jump()<CR>', { noremap = true, desc = 'flash' })
 vim.keymap.set('v', '<leader><leader>', '<cmd>lua require("flash").jump()<CR>', { noremap = true, desc = 'flash' })
 
 vim.keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'toggle file explorer' }) -- toggle file explorer
@@ -145,32 +146,32 @@ end, { desc = 'disable diagnostic' })
 
 vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = true, lsp_fallback = true })<CR>", { desc = 'format code' })
 
-local tele = 't'
+-- local tele = 't'
 local fzf = 'f'
 vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({debug=true})<CR>", { silent = true, desc = 'files' })
 -- vim.keymap.set('n', '<leader>p', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
 
-vim.keymap.set('n', '<leader>' .. tele .. 'h', "<cmd>lua require('telescope.builtin').help_tags()<CR>", { desc = 'help' })
-vim.keymap.set('n', '<leader>' .. tele .. 'k', "<cmd>lua require('telescope.builtin').keymaps()<CR>", { desc = 'keymaps' })
-vim.keymap.set('n', '<leader>' .. tele .. 'f', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
-vim.keymap.set('n', '<leader>' .. tele .. 'i', "<cmd>lua require('telescope.builtin').builtin()<CR>", { desc = 'telescope builtin' })
-vim.keymap.set('n', '<leader>' .. tele .. 'y', "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", { desc = 'symbols' })
-vim.keymap.set('n', '<leader>' .. tele .. 'Y', "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", { desc = 'workspace symbols' })
-vim.keymap.set('n', '<leader>' .. tele .. 'w', "<cmd>lua require('telescope.builtin').grep_string()<CR>", { desc = 'current word' })
-vim.keymap.set('n', '<leader>' .. tele .. 's', "<cmd>lua require('telescope.builtin').live_grep()<CR>", { desc = 'live grep' })
-vim.keymap.set(
-  'n',
-  '<leader>' .. tele .. 'o',
-  "<cmd>lua require('telescope.builtin').live_grep{ grep_open_files = true, prompt_title = 'grep open files' }<CR>",
-  { desc = 'search in open files' }
-)
-vim.keymap.set('n', '<leader>' .. tele .. 'd', "<cmd>lua require('telescope.builtin').diagnostics()<CR>", { desc = 'diagnostics' })
-vim.keymap.set('n', '<leader>' .. tele .. 'p', "<cmd>lua require('telescope.builtin').resume()<CR>", { desc = 'prev selection' })
-vim.keymap.set('n', '<leader>' .. tele .. 'o', "<cmd>lua require('telescope.builtin').oldfiles()<CR>", { desc = 'old files' })
-vim.keymap.set('n', '<leader>' .. tele .. ';', "<cmd>lua require('telescope.builtin').command_history()<CR>", { desc = 'command history' })
-vim.keymap.set('n', '<leader>' .. tele .. '/', "<cmd>lua require('telescope.builtin').search_history()<CR>", { desc = 'search history' })
-vim.keymap.set('n', '<leader>' .. tele .. 't', "<cmd>lua require('telescope.builtin').treesitter()<CR>", { desc = 'treesitter' })
-vim.keymap.set('n', '<leader>' .. tele .. 'c', "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", { desc = 'current buffer' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 'h', "<cmd>lua require('telescope.builtin').help_tags()<CR>", { desc = 'help' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 'k', "<cmd>lua require('telescope.builtin').keymaps()<CR>", { desc = 'keymaps' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 'f', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 'i', "<cmd>lua require('telescope.builtin').builtin()<CR>", { desc = 'telescope builtin' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 'y', "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", { desc = 'symbols' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 'Y', "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", { desc = 'workspace symbols' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 'w', "<cmd>lua require('telescope.builtin').grep_string()<CR>", { desc = 'current word' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 's', "<cmd>lua require('telescope.builtin').live_grep()<CR>", { desc = 'live grep' })
+-- vim.keymap.set(
+--   'n',
+--   '<leader>' .. tele .. 'o',
+--   "<cmd>lua require('telescope.builtin').live_grep{ grep_open_files = true, prompt_title = 'grep open files' }<CR>",
+--   { desc = 'search in open files' }
+-- )
+-- vim.keymap.set('n', '<leader>' .. tele .. 'd', "<cmd>lua require('telescope.builtin').diagnostics()<CR>", { desc = 'diagnostics' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 'p', "<cmd>lua require('telescope.builtin').resume()<CR>", { desc = 'prev selection' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 'o', "<cmd>lua require('telescope.builtin').oldfiles()<CR>", { desc = 'old files' })
+-- vim.keymap.set('n', '<leader>' .. tele .. ';', "<cmd>lua require('telescope.builtin').command_history()<CR>", { desc = 'command history' })
+-- vim.keymap.set('n', '<leader>' .. tele .. '/', "<cmd>lua require('telescope.builtin').search_history()<CR>", { desc = 'search history' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 't', "<cmd>lua require('telescope.builtin').treesitter()<CR>", { desc = 'treesitter' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 'c', "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", { desc = 'current buffer' })
 
 vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').files({debug=true})<CR>", { silent = true, desc = 'files' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'o', "<cmd>lua require('fzf-lua').oldfiles({debug=true})<CR>", { silent = true, desc = 'old files' })
@@ -281,14 +282,19 @@ vim.keymap.set('n', '<leader>gp', '<cmd>lua require("gitsigns").preview_hunk()<C
 vim.keymap.set('n', '<leader>gb', '<cmd>lua require("gitsigns").blame_line { full = true }<CR>', { desc = 'blame line' })
 vim.keymap.set('n', '<leader>gb', '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', { desc = 'toggle blame' })
 vim.keymap.set('n', '<leader>gd', '<cmd>lua require("gitsigns").diffthis()<CR>', { desc = 'diff this' })
--- vim.keymap.set('n', '<leader>hD', '<cmd>lua require("gitsigns").diffthis "~"()<CR>', { desc = 'diff this ~' })
 vim.keymap.set('n', '<leader>gd', '<cmd>lua require("gitsigns").toggle_deleted()<CR>', { desc = 'toggle diff' })
 
 vim.keymap.set('n', '<leader>xs', '<cmd>lua require("resession").save()<CR>', { desc = 'session save' })
 vim.keymap.set('n', '<leader>xl', '<cmd>lua require("resession").load()<CR>', { desc = 'session load' })
 vim.keymap.set('n', '<leader>xd', '<cmd>lua require("resession").delete()<CR>', { desc = 'session delete' })
-vim.keymap.set('n', '<leader>be', '<cmd>lua require("bufferline").sort_by("extension")<CR>', { desc = 'sort by extension' })
-vim.keymap.set('n', '<leader>bd', '<cmd>lua require("bufferline").sort_by("directory")<CR>', { desc = 'sort by directory' })
+
+vim.keymap.set('n', '<leader>tt', '<cmd>lua require("bufferline").pick()<CR>', { desc = 'pick' })
+vim.keymap.set('n', '<leader>te', '<cmd>lua require("bufferline").sort_by("extension")<CR>', { desc = 'sort by extension' })
+vim.keymap.set('n', '<leader>td', '<cmd>lua require("bufferline").sort_by("directory")<CR>', { desc = 'sort by directory' })
+vim.keymap.set('n', '<leader>tn', '<cmd>lua require("bufferline").move(1)<CR>', { desc = 'move next' })
+vim.keymap.set('n', '<leader>tp', '<cmd>lua require("bufferline").move(-1)<CR>', { desc = 'move prev' })
+vim.keymap.set('n', '<leader>tl', '<cmd>lua require("bufferline").cycle(1)<CR>', { desc = 'cycle prev' })
+vim.keymap.set('n', '<leader>th', '<cmd>lua require("bufferline").cycle(-1)<CR>', { desc = 'cycle next' })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -345,17 +351,6 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-  -- "gc" to comment visual regions/lines
-  -- gcc for toggling line comment
-  { 'numToStr/Comment.nvim', opts = {} },
-
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      current_line_blame = true,
-    },
-  },
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
@@ -381,10 +376,7 @@ require('lazy').setup({
           name = 'split, spectre',
         },
         t = {
-          name = 'telescope',
-        },
-        r = {
-          name = 'rename',
+          name = 'bufferline',
         },
         c = {
           name = 'code',
@@ -403,6 +395,17 @@ require('lazy').setup({
         },
       }, { prefix = '<leader>' })
     end,
+  },
+
+  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+
+  { 'numToStr/Comment.nvim', opts = {} },
+
+  { -- Adds git related signs to the gutter, as well as utilities for managing changes
+    'lewis6991/gitsigns.nvim',
+    opts = {
+      current_line_blame = true,
+    },
   },
 
   { -- LSP Configuration & Plugins
@@ -775,17 +778,17 @@ require('lazy').setup({
         },
       }
 
-      local ts_repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
-
-      -- vim way: ; goes to the direction you were moving.
-      vim.keymap.set({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
-      vim.keymap.set({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_opposite)
-
-      -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
-      vim.keymap.set({ 'n', 'x', 'o' }, 'f', ts_repeat_move.builtin_f)
-      vim.keymap.set({ 'n', 'x', 'o' }, 'F', ts_repeat_move.builtin_F)
-      vim.keymap.set({ 'n', 'x', 'o' }, 't', ts_repeat_move.builtin_t)
-      vim.keymap.set({ 'n', 'x', 'o' }, 'T', ts_repeat_move.builtin_T)
+      -- local ts_repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
+      --
+      -- -- vim way: ; goes to the direction you were moving.
+      -- vim.keymap.set({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
+      -- vim.keymap.set({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_opposite)
+      --
+      -- -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
+      -- vim.keymap.set({ 'n', 'x', 'o' }, 'f', ts_repeat_move.builtin_f)
+      -- vim.keymap.set({ 'n', 'x', 'o' }, 'F', ts_repeat_move.builtin_F)
+      -- vim.keymap.set({ 'n', 'x', 'o' }, 't', ts_repeat_move.builtin_t)
+      -- vim.keymap.set({ 'n', 'x', 'o' }, 'T', ts_repeat_move.builtin_T)
     end,
   },
 
@@ -990,6 +993,13 @@ require('lazy').setup({
   {
     'folke/flash.nvim',
     event = 'VeryLazy',
+    opts = {
+      modes = {
+        char = {
+          enabled = false, -- disable f, F, t, T override
+        },
+      },
+    },
   },
 
   {
