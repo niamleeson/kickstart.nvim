@@ -1127,65 +1127,105 @@ require('lazy').setup({
     end,
   },
 
+  -- {
+  --   'stevearc/resession.nvim',
+  --   event = 'VeryLazy',
+  --   config = function()
+  --     require('resession').setup {
+  --       autosave = {
+  --         enabled = true,
+  --         interval = 60,
+  --         notify = false,
+  --       },
+  --     }
+  --
+  --     require('resession').add_hook('post_load', function()
+  --       -- remove noname buffers
+  --       local buffers = vim.api.nvim_list_bufs()
+  --       for _, buf in ipairs(buffers) do
+  --         local name = vim.api.nvim_buf_get_name(buf)
+  --         if name == '' then
+  --           vim.api.nvim_buf_delete(buf, {})
+  --         end
+  --       end
+  --     end)
+  --
+  --     -- one session per directory
+  --     vim.api.nvim_create_autocmd('VimEnter', {
+  --       callback = function()
+  --         vim.notify('hey', 'info')
+  --         -- Only load the session if nvim was started with no args
+  --         if vim.fn.argc(-1) == 0 then
+  --           -- Save these to a different directory, so our manual sessions don't get polluted
+  --           require('resession').load(vim.fn.getcwd(), { dir = 'dirsession', silence_errors = true })
+  --         end
+  --       end,
+  --       nested = true,
+  --     })
+  --     vim.api.nvim_create_autocmd('VimLeavePre', {
+  --       callback = function()
+  --         require('resession').save(vim.fn.getcwd(), { dir = 'dirsession', notify = false })
+  --       end,
+  --     })
+  --
+  --     -- save before exiting
+  --     vim.api.nvim_create_autocmd('VimLeavePre', {
+  --       callback = function()
+  --         -- Always save a special session named "last"
+  --         require('resession').save 'last'
+  --       end,
+  --     })
+  --   end,
+  -- },
+  --
+  -- {
+  --   'willothy/nvim-cokeline',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim', -- Required for v0.4.0+
+  --     'nvim-tree/nvim-web-devicons', -- If you want devicons
+  --     'stevearc/resession.nvim', -- persistent history
+  --   },
+  --   config = true,
+  -- },
+
   {
-    'stevearc/resession.nvim',
-    event = 'VeryLazy',
+    'akinsho/bufferline.nvim',
+    version = '*',
+    dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
-      require('resession').setup {
-        autosave = {
-          enabled = true,
-          interval = 60,
-          notify = false,
+      vim.opt.termguicolors = true
+      require('bufferline').setup {
+        options = {
+          custom_filter = function(buf)
+            if vim.fn.bufname(buf) ~= 'NvimTree' and vim.fn.bufname(buf) ~= '' then
+              return true
+            end
+          end,
         },
       }
-
-      require('resession').add_hook('post_load', function()
-        -- remove noname buffers
-        local buffers = vim.api.nvim_list_bufs()
-        for _, buf in ipairs(buffers) do
-          local name = vim.api.nvim_buf_get_name(buf)
-          if name == '' then
-            vim.api.nvim_buf_delete(buf, {})
-          end
-        end
-      end)
-
-      -- one session per directory
-      vim.api.nvim_create_autocmd('VimEnter', {
-        callback = function()
-          vim.notify('hey', 'info')
-          -- Only load the session if nvim was started with no args
-          if vim.fn.argc(-1) == 0 then
-            -- Save these to a different directory, so our manual sessions don't get polluted
-            require('resession').load(vim.fn.getcwd(), { dir = 'dirsession', silence_errors = true })
-          end
-        end,
-        nested = true,
-      })
-      vim.api.nvim_create_autocmd('VimLeavePre', {
-        callback = function()
-          require('resession').save(vim.fn.getcwd(), { dir = 'dirsession', notify = false })
-        end,
-      })
-
-      -- save before exiting
-      vim.api.nvim_create_autocmd('VimLeavePre', {
-        callback = function()
-          -- Always save a special session named "last"
-          require('resession').save 'last'
-        end,
-      })
     end,
   },
 
   {
-    'willothy/nvim-cokeline',
-    dependencies = {
-      'nvim-lua/plenary.nvim', -- Required for v0.4.0+
-      'nvim-tree/nvim-web-devicons', -- If you want devicons
-      'stevearc/resession.nvim', -- persistent history
-    },
-    config = true,
+    'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup {
+        log_level = 'error',
+        auto_session_suppress_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
+        post_restore_cmds = {
+          function()
+            -- remove noname buffers
+            local buffers = vim.api.nvim_list_bufs()
+            for _, buf in ipairs(buffers) do
+              local name = vim.api.nvim_buf_get_name(buf)
+              if name == '' then
+                vim.api.nvim_buf_delete(buf, {})
+              end
+            end
+          end,
+        },
+      }
+    end,
   },
 
   {
