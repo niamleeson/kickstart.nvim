@@ -283,6 +283,14 @@ vim.keymap.set('n', '<leader>gd', '<cmd>lua require("gitsigns").diffthis()<CR>',
 -- vim.keymap.set('n', '<leader>hD', '<cmd>lua require("gitsigns").diffthis "~"()<CR>', { desc = 'diff this ~' })
 vim.keymap.set('n', '<leader>gd', '<cmd>lua require("gitsigns").toggle_deleted()<CR>', { desc = 'toggle diff' })
 
+vim.keymap.set('n', '<leader>xs', '<cmd>lua require("resession").save()<CR>', { desc = 'session save' })
+vim.keymap.set('n', '<leader>xl', '<cmd>lua require("resession").load()<CR>', { desc = 'session load' })
+vim.keymap.set('n', '<leader>xd', '<cmd>lua require("resession").delete()<CR>', { desc = 'session delete' })
+-- vim.keymap.set('n', '<leader>xl', '<cmd>lua require("nvim-possession").list()<CR>', { desc = 'session list' })
+-- vim.keymap.set('n', '<leader>xn', '<cmd>lua require("nvim-possession").new()<CR>', { desc = 'session new' })
+-- vim.keymap.set('n', '<leader>xu', '<cmd>lua require("nvim-possession").update()<CR>', { desc = 'session update' })
+-- vim.keymap.set('n', '<leader>xd', '<cmd>lua require("nvim-possession").delete()<CR>', { desc = 'session delete' })
+
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -980,15 +988,6 @@ require('lazy').setup({
   {
     'folke/flash.nvim',
     event = 'VeryLazy',
-    opts = {},
-    -- stylua: ignore
-    keys = {
-    -- { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "flash" },
-    -- { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "flash treesitter" },
-    -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-    -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-    --   { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-    },
   },
 
   {
@@ -1129,21 +1128,64 @@ require('lazy').setup({
   },
 
   {
-    'akinsho/bufferline.nvim',
-    version = '*',
-    dependencies = 'nvim-tree/nvim-web-devicons',
+    'stevearc/resession.nvim',
+    event = 'VeryLazy',
     config = function()
-      vim.opt.termguicolors = true
-      require('bufferline').setup {
-        options = {
-          custom_filter = function(buf)
-            if vim.fn.bufname(buf) ~= 'NvimTree' and vim.fn.bufname(buf) ~= '' then
-              return true
-            end
-          end,
+      require('resession').setup {
+        autosave = {
+          enabled = true,
+          interval = 60,
+          notify = false,
         },
       }
+
+      require('resession').add_hook('post_load', function()
+        -- remove noname buffers
+        local buffers = vim.api.nvim_list_bufs()
+        for _, buf in ipairs(buffers) do
+          local name = vim.api.nvim_buf_get_name(buf)
+          if name == '' then
+            vim.api.nvim_buf_delete(buf, {})
+          end
+        end
+      end)
+
+      -- one session per directory
+      vim.api.nvim_create_autocmd('VimEnter', {
+        callback = function()
+          vim.notify('hey', 'info')
+          -- Only load the session if nvim was started with no args
+          if vim.fn.argc(-1) == 0 then
+            -- Save these to a different directory, so our manual sessions don't get polluted
+            require('resession').load(vim.fn.getcwd(), { dir = 'dirsession', silence_errors = true })
+          end
+        end,
+        nested = true,
+      })
+      vim.api.nvim_create_autocmd('VimLeavePre', {
+        callback = function()
+          require('resession').save(vim.fn.getcwd(), { dir = 'dirsession', notify = false })
+        end,
+      })
+
+      -- save before exiting
+      vim.api.nvim_create_autocmd('VimLeavePre', {
+        callback = function()
+          -- Always save a special session named "last"
+          require('resession').save 'last'
+        end,
+      })
     end,
+  },
+
+  {
+    'willothy/nvim-cokeline',
+    dependencies = {
+      'nvim-lua/plenary.nvim', -- Required for v0.4.0+
+      'nvim-tree/nvim-web-devicons', -- If you want devicons
+      'stevearc/resession.nvim', -- persistent history
+    },
+    config = true,
   },
 
   {
@@ -1159,23 +1201,13 @@ require('lazy').setup({
   { 'kevinhwang91/nvim-bqf', event = 'VeryLazy' },
 
   {
-    'nvimdev/dashboard-nvim',
-    event = 'VimEnter',
-    config = function()
-      require('dashboard').setup {
-        -- config
-      }
-    end,
-    dependencies = { { 'nvim-tree/nvim-web-devicons' } },
-  },
-
-  {
     'shortcuts/no-neck-pain.nvim',
     config = function()
       require('no-neck-pain').setup {
         autocmds = {
           enableOnVimEnter = true,
-          enableOnTapEnter = true,
+          enableOnTabEnter = true,
+          skipEnteringNoNeckPainBuffer = true,
         },
         width = 150,
         mappings = {
@@ -1185,25 +1217,18 @@ require('lazy').setup({
     end,
   },
 
-  -- {
-  --   'rmagatti/auto-session',
-  --   event = 'VeryLazy',
-  --   config = function()
-  --     require('auto-session').setup {
-  --       log_level = 'error',
-  --     }
-  --   end,
-  -- },
-
+  -- breadcrumbs
   {
     'utilyre/barbecue.nvim',
     name = 'barbecue',
     version = '*',
     dependencies = {
       'SmiteshP/nvim-navic',
-      'nvim-tree/nvim-web-devicons', -- optional dependency
+      'nvim-tree/nvim-web-devicons',
     },
-    opts = {},
+    config = function()
+      vim.g.navic_silence = true
+    end,
   },
 
   -- plugin end
