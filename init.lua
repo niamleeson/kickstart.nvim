@@ -858,7 +858,7 @@ require('lazy').setup({
           },
         },
         files = {
-          path_shorten = 4,
+          -- path_shorten = 4,
           fzf_opts = {
             ['--history'] = vim.fn.stdpath 'data' .. '/fzf-lua-files-history',
           },
