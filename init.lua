@@ -844,6 +844,9 @@ require('lazy').setup({
           builtin = {
             ['<F12>'] = 'toggle-help',
             ['<F11>'] = 'toggle-preview',
+            ['<S-down>'] = 'preview-page-down',
+            ['<S-up>'] = 'preview-page-up',
+            ['<S-left>'] = 'preview-page-reset',
           },
           fzf = {
             ['down'] = 'next-history',
