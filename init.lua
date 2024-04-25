@@ -288,13 +288,14 @@ vim.keymap.set('n', '<leader>xs', '<cmd>lua require("resession").save()<CR>', { 
 vim.keymap.set('n', '<leader>xl', '<cmd>lua require("resession").load()<CR>', { desc = 'session load' })
 vim.keymap.set('n', '<leader>xd', '<cmd>lua require("resession").delete()<CR>', { desc = 'session delete' })
 
-vim.keymap.set('n', '<leader>tt', '<cmd>lua require("bufferline").pick()<CR>', { desc = 'pick' })
-vim.keymap.set('n', '<leader>te', '<cmd>lua require("bufferline").sort_by("extension")<CR>', { desc = 'sort by extension' })
-vim.keymap.set('n', '<leader>td', '<cmd>lua require("bufferline").sort_by("directory")<CR>', { desc = 'sort by directory' })
-vim.keymap.set('n', '<leader>tn', '<cmd>lua require("bufferline").move(1)<CR>', { desc = 'move next' })
-vim.keymap.set('n', '<leader>tp', '<cmd>lua require("bufferline").move(-1)<CR>', { desc = 'move prev' })
-vim.keymap.set('n', '<leader>tl', '<cmd>lua require("bufferline").cycle(1)<CR>', { desc = 'cycle prev' })
-vim.keymap.set('n', '<leader>th', '<cmd>lua require("bufferline").cycle(-1)<CR>', { desc = 'cycle next' })
+vim.keymap.set('n', '<leader><leader>', '<cmd>lua require("bufferline").pick()<CR>', { desc = 'pick' })
+vim.keymap.set('n', '<leader>bk', '<cmd>lua require("bufferline").pick()<CR>', { desc = 'pick' })
+vim.keymap.set('n', '<leader>be', '<cmd>lua require("bufferline").sort_by("extension")<CR>', { desc = 'sort by extension' })
+vim.keymap.set('n', '<leader>bd', '<cmd>lua require("bufferline").sort_by("directory")<CR>', { desc = 'sort by directory' })
+vim.keymap.set('n', '<leader>bn', '<cmd>lua require("bufferline").move(1)<CR>', { desc = 'move next' })
+vim.keymap.set('n', '<leader>bp', '<cmd>lua require("bufferline").move(-1)<CR>', { desc = 'move prev' })
+vim.keymap.set('n', '<leader>bl', '<cmd>lua require("bufferline").cycle(1)<CR>', { desc = 'cycle prev' })
+vim.keymap.set('n', '<leader>bh', '<cmd>lua require("bufferline").cycle(-1)<CR>', { desc = 'cycle next' })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
