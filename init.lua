@@ -1309,6 +1309,7 @@ local config = wezterm.config_builder()
 
 -- config.color_scheme = 'AdventureTime'
 config.font = wezterm.font("VictorMono Nerd Font Mono", { weight = "Light" })
+-- config.font = wezterm.font("VictorMono Nerd Font Mono", { weight = "Regular" })
 config.font_size = 16
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
@@ -1323,6 +1324,11 @@ config.keys = {
 	-- 	mods = "CTRL|SHIFT",
 	-- 	action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
 	-- },
+	{
+		key = "w",
+		mods = "CTRL",
+		action = wezterm.action.CloseCurrentPane({ confirm = true }),
+	},
 	{
 		key = "w",
 		mods = "CMD",
@@ -1349,6 +1355,20 @@ config.keys = {
 		end),
 	},
 }
+
+for i = 1, 8 do
+	-- CTRL + number to activate that tab
+	table.insert(config.keys, {
+		key = tostring(i),
+		mods = "CTRL",
+		action = wezterm.action.ActivateTab(i - 1),
+	})
+	-- -- F1 through F8 to activate that tab
+	-- table.insert(config.keys, {
+	--   key = 'F' .. tostring(i),
+	--   action = wezterm.action.ActivateTab(i - 1),
+	-- })
+end
 
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 -- you can put the rest of your Wezterm config here
