@@ -61,7 +61,8 @@ vim.opt.helpheight = 9999
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' }) -- toggle file explorer
+vim.keymap.set('n', '<leader>q', '<cmd>qa<CR>', { desc = 'quitall' })
+vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' })
 
 vim.keymap.set('n', '<leader>;', ':', { desc = 'command' })
 
