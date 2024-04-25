@@ -286,10 +286,8 @@ vim.keymap.set('n', '<leader>gd', '<cmd>lua require("gitsigns").toggle_deleted()
 vim.keymap.set('n', '<leader>xs', '<cmd>lua require("resession").save()<CR>', { desc = 'session save' })
 vim.keymap.set('n', '<leader>xl', '<cmd>lua require("resession").load()<CR>', { desc = 'session load' })
 vim.keymap.set('n', '<leader>xd', '<cmd>lua require("resession").delete()<CR>', { desc = 'session delete' })
--- vim.keymap.set('n', '<leader>xl', '<cmd>lua require("nvim-possession").list()<CR>', { desc = 'session list' })
--- vim.keymap.set('n', '<leader>xn', '<cmd>lua require("nvim-possession").new()<CR>', { desc = 'session new' })
--- vim.keymap.set('n', '<leader>xu', '<cmd>lua require("nvim-possession").update()<CR>', { desc = 'session update' })
--- vim.keymap.set('n', '<leader>xd', '<cmd>lua require("nvim-possession").delete()<CR>', { desc = 'session delete' })
+vim.keymap.set('n', '<leader>be', '<cmd>lua require("bufferline").sort_by("extension")<CR>', { desc = 'sort by extension' })
+vim.keymap.set('n', '<leader>bd', '<cmd>lua require("bufferline").sort_by("directory")<CR>', { desc = 'sort by directory' })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -369,6 +367,9 @@ require('lazy').setup({
       local wk = require 'which-key'
 
       wk.register({
+        b = {
+          name = 'bufferline',
+        },
         e = {
           name = 'explorer',
         },
