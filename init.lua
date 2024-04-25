@@ -1323,7 +1323,8 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- config.color_scheme = 'AdventureTime'
-config.font = wezterm.font("VictorMono Nerd Font Mono", { weight = "Light" })
+config.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Light" })
+-- config.font = wezterm.font("VictorMono Nerd Font Mono", { weight = "Light" })
 -- config.font = wezterm.font("VictorMono Nerd Font Mono", { weight = "Regular" })
 config.font_size = 16
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
