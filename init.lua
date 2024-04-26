@@ -987,6 +987,72 @@ require('lazy').setup({
     end,
   },
 
+  {
+    'hedyhli/outline.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('outline').setup {
+        outline_window = {
+          position = 'left',
+          width = 20,
+        },
+        keymaps = {
+          close = { 'q' },
+        },
+      }
+    end,
+  },
+
+  {
+    'rmagatti/auto-session',
+    priority = 998,
+    config = function()
+      require('auto-session').setup {
+        log_level = 'error',
+        auto_session_suppress_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
+        session_lens = {
+          load_on_setup = false,
+        },
+        pre_save_cmds = {
+          function()
+            local status_ok, api = pcall(require, 'nvim-tree.api')
+            if not status_ok then
+              return
+            end
+            api.tree.close()
+          end,
+        },
+        post_save_cmds = {
+          function()
+            local status_ok, api = pcall(require, 'nvim-tree.api')
+            if not status_ok then
+              return
+            end
+            api.tree.toggle { focus = false, find_file = true }
+          end,
+        },
+        post_restore_cmds = {
+          function()
+            local status_ok, api = pcall(require, 'nvim-tree.api')
+            if not status_ok then
+              return
+            end
+            api.tree.toggle { focus = false, find_file = true }
+
+            -- remove noname buffers
+            local buffers = vim.api.nvim_list_bufs()
+            for _, buf in ipairs(buffers) do
+              local name = vim.api.nvim_buf_get_name(buf)
+              if name == '' then
+                vim.api.nvim_buf_delete(buf, {})
+              end
+            end
+          end,
+        },
+      }
+    end,
+  },
+
   -- fast cursor movement
   {
     'folke/flash.nvim',
@@ -1127,18 +1193,6 @@ require('lazy').setup({
   },
 
   {
-    'hedyhli/outline.nvim',
-    event = 'VeryLazy',
-    config = function()
-      require('outline').setup {
-        keymaps = {
-          close = { 'q' },
-        },
-      }
-    end,
-  },
-
-  {
     'willothy/nvim-cokeline',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -1234,32 +1288,6 @@ require('lazy').setup({
   },
 
   {
-    'rmagatti/auto-session',
-    priority = 998,
-    config = function()
-      require('auto-session').setup {
-        log_level = 'error',
-        auto_session_suppress_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
-        session_lens = {
-          load_on_setup = false,
-        },
-        post_restore_cmds = {
-          function()
-            -- remove noname buffers
-            local buffers = vim.api.nvim_list_bufs()
-            for _, buf in ipairs(buffers) do
-              local name = vim.api.nvim_buf_get_name(buf)
-              if name == '' then
-                vim.api.nvim_buf_delete(buf, {})
-              end
-            end
-          end,
-        },
-      }
-    end,
-  },
-
-  {
     'nvim-pack/nvim-spectre',
     event = 'VeryLazy',
     dependencies = 'nvim-lua/plenary.nvim',
@@ -1277,8 +1305,8 @@ require('lazy').setup({
     config = function()
       require('no-neck-pain').setup {
         autocmds = {
-          enableOnVimEnter = true,
-          enableOnTabEnter = true,
+          -- enableOnVimEnter = true,
+          -- enableOnTabEnter = true,
           skipEnteringNoNeckPainBuffer = true,
         },
         width = 150,
