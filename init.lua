@@ -949,7 +949,7 @@ require('lazy').setup({
 
       nvimtree.setup {
         view = {
-          width = 50,
+          width = '20%',
           relativenumber = true,
         },
         -- change folder arrow icons
