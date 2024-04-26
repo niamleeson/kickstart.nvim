@@ -285,18 +285,9 @@ vim.keymap.set('n', '<leader>gb', '<cmd>lua require("gitsigns").toggle_current_l
 vim.keymap.set('n', '<leader>gd', '<cmd>lua require("gitsigns").diffthis()<CR>', { desc = 'diff this' })
 vim.keymap.set('n', '<leader>gd', '<cmd>lua require("gitsigns").toggle_deleted()<CR>', { desc = 'toggle diff' })
 
-vim.keymap.set('n', '<leader>xs', '<cmd>lua require("resession").save()<CR>', { desc = 'session save' })
-vim.keymap.set('n', '<leader>xl', '<cmd>lua require("resession").load()<CR>', { desc = 'session load' })
-vim.keymap.set('n', '<leader>xd', '<cmd>lua require("resession").delete()<CR>', { desc = 'session delete' })
-
-vim.keymap.set('n', '<leader><leader>', '<cmd>lua require("bufferline").pick()<CR>', { desc = 'pick' })
-vim.keymap.set('n', '<leader>bk', '<cmd>lua require("bufferline").pick()<CR>', { desc = 'pick' })
-vim.keymap.set('n', '<leader>bse', '<cmd>lua require("bufferline").sort_by("extension")<CR>', { desc = 'sort by extension' })
-vim.keymap.set('n', '<leader>bsd', '<cmd>lua require("bufferline").sort_by("directory")<CR>', { desc = 'sort by directory' })
-vim.keymap.set('n', '<leader>bn', '<cmd>lua require("bufferline").move(1)<CR>', { desc = 'move next' })
-vim.keymap.set('n', '<leader>bp', '<cmd>lua require("bufferline").move(-1)<CR>', { desc = 'move prev' })
-vim.keymap.set('n', '<leader>bl', '<cmd>lua require("bufferline").cycle(1)<CR>', { desc = 'cycle prev' })
-vim.keymap.set('n', '<leader>bh', '<cmd>lua require("bufferline").cycle(-1)<CR>', { desc = 'cycle next' })
+vim.keymap.set('n', '<leader><leader>', function()
+  require('cokeline.mappings').pick 'focus'
+end, { desc = 'Pick a buffer to focus' })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -401,10 +392,11 @@ require('lazy').setup({
 
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim', event = 'VeryLazy', opts = {} },
 
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
+    event = 'BufRead',
     opts = {
       current_line_blame = true,
     },
@@ -647,6 +639,9 @@ require('lazy').setup({
     priority = 1000,
     opts = {
       flavour = 'mocha',
+      no_italic = true,
+      no_bold = true,
+      no_underline = true,
     },
     init = function()
       -- colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
@@ -664,9 +659,6 @@ require('lazy').setup({
   --     vim.cmd 'colorscheme github_dark_dimmed'
   --   end,
   -- },
-
-  -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -816,6 +808,7 @@ require('lazy').setup({
 
   {
     'stevearc/oil.nvim',
+    event = 'VeryLazy',
     config = function()
       require('oil').setup()
 
@@ -894,43 +887,43 @@ require('lazy').setup({
     end,
   },
 
-  {
-    'nvim-telescope/telescope.nvim',
-    event = 'VimEnter',
-    branch = '0.1.x',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      { -- If encountering errors, see telescope-fzf-native README for installation instructions
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
-      },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-    },
-    config = function()
-      require('telescope').setup {
-        defaults = {
-          path_display = {
-            shorten = 4,
-          },
-          layout_config = {
-            width = { padding = 0 },
-          },
-        },
-        extensions = {
-          ['ui-select'] = {
-            require('telescope.themes').get_dropdown(),
-          },
-        },
-      }
-
-      require('telescope').load_extension 'fzf'
-      require('telescope').load_extension 'ui-select'
-    end,
-  },
+  -- {
+  --   'nvim-telescope/telescope.nvim',
+  --   event = 'VimEnter',
+  --   branch = '0.1.x',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     { -- If encountering errors, see telescope-fzf-native README for installation instructions
+  --       'nvim-telescope/telescope-fzf-native.nvim',
+  --       build = 'make',
+  --       cond = function()
+  --         return vim.fn.executable 'make' == 1
+  --       end,
+  --     },
+  --     { 'nvim-telescope/telescope-ui-select.nvim' },
+  --     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+  --   },
+  --   config = function()
+  --     require('telescope').setup {
+  --       defaults = {
+  --         path_display = {
+  --           shorten = 4,
+  --         },
+  --         layout_config = {
+  --           width = { padding = 0 },
+  --         },
+  --       },
+  --       extensions = {
+  --         ['ui-select'] = {
+  --           require('telescope.themes').get_dropdown(),
+  --         },
+  --       },
+  --     }
+  --
+  --     require('telescope').load_extension 'fzf'
+  --     require('telescope').load_extension 'ui-select'
+  --   end,
+  -- },
 
   {
     'kylechui/nvim-surround',
@@ -1058,6 +1051,7 @@ require('lazy').setup({
   -- colors hex codes
   {
     'norcalli/nvim-colorizer.lua',
+    event = 'VeryLazy',
     config = function()
       require('colorizer').setup {}
     end,
@@ -1144,80 +1138,96 @@ require('lazy').setup({
     end,
   },
 
-  -- {
-  --   'stevearc/resession.nvim',
-  --   event = 'VeryLazy',
-  --   config = function()
-  --     require('resession').setup {
-  --       autosave = {
-  --         enabled = true,
-  --         interval = 60,
-  --         notify = false,
-  --       },
-  --     }
-  --
-  --     require('resession').add_hook('post_load', function()
-  --       -- remove noname buffers
-  --       local buffers = vim.api.nvim_list_bufs()
-  --       for _, buf in ipairs(buffers) do
-  --         local name = vim.api.nvim_buf_get_name(buf)
-  --         if name == '' then
-  --           vim.api.nvim_buf_delete(buf, {})
-  --         end
-  --       end
-  --     end)
-  --
-  --     -- one session per directory
-  --     vim.api.nvim_create_autocmd('VimEnter', {
-  --       callback = function()
-  --         vim.notify('hey', 'info')
-  --         -- Only load the session if nvim was started with no args
-  --         if vim.fn.argc(-1) == 0 then
-  --           -- Save these to a different directory, so our manual sessions don't get polluted
-  --           require('resession').load(vim.fn.getcwd(), { dir = 'dirsession', silence_errors = true })
-  --         end
-  --       end,
-  --       nested = true,
-  --     })
-  --     vim.api.nvim_create_autocmd('VimLeavePre', {
-  --       callback = function()
-  --         require('resession').save(vim.fn.getcwd(), { dir = 'dirsession', notify = false })
-  --       end,
-  --     })
-  --
-  --     -- save before exiting
-  --     vim.api.nvim_create_autocmd('VimLeavePre', {
-  --       callback = function()
-  --         -- Always save a special session named "last"
-  --         require('resession').save 'last'
-  --       end,
-  --     })
-  --   end,
-  -- },
-  --
-  -- {
-  --   'willothy/nvim-cokeline',
-  --   dependencies = {
-  --     'nvim-lua/plenary.nvim', -- Required for v0.4.0+
-  --     'nvim-tree/nvim-web-devicons', -- If you want devicons
-  --     'stevearc/resession.nvim', -- persistent history
-  --   },
-  --   config = true,
-  -- },
-
   {
-    'akinsho/bufferline.nvim',
-    version = '*',
-    dependencies = 'nvim-tree/nvim-web-devicons',
+    'willothy/nvim-cokeline',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+    },
     config = function()
-      vim.opt.termguicolors = true
-      require('bufferline').setup {
-        options = {
-          custom_filter = function(buf)
-            if vim.fn.bufname(buf) ~= 'NvimTree' and vim.fn.bufname(buf) ~= '' then
-              return true
+      local is_picking_focus = require('cokeline.mappings').is_picking_focus
+      local get_hex = require('cokeline.hlgroups').get_hl_attr
+      local pickFg = '#e1e4ed'
+      local brightFg = '#bac2db'
+      local normalFg = get_hex('Comment', 'fg')
+      local darkerFg = '#4c4f5e'
+      local normalBg = '#1e1e2e'
+      local darkerBg = '#101019'
+
+      require('cokeline').setup {
+        default_hl = {
+          fg = function(buffer)
+            if is_picking_focus() then
+              return darkerFg
             end
+            return buffer.is_focused and brightFg or normalFg
           end,
+          bg = function()
+            if is_picking_focus() then
+              return darkerBg
+            end
+            return normalBg
+          end,
+        },
+
+        components = {
+          {
+            text = function()
+              return '▏'
+            end,
+            fg = function()
+              if is_picking_focus() then
+                return darkerFg
+              end
+              return normalFg
+            end,
+          },
+          {
+            text = function(buffer)
+              return is_picking_focus() and buffer.pick_letter .. ' ' or buffer.devicon.icon
+            end,
+            fg = function(buffer)
+              return is_picking_focus() and pickFg or buffer.devicon.color
+            end,
+          },
+          {
+            text = function(buffer)
+              return buffer.unique_prefix .. buffer.filename .. '⠀'
+            end,
+            bold = function(buffer)
+              return buffer.is_focused
+            end,
+          },
+          {
+            text = function(buffer)
+              if buffer.is_modified then
+                return ''
+              end
+              if buffer.is_hovered then
+                return '󰅙'
+              end
+              return '󰅖'
+            end,
+            on_click = function(_, _, _, _, buffer)
+              buffer:delete()
+            end,
+          },
+          {
+            text = function(buffer)
+              return buffer.is_last and '' or ' '
+            end,
+          },
+          {
+            text = function(buffer)
+              return buffer.is_last and '▕' or ''
+            end,
+            fg = function()
+              if is_picking_focus() then
+                return darkerFg
+              end
+              return normalFg
+            end,
+          },
         },
       }
     end,
@@ -1225,10 +1235,14 @@ require('lazy').setup({
 
   {
     'rmagatti/auto-session',
+    priority = 998,
     config = function()
       require('auto-session').setup {
         log_level = 'error',
         auto_session_suppress_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
+        session_lens = {
+          load_on_setup = false,
+        },
         post_restore_cmds = {
           function()
             -- remove noname buffers
@@ -1252,13 +1266,14 @@ require('lazy').setup({
   },
 
   -- allows targeting quotes, parens, commas from outside
-  { 'wellle/targets.vim' },
+  { 'wellle/targets.vim', event = 'VeryLazy' },
 
   -- quickfix list experience enhancement
   { 'kevinhwang91/nvim-bqf', event = 'VeryLazy' },
 
   {
     'shortcuts/no-neck-pain.nvim',
+    priority = 999,
     config = function()
       require('no-neck-pain').setup {
         autocmds = {
@@ -1277,6 +1292,7 @@ require('lazy').setup({
   -- breadcrumbs
   {
     'utilyre/barbecue.nvim',
+    event = 'VeryLazy',
     name = 'barbecue',
     version = '*',
     dependencies = {
