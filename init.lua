@@ -139,12 +139,11 @@ vim.keymap.set('n', '<leader>cu', '<cmd>TSToolsRemoveUnused<CR>', { desc = 'remo
 vim.keymap.set('n', '<leader>cr', '<cmd>TSToolsRenameFile<CR>', { desc = 'rename file' })
 vim.keymap.set('n', '<leader>cf', '<cmd>TSToolsFileReferences<CR>', { desc = 'find file references' })
 vim.keymap.set('n', '<leader>cx', function()
-  if vim.diagnostic.get(0, {}) ~= nil then
-    vim.diagnostic.disable()
-  else
-    vim.diagnostic.enable()
-  end
+  vim.diagnostic.disable()
 end, { desc = 'disable diagnostic' })
+vim.keymap.set('n', '<leader>cz', function()
+  vim.diagnostic.enable()
+end, { desc = 'enable diagnostic' })
 
 vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = true, lsp_fallback = true })<CR>", { desc = 'format code' })
 
