@@ -62,6 +62,7 @@ vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.keymap.set('n', '<leader>q', '<cmd>qa<CR>', { desc = 'quitall' })
+vim.keymap.set('n', '<leader>Q', '<cmd>qa!<CR>', { desc = 'quitall force' })
 vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' })
 vim.keymap.set('n', '<leader>bd', '<cmd>bd<CR>', { desc = 'close buffer' })
 
@@ -305,12 +306,24 @@ vim.keymap.set('n', '<leader>cc', function()
 
   if line:match '^%s*$' then
     vim.cmd('normal! I' .. indent .. 'console.log();')
-    vim.cmd 'normal! h'
+    vim.cmd 'normal! hi'
   else
     vim.cmd 'normal! o'
     vim.cmd('normal! i' .. indent .. 'console.log("' .. word .. ':", ' .. word .. ');')
   end
 end, { desc = 'Add console.log' })
+
+vim.keymap.set('v', '<leader>cc', function()
+  local line = vim.fn.getline '.'
+  local indent = string.match(line, '^%s*')
+  vim.cmd 'normal! "vy'
+  local char = 'v'
+  local word = vim.api.nvim_exec([[echo getreg(']] .. char .. [[')]], true)
+  vim.cmd 'normal! o'
+  vim.cmd('normal! i' .. indent .. 'console.log("' .. word .. ':", ' .. word .. ');')
+  vim.cmd 'normal! gv'
+  vim.api.nvim_input '<esc>'
+end)
 
 vim.keymap.set('n', '<leader>cD', function()
   vim.cmd '%s/console\\.log(\\(.*\\));//'
