@@ -1433,6 +1433,7 @@ config.send_composed_key_when_right_alt_is_pressed = true
 config.window_close_confirmation = "NeverPrompt"
 
 config.keys = {
+	{ key = "q", mods = "CMD", action = wezterm.action.CloseCurrentPane({ confirm = true }) },
 	-- {
 	-- 	key = '"',
 	-- 	mods = "CTRL|SHIFT",
