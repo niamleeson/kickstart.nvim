@@ -149,7 +149,7 @@ vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = t
 
 -- local tele = 't'
 local fzf = 'f'
-vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({debug=true})<CR>", { silent = true, desc = 'files' })
+vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true, desc = 'files' })
 -- vim.keymap.set('n', '<leader>p', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
 
 -- vim.keymap.set('n', '<leader>' .. tele .. 'h', "<cmd>lua require('telescope.builtin').help_tags()<CR>", { desc = 'help' })
@@ -174,11 +174,11 @@ vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({debug=true}
 -- vim.keymap.set('n', '<leader>' .. tele .. 't', "<cmd>lua require('telescope.builtin').treesitter()<CR>", { desc = 'treesitter' })
 -- vim.keymap.set('n', '<leader>' .. tele .. 'c', "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", { desc = 'current buffer' })
 
-vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').files({debug=true})<CR>", { silent = true, desc = 'files' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'o', "<cmd>lua require('fzf-lua').oldfiles({debug=true})<CR>", { silent = true, desc = 'old files' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'g', "<cmd>lua require('fzf-lua').grep_project({debug=true})<CR>", { silent = true, desc = 'grep' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'l', "<cmd>lua require('fzf-lua').live_grep_glob({debug=true})<CR>", { silent = true, desc = 'live grep' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'r', "<cmd>lua require('fzf-lua').resume({debug=true})<CR>", { silent = true, desc = 'resume' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true, desc = 'files' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'o', "<cmd>lua require('fzf-lua').oldfiles()<CR>", { silent = true, desc = 'old files' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'g', "<cmd>lua require('fzf-lua').grep_project()<CR>", { silent = true, desc = 'grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'l', "<cmd>lua require('fzf-lua').live_grep_glob()<CR>", { silent = true, desc = 'live grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'r', "<cmd>lua require('fzf-lua').resume()<CR>", { silent = true, desc = 'resume' })
 vim.keymap.set(
   'v',
   '<leader>' .. fzf .. 'v',
@@ -197,8 +197,8 @@ vim.keymap.set(
   "<cmd>lua require('fzf-lua').grep_cWORD({debug=true,cwd=vim.loop.cwd()})<CR>",
   { silent = true, desc = 'current WORD' }
 )
-vim.keymap.set('n', '<leader>' .. fzf .. 'cg', "<cmd>lua require('fzf-lua').grep_curbuf({debug=true})<CR>", { silent = true, desc = 'current file grep' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'cl', "<cmd>lua require('fzf-lua').lgrep_curbuf({debug=true})<CR>", { silent = true, desc = 'current file live grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'cg', "<cmd>lua require('fzf-lua').grep_curbuf()<CR>", { silent = true, desc = 'current file grep' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'cl', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", { silent = true, desc = 'current file live grep' })
 vim.keymap.set('n', '<leader>' .. fzf .. 's', "<cmd>lua require('fzf-lua').lsp_document_symbols()<CR>", { silent = true, desc = 'symbols' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'e', "<cmd>lua require('fzf-lua').lsp_references()<CR>", { silent = true, desc = 'references' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mc', "<cmd>lua require('fzf-lua').commands()<CR>", { silent = true, desc = 'commands' })
@@ -256,7 +256,6 @@ vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search(
 
 vim.keymap.set('n', '<leader>n', '<cmd>NoNeckPain<CR>', { desc = 'no neck pain' })
 
-vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<CR>', { desc = 'LazyGit' })
 vim.keymap.set('n', ']c', function()
   if vim.wo.diff then
     vim.cmd.normal { ']c', bang = true }
@@ -272,30 +271,23 @@ vim.keymap.set('n', '[c', function()
     require('gitsigns').nav_hunk 'prev'
   end
 end, { desc = 'prev change' })
-vim.keymap.set('n', '<leader>gs', '<cmd>lua require("gitsigns").stage_hunk()<CR>', { desc = 'stage hunk' })
-vim.keymap.set('n', '<leader>gr', '<cmd>lua require("gitsigns").reset_hunk()<CR>', { desc = 'reset hunk' })
-vim.keymap.set('v', '<leader>gs', '<cmd>lua require("gitsigns").stage_hunk { vim.fn.line ".", vim.fn.line "v" }<CR>', { desc = 'stage hunk' })
-vim.keymap.set('v', '<leader>gr', '<cmd>lua require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" }<CR>', { desc = 'reset hunk' })
-vim.keymap.set('n', '<leader>gS', '<cmd>lua require("gitsigns").stage_buffer()<CR>', { desc = 'stage buffer' })
-vim.keymap.set('n', '<leader>gu', '<cmd>lua require("gitsigns").undo_stage_hunk()<CR>', { desc = 'undo stage hunk' })
-vim.keymap.set('n', '<leader>gR', '<cmd>lua require("gitsigns").reset_buffer()<CR>', { desc = 'reset buffer' })
-vim.keymap.set('n', '<leader>gp', '<cmd>lua require("gitsigns").preview_hunk()<CR>', { desc = 'perview hunk' })
-vim.keymap.set('n', '<leader>gb', '<cmd>lua require("gitsigns").blame_line { full = true }<CR>', { desc = 'blame line' })
-vim.keymap.set('n', '<leader>gb', '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', { desc = 'toggle blame' })
-vim.keymap.set('n', '<leader>gd', '<cmd>lua require("gitsigns").diffthis()<CR>', { desc = 'diff this' })
-vim.keymap.set('n', '<leader>gd', '<cmd>lua require("gitsigns").toggle_deleted()<CR>', { desc = 'toggle diff' })
+
+vim.keymap.set('n', '<leader>vv', '<cmd>LazyGit<CR>', { desc = 'LazyGit' })
+vim.keymap.set('n', '<leader>vs', '<cmd>lua require("gitsigns").stage_hunk()<CR>', { desc = 'stage hunk' })
+vim.keymap.set('n', '<leader>vr', '<cmd>lua require("gitsigns").reset_hunk()<CR>', { desc = 'reset hunk' })
+vim.keymap.set('v', '<leader>vs', '<cmd>lua require("gitsigns").stage_hunk { vim.fn.line ".", vim.fn.line "v" }<CR>', { desc = 'stage hunk' })
+vim.keymap.set('v', '<leader>vr', '<cmd>lua require("gitsigns").reset_hunk { vim.fn.line ".", vim.fn.line "v" }<CR>', { desc = 'reset hunk' })
+vim.keymap.set('n', '<leader>vS', '<cmd>lua require("gitsigns").stage_buffer()<CR>', { desc = 'stage buffer' })
+vim.keymap.set('n', '<leader>vu', '<cmd>lua require("gitsigns").undo_stage_hunk()<CR>', { desc = 'undo stage hunk' })
+vim.keymap.set('n', '<leader>vR', '<cmd>lua require("gitsigns").reset_buffer()<CR>', { desc = 'reset buffer' })
+vim.keymap.set('n', '<leader>vp', '<cmd>lua require("gitsigns").preview_hunk()<CR>', { desc = 'perview hunk' })
+vim.keymap.set('n', '<leader>vl', '<cmd>lua require("gitsigns").blame_line { full = true }<CR>', { desc = 'show blame commit' })
+vim.keymap.set('n', '<leader>vb', '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', { desc = 'toggle line blame' })
+vim.keymap.set('n', '<leader>vd', '<cmd>lua require("gitsigns").diffthis()<CR>', { desc = 'diff file' })
 
 vim.keymap.set('n', '<leader><leader>', function()
   require('cokeline.mappings').pick 'focus'
 end, { desc = 'Pick a buffer to focus' })
-
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
 
 -- Add console.log with cursor on ) if the line is just spaces or tabs
 vim.keymap.set('n', '<leader>cc', function()
@@ -346,8 +338,57 @@ vim.keymap.set('n', '<leader>cpd', function()
   vim.cmd 'g/await\\s*this\\.pauseTest();/d'
 end, { desc = 'Delete pauseTest' })
 
--- [[ Install `lazy.nvim` plugin manager ]]
---    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
+vim.keymap.set('n', '<leader>gr', function()
+  local path = vim.fn.expand '%:p:~'
+  local start_index = path:find 'components' + string.len 'components'
+  local result = path:sub(start_index + 1)
+  local new_result = string.gsub(result, '%.%w+$', '')
+  print(new_result)
+  require('fzf-lua').files { query = new_result }
+end, { desc = 'all related files' })
+vim.keymap.set('n', '<leader>gj', function()
+  local path = vim.fn.expand '%:p:~'
+  local start_index = path:find 'components' + string.len 'components'
+  local result = path:sub(start_index + 1)
+  local new_result = string.gsub(result, '%.%w+$', '.js')
+  print(new_result)
+  require('fzf-lua').files { query = new_result }
+end, { desc = 'related js files' })
+vim.keymap.set('n', '<leader>gh', function()
+  local path = vim.fn.expand '%:p:~'
+  local start_index = path:find 'components' + string.len 'components'
+  local result = path:sub(start_index + 1)
+  local new_result = string.gsub(result, '%.%w+$', '.hbs')
+  print(new_result)
+  require('fzf-lua').files { query = new_result }
+end, { desc = 'related hbs files' })
+vim.keymap.set('n', '<leader>gc', function()
+  local path = vim.fn.expand '%:p:~'
+  local start_index = path:find 'components' + string.len 'components'
+  local result = path:sub(start_index + 1)
+  local new_result = string.gsub(result, '%.%w+$', '.scss')
+  print(new_result)
+  require('fzf-lua').files { query = new_result }
+end, { desc = 'related css files' })
+vim.keymap.set('n', '<leader>gt', function()
+  local path = vim.fn.expand '%:p:~'
+  local start_index = path:find 'components' + string.len 'components'
+  local result = path:sub(start_index + 1)
+  local new_result = string.gsub(result, '%.%w+$', '-test.js')
+  print(new_result)
+  require('fzf-lua').files { query = new_result }
+end, { desc = 'related test files' })
+
+-- auto command --
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
+-- lazy vim config --
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -868,6 +909,7 @@ require('lazy').setup({
           },
         },
         files = {
+          formatter = 'path.filename_first', -- vscode like find where file name can be specified first
           -- path_shorten = 4,
           fzf_opts = {
             ['--history'] = vim.fn.stdpath 'data' .. '/fzf-lua-files-history',
@@ -894,7 +936,7 @@ require('lazy').setup({
             end,
           },
         },
-        file_ignore_patterns = { '%.lock$', '%.lua$', '%.vim$' },
+        file_ignore_patterns = { 'i18n/', '%.lock$', '%.lua$', '%.vim$' },
       }
     end,
   },
