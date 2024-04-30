@@ -64,22 +64,8 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', '<cmd>qa<CR>', { desc = 'quitall' })
 vim.keymap.set('n', '<leader>Q', '<cmd>qa!<CR>', { desc = 'quitall force' })
 vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' })
--- vim.keymap.set('n', '<leader>bd', '<cmd>bd<CR>', { desc = 'close buffer' })
 vim.keymap.set('n', '<leader>bd', function()
-  local lazy = require 'cokeline.lazy'
-  local state = lazy 'cokeline.state'
-  local curbufnumber = tonumber(vim.fn.bufnr '%')
-
-  local target_buffer = vim.tbl_filter(function(buffer)
-    return buffer.number == curbufnumber
-  end, state.visible_buffers)[1]
-
-  if not target_buffer then
-    print 'Current buffer not found'
-    return
-  end
-
-  target_buffer:delete()
+  require('cokeline.buffers').get_current():delete()
 end, { desc = 'close buffer' })
 vim.keymap.set('n', '<leader>;', ':', { desc = 'command' })
 
