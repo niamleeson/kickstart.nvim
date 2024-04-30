@@ -149,7 +149,7 @@ vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = t
 
 -- local tele = 't'
 local fzf = 'f'
-vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true, desc = 'files' })
+vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({fzf_cli_args='-i'})<CR>", { silent = true, desc = 'files' })
 -- vim.keymap.set('n', '<leader>p', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
 
 -- vim.keymap.set('n', '<leader>' .. tele .. 'h', "<cmd>lua require('telescope.builtin').help_tags()<CR>", { desc = 'help' })
@@ -174,7 +174,7 @@ vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files()<CR>", { si
 -- vim.keymap.set('n', '<leader>' .. tele .. 't', "<cmd>lua require('telescope.builtin').treesitter()<CR>", { desc = 'treesitter' })
 -- vim.keymap.set('n', '<leader>' .. tele .. 'c', "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", { desc = 'current buffer' })
 
-vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true, desc = 'files' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').files({fzf_cli_args='-i'})<CR>", { silent = true, desc = 'files' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'o', "<cmd>lua require('fzf-lua').oldfiles()<CR>", { silent = true, desc = 'old files' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'g', "<cmd>lua require('fzf-lua').grep_project()<CR>", { silent = true, desc = 'grep' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'l', "<cmd>lua require('fzf-lua').live_grep_glob()<CR>", { silent = true, desc = 'live grep' })
