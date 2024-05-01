@@ -868,7 +868,7 @@ require('lazy').setup({
     end,
   },
 
-  -- { 'junegunn/fzf', build = './install --bin' },
+  { 'junegunn/fzf', build = './install --bin' },
 
   {
     'ibhagwan/fzf-lua',
@@ -1290,7 +1290,44 @@ require('lazy').setup({
   { 'wellle/targets.vim', event = 'VeryLazy' },
 
   -- quickfix list experience enhancement
-  { 'kevinhwang91/nvim-bqf', event = 'VeryLazy' },
+  {
+    'kevinhwang91/nvim-bqf',
+    event = 'VeryLazy',
+    config = function()
+      require('bqf').setup {
+        func_map = {
+          open = '<CR>',
+          openc = 'o',
+          drop = 'O',
+          split = '<C-x>',
+          vsplit = '<C-v>',
+          tab = 't',
+          tabb = 'T',
+          tabc = '<C-t>',
+          tabdrop = '',
+          ptogglemode = 'zp',
+          ptoggleitem = 'p',
+          ptoggleauto = 'P',
+          pscrollup = '<C-b>',
+          pscrolldown = '<C-f>',
+          pscrollorig = 'zo',
+          prevfile = '<C-p>',
+          nextfile = '<C-n>',
+          prevhist = '<',
+          nexthist = '>',
+          lastleave = [['"]],
+          stoggleup = '<S-Tab>',
+          stoggledown = '<Tab>',
+          stogglevm = '<Tab>',
+          stogglebuf = [['<Tab>]],
+          sclear = 'z<Tab>',
+          filter = 'zn',
+          filterr = 'zN',
+          fzffilter = 'zF',
+        },
+      }
+    end,
+  },
 
   {
     'shortcuts/no-neck-pain.nvim',
