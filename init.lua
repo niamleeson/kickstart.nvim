@@ -892,6 +892,8 @@ require('lazy').setup({
             ['up'] = 'prev-history',
             ['ctrl-n'] = 'down',
             ['ctrl-p'] = 'up',
+            ['ctrl-d'] = 'half-page-down',
+            ['ctrl-u'] = 'half-page-up',
           },
         },
         grep = {
