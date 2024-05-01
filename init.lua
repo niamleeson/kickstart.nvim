@@ -210,7 +210,12 @@ vim.keymap.set(
 )
 vim.keymap.set('n', '<leader>' .. fzf .. 'cg', "<cmd>lua require('fzf-lua').grep_curbuf()<CR>", { silent = true, desc = 'current file grep' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'cl', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", { silent = true, desc = 'current file live grep' })
-vim.keymap.set('n', '<leader>' .. fzf .. 's', "<cmd>lua require('fzf-lua').lsp_document_symbols()<CR>", { silent = true, desc = 'symbols' })
+vim.keymap.set(
+  'n',
+  '<leader>' .. fzf .. 's',
+  "<cmd>lua require('fzf-lua').lsp_document_symbols({ winopts = { fullscreen = true, preview = { layout = 'horizontal', vertical = 'down:50%', horizontal = 'right:40%', title_pos = 'left', }, }, })<CR>",
+  { silent = true, desc = 'symbols' }
+)
 vim.keymap.set('n', '<leader>' .. fzf .. 'e', "<cmd>lua require('fzf-lua').lsp_references()<CR>", { silent = true, desc = 'references' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mc', "<cmd>lua require('fzf-lua').commands()<CR>", { silent = true, desc = 'commands' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mb', "<cmd>lua require('fzf-lua').buffers()<CR>", { silent = true, desc = 'buffers' })
@@ -251,6 +256,7 @@ vim.keymap.set('n', '<C-h>', "<cmd>lua require('smart-splits').move_cursor_left(
 vim.keymap.set('n', '<C-l>', "<cmd>lua require('smart-splits').move_cursor_right()<CR>")
 
 vim.keymap.set('n', '<leader>o', '<cmd>Outline<CR>', { desc = 'toggle outline' })
+vim.keymap.set('n', '<leader>cn', '<cmd>Oil<CR>', { desc = 'open Oil' })
 
 vim.keymap.set('n', '<leader>ss', '<cmd>lua require("spectre").toggle()<CR>', {
   desc = 'spectre',
@@ -467,6 +473,7 @@ require('lazy').setup({
 
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
+    event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       'williamboman/mason.nvim',
@@ -519,7 +526,7 @@ require('lazy').setup({
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
-        -- tsserver = {}, -- npm i -g typescript typescript-language-server
+        tsserver = {}, -- npm i -g typescript typescript-language-server
         -- eslint = {}, -- npm i -g vscode-langservers-extracted
         ember = {}, -- npm install -g @lifeart/ember-language-server
         html = {}, -- npm i -g vscode-langservers-extracted
@@ -551,11 +558,11 @@ require('lazy').setup({
   },
 
   -- better typescript integration
-  {
-    'pmizio/typescript-tools.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    opts = {},
-  },
+  -- {
+  --   'pmizio/typescript-tools.nvim',
+  --   dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+  --   opts = {},
+  -- },
 
   { -- Autoformat
     'stevearc/conform.nvim',
