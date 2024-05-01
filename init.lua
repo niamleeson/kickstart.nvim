@@ -255,7 +255,6 @@ vim.keymap.set('n', '<C-h>', "<cmd>lua require('smart-splits').move_cursor_left(
 -- vim.keymap.set('n', '<C-k>', "<cmd>lua require('smart-splits').move_cursor_up()<CR>")
 vim.keymap.set('n', '<C-l>', "<cmd>lua require('smart-splits').move_cursor_right()<CR>")
 
-vim.keymap.set('n', '<leader>o', '<cmd>Outline<CR>', { desc = 'toggle outline' })
 vim.keymap.set('n', '<leader>cn', '<cmd>Oil<CR>', { desc = 'open Oil' })
 
 vim.keymap.set('n', '<leader>ss', '<cmd>lua require("spectre").toggle()<CR>', {
@@ -1069,22 +1068,6 @@ require('lazy').setup({
         },
         git = {
           ignore = false,
-        },
-      }
-    end,
-  },
-
-  {
-    'hedyhli/outline.nvim',
-    event = 'VeryLazy',
-    config = function()
-      require('outline').setup {
-        outline_window = {
-          position = 'left',
-          width = 20,
-        },
-        keymaps = {
-          close = { 'q' },
         },
       }
     end,
