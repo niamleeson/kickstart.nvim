@@ -410,7 +410,6 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
-    event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
     init = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 0
@@ -591,7 +590,6 @@ require('lazy').setup({
 
   {
     'hrsh7th/nvim-cmp',
-    event = 'VeryLazy',
     dependencies = {
       'neovim/nvim-lspconfig',
       'hrsh7th/cmp-nvim-lsp',
@@ -894,8 +892,8 @@ require('lazy').setup({
           },
           lualine_x = {
             {
-              require('noice').api.statusline.mode.get,
-              cond = require('noice').api.statusline.mode.has,
+              require('noice').api.status.mode.get, -- mode is vim "mode" noice has a table with key set to "mode"
+              cond = require('noice').api.status.mode.has,
               color = { fg = '#ff9e64' },
             },
           },
@@ -1175,9 +1173,9 @@ require('lazy').setup({
   },
 
   -- resizing splits
+  -- do not lazy load this or it will slow down
   {
     'mrjones2014/smart-splits.nvim',
-    event = 'VeryLazy',
     config = function()
       require('smart-splits').setup()
     end,
