@@ -161,29 +161,6 @@ vim.keymap.set('n', '<leader>l', "<cmd>lua require('conform').format({ async = t
 -- local tele = 't'
 local fzf = 'f'
 vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({fzf_cli_args='-i'})<CR>", { silent = true, desc = 'files' })
--- vim.keymap.set('n', '<leader>p', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
-
--- vim.keymap.set('n', '<leader>' .. tele .. 'h', "<cmd>lua require('telescope.builtin').help_tags()<CR>", { desc = 'help' })
--- vim.keymap.set('n', '<leader>' .. tele .. 'k', "<cmd>lua require('telescope.builtin').keymaps()<CR>", { desc = 'keymaps' })
--- vim.keymap.set('n', '<leader>' .. tele .. 'f', "<cmd>lua require('telescope.builtin').find_files()<CR>", { desc = 'files' })
--- vim.keymap.set('n', '<leader>' .. tele .. 'i', "<cmd>lua require('telescope.builtin').builtin()<CR>", { desc = 'telescope builtin' })
--- vim.keymap.set('n', '<leader>' .. tele .. 'y', "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", { desc = 'symbols' })
--- vim.keymap.set('n', '<leader>' .. tele .. 'Y', "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", { desc = 'workspace symbols' })
--- vim.keymap.set('n', '<leader>' .. tele .. 'w', "<cmd>lua require('telescope.builtin').grep_string()<CR>", { desc = 'current word' })
--- vim.keymap.set('n', '<leader>' .. tele .. 's', "<cmd>lua require('telescope.builtin').live_grep()<CR>", { desc = 'live grep' })
--- vim.keymap.set(
---   'n',
---   '<leader>' .. tele .. 'o',
---   "<cmd>lua require('telescope.builtin').live_grep{ grep_open_files = true, prompt_title = 'grep open files' }<CR>",
---   { desc = 'search in open files' }
--- )
--- vim.keymap.set('n', '<leader>' .. tele .. 'd', "<cmd>lua require('telescope.builtin').diagnostics()<CR>", { desc = 'diagnostics' })
--- vim.keymap.set('n', '<leader>' .. tele .. 'p', "<cmd>lua require('telescope.builtin').resume()<CR>", { desc = 'prev selection' })
--- vim.keymap.set('n', '<leader>' .. tele .. 'o', "<cmd>lua require('telescope.builtin').oldfiles()<CR>", { desc = 'old files' })
--- vim.keymap.set('n', '<leader>' .. tele .. ';', "<cmd>lua require('telescope.builtin').command_history()<CR>", { desc = 'command history' })
--- vim.keymap.set('n', '<leader>' .. tele .. '/', "<cmd>lua require('telescope.builtin').search_history()<CR>", { desc = 'search history' })
--- vim.keymap.set('n', '<leader>' .. tele .. 't', "<cmd>lua require('telescope.builtin').treesitter()<CR>", { desc = 'treesitter' })
--- vim.keymap.set('n', '<leader>' .. tele .. 'c', "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", { desc = 'current buffer' })
 
 vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').files({fzf_cli_args='-i'})<CR>", { silent = true, desc = 'files' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'o', "<cmd>lua require('fzf-lua').oldfiles()<CR>", { silent = true, desc = 'old files' })
@@ -488,25 +465,6 @@ require('lazy').setup({
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          -- In this case, we create a function that lets us more easily define mappings specific
-          -- for LSP related items. It sets the mode, buffer and description for us each time.
-          -- local map = function(keys, func, desc)
-          --   vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-          -- end
-
-          -- Rename the variable under your cursor.
-          --  Most Language Servers support renaming across files, etc.
-          -- map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-
-          -- Execute a code action, usually your cursor needs to be on top of an error
-          -- or a suggestion from your LSP for this to activate.
-          -- map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-          -- Opens a popup that displays documentation about the word under your cursor
-          --  See `:help K` for why this keymap.
-          -- map('K', vim.lsp.buf.hover, 'Hover Documentation')
-
-          -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client.server_capabilities.documentHighlightProvider then
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -973,44 +931,6 @@ require('lazy').setup({
       }
     end,
   },
-
-  -- {
-  --   'nvim-telescope/telescope.nvim',
-  --   event = 'VimEnter',
-  --   branch = '0.1.x',
-  --   dependencies = {
-  --     'nvim-lua/plenary.nvim',
-  --     { -- If encountering errors, see telescope-fzf-native README for installation instructions
-  --       'nvim-telescope/telescope-fzf-native.nvim',
-  --       build = 'make',
-  --       cond = function()
-  --         return vim.fn.executable 'make' == 1
-  --       end,
-  --     },
-  --     { 'nvim-telescope/telescope-ui-select.nvim' },
-  --     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-  --   },
-  --   config = function()
-  --     require('telescope').setup {
-  --       defaults = {
-  --         path_display = {
-  --           shorten = 4,
-  --         },
-  --         layout_config = {
-  --           width = { padding = 0 },
-  --         },
-  --       },
-  --       extensions = {
-  --         ['ui-select'] = {
-  --           require('telescope.themes').get_dropdown(),
-  --         },
-  --       },
-  --     }
-  --
-  --     require('telescope').load_extension 'fzf'
-  --     require('telescope').load_extension 'ui-select'
-  --   end,
-  -- },
 
   {
     'kylechui/nvim-surround',
