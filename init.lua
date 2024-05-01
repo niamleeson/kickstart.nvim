@@ -61,6 +61,16 @@ vim.opt.helpheight = 9999
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- disable automatic comment insertion
+-- vim.cmd [[autocmd FileType * set formatoptions-=cro]]
+vim.api.nvim_create_autocmd('BufEnter', {
+  callback = function()
+    vim.opt.formatoptions:remove { 'c', 'r', 'o' }
+  end,
+  group = vim.api.nvim_create_augroup('General', { clear = true }),
+  desc = 'Disable New Line Comment',
+})
+
 vim.keymap.set('n', '<leader>q', '<cmd>qa<CR>', { desc = 'quitall' })
 vim.keymap.set('n', '<leader>Q', '<cmd>qa!<CR>', { desc = 'quitall force' })
 vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' })
