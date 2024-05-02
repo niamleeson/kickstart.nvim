@@ -188,12 +188,14 @@ vim.keymap.set(
 )
 vim.keymap.set('n', '<leader>' .. fzf .. 'cg', "<cmd>lua require('fzf-lua').grep_curbuf()<CR>", { silent = true, desc = 'current file grep' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'cl', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", { silent = true, desc = 'current file live grep' })
-vim.keymap.set(
-  'n',
-  '<leader>' .. fzf .. 's',
-  "<cmd>lua require('fzf-lua').lsp_document_symbols({ winopts = { fullscreen = true, preview = { layout = 'horizontal', vertical = 'down:50%', horizontal = 'right:40%', title_pos = 'left', }, }, })<CR>",
-  { silent = true, desc = 'symbols' }
-)
+vim.keymap.set('n', '<leader>' .. fzf .. 's', function()
+  require('fzf-lua').lsp_document_symbols {
+    winopts = {
+      fullscreen = true,
+      preview = { layout = 'horizontal', vertical = 'down:50%', horizontal = 'right:40%', title_pos = 'left' },
+    },
+  }
+end, { silent = true, desc = 'symbols' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'e', "<cmd>lua require('fzf-lua').lsp_references()<CR>", { silent = true, desc = 'references' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mc', "<cmd>lua require('fzf-lua').commands()<CR>", { silent = true, desc = 'commands' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mb', "<cmd>lua require('fzf-lua').buffers()<CR>", { silent = true, desc = 'buffers' })
