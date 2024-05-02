@@ -286,6 +286,10 @@ vim.keymap.set('n', '<leader><leader>', function()
   require('cokeline.mappings').pick 'focus'
 end, { desc = 'Pick a buffer to focus' })
 
+vim.keymap.set('n', '<leader>cm', "<cmd>:lua require('treesj').toggle()<cr>", { desc = 'split/join code toggle' })
+vim.keymap.set('n', '<leader>cs', "<cmd>:lua require('treesj').split()<cr>", { desc = 'split code' })
+vim.keymap.set('n', '<leader>cj', "<cmd>:lua require('treesj').join()<cr>", { desc = 'join code' })
+
 -- Add console.log with cursor on ) if the line is just spaces or tabs
 vim.keymap.set('n', '<leader>cc', function()
   local word = vim.fn.expand '<cword>'
@@ -1412,6 +1416,17 @@ require('lazy').setup({
       require('outline').setup {}
     end,
   },
+
+  {
+    'Wansmer/treesj',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('treesj').setup {
+        use_default_keymaps = false,
+      }
+    end,
+  },
+
   -- zzz
 }, {
   ui = {
