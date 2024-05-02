@@ -283,8 +283,6 @@ vim.keymap.set('n', '<leader><leader>', function()
   require('cokeline.mappings').pick 'focus'
 end, { desc = 'Pick a buffer to focus' })
 
--- vim.keymap.set('n', '<leader>o', '<cmd>AerialToggle!<CR>', { desc = 'toggle outline' })
-
 -- Add console.log with cursor on ) if the line is just spaces or tabs
 vim.keymap.set('n', '<leader>cc', function()
   local word = vim.fn.expand '<cword>'
@@ -1365,18 +1363,6 @@ require('lazy').setup({
       vim.g.navic_silence = true
     end,
   },
-
-  -- {
-  --   'stevearc/aerial.nvim',
-  --   build = ':TSUpdate',
-  --   opts = {
-  --     backends = { 'lsp', 'treesitter', 'markdown', 'asciidoc', 'man' },
-  --   },
-  --   dependencies = {
-  --     'nvim-treesitter/nvim-treesitter',
-  --     'nvim-tree/nvim-web-devicons',
-  --   },
-  -- },
 
   -- plugin end
 }, {
