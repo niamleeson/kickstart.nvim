@@ -196,7 +196,7 @@ vim.keymap.set('n', '<leader>' .. fzf .. 's', function()
 end, { silent = true, desc = 'symbols' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'e', "<cmd>lua require('fzf-lua').lsp_references()<CR>", { silent = true, desc = 'references' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mc', "<cmd>lua require('fzf-lua').commands()<CR>", { silent = true, desc = 'commands' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'mb', "<cmd>lua require('fzf-lua').buffers()<CR>", { silent = true, desc = 'buffers' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'b', "<cmd>lua require('fzf-lua').buffers()<CR>", { silent = true, desc = 'buffers' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mm', "<cmd>lua require('fzf-lua').marks()<CR>", { silent = true, desc = 'marks' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mk', "<cmd>lua require('fzf-lua').keymaps()<CR>", { silent = true, desc = 'keymaps' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mt', "<cmd>lua require('fzf-lua').tabs()<CR>", { silent = true, desc = 'tabs' })
@@ -278,6 +278,9 @@ vim.keymap.set('n', '<leader>vp', '<cmd>lua require("gitsigns").preview_hunk()<C
 vim.keymap.set('n', '<leader>vl', '<cmd>lua require("gitsigns").blame_line { full = true }<CR>', { desc = 'show blame commit' })
 vim.keymap.set('n', '<leader>vb', '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', { desc = 'toggle line blame' })
 vim.keymap.set('n', '<leader>vd', '<cmd>lua require("gitsigns").diffthis()<CR>', { desc = 'diff file' })
+vim.keymap.set('n', '<leader>vD', function()
+  require('gitsigns').diffthis '~'
+end)
 
 vim.keymap.set('n', '<leader><leader>', function()
   require('cokeline.mappings').pick 'focus'
@@ -1190,6 +1193,43 @@ require('lazy').setup({
       'nvim-tree/nvim-web-devicons',
     },
     config = function()
+      -- local function harpoon_sorter()
+      --   local harpoon = require('harpoon'):marks()
+      --   local cache = {}
+      --
+      --   local function marknum(buf, force)
+      --     local b = cache[buf.number]
+      --     if b == nil or force then
+      --       b = harpoon.get_index_of(buf.path)
+      --       cache[buf.number] = b
+      --     end
+      --     return b
+      --   end
+      --
+      --   harpoon.on('changed', function()
+      --     for _, buf in ipairs(require('cokeline.buffers').get_visible()) do
+      --       cache[buf.number] = marknum(buf, true)
+      --     end
+      --   end)
+      --
+      --   -- Use this in `config.buffers.new_buffers_position`
+      --   return function(a, b)
+      --     local ma = marknum(a)
+      --     local mb = marknum(b)
+      --     if ma and not mb then
+      --       return true
+      --     elseif mb and not ma then
+      --       return false
+      --     elseif ma == nil and mb == nil then
+      --       -- switch the a and b.index to place non-harpoon buffers on the left
+      --       -- side of the tabline - this puts them on the right.
+      --       ma = a._valid_index
+      --       mb = b._valid_index
+      --     end
+      --     return ma < mb
+      --   end
+      -- end
+
       local is_picking_focus = require('cokeline.mappings').is_picking_focus
       local get_hex = require('cokeline.hlgroups').get_hl_attr
       local pickFg = '#e1e4ed'
@@ -1200,6 +1240,9 @@ require('lazy').setup({
       local darkerBg = '#101019'
 
       require('cokeline').setup {
+        -- buffers = {
+        --   new_buffers_position = harpoon_sorter(),
+        -- },
         pick = { use_filename = false },
         default_hl = {
           fg = function(buffer)
