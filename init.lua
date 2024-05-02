@@ -72,6 +72,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
 })
 
 vim.keymap.set('n', '<leader>q', '<cmd>qa<CR>', { desc = 'quitall' })
+vim.keymap.set('n', '<leader>x', '<cmd>q<CR>', { desc = 'quit' })
 vim.keymap.set('n', '<leader>Q', '<cmd>qa!<CR>', { desc = 'quitall force' })
 vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' })
 vim.keymap.set('n', '<leader>bd', function()
