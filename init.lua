@@ -274,7 +274,7 @@ vim.keymap.set('v', '<leader>vr', '<cmd>lua require("gitsigns").reset_hunk { vim
 vim.keymap.set('n', '<leader>vS', '<cmd>lua require("gitsigns").stage_buffer()<CR>', { desc = 'stage buffer' })
 vim.keymap.set('n', '<leader>vu', '<cmd>lua require("gitsigns").undo_stage_hunk()<CR>', { desc = 'undo stage hunk' })
 vim.keymap.set('n', '<leader>vR', '<cmd>lua require("gitsigns").reset_buffer()<CR>', { desc = 'reset buffer' })
-vim.keymap.set('n', '<leader>vp', '<cmd>lua require("gitsigns").preview_hunk()<CR>', { desc = 'perview hunk' })
+vim.keymap.set('n', '<leader>vp', '<cmd>lua require("gitsigns").preview_hunk()<CR>', { desc = 'preview hunk' })
 vim.keymap.set('n', '<leader>vl', '<cmd>lua require("gitsigns").blame_line { full = true }<CR>', { desc = 'show blame commit' })
 vim.keymap.set('n', '<leader>vb', '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', { desc = 'toggle line blame' })
 vim.keymap.set('n', '<leader>vd', '<cmd>lua require("gitsigns").diffthis()<CR>', { desc = 'diff file' })
@@ -334,42 +334,37 @@ end, { desc = 'Delete pauseTest' })
 
 vim.keymap.set('n', '<leader>gr', function()
   local path = vim.fn.expand '%:p:~'
-  local start_index = path:find 'components' + string.len 'components'
-  local result = path:sub(start_index + 1)
+  local last_slash_index = path:reverse():find('/', 1, true)
+  local result = path:sub(#path - last_slash_index + 2)
   local new_result = string.gsub(result, '%.%w+$', '')
-  print(new_result)
   require('fzf-lua').files { query = new_result }
 end, { desc = 'all related files' })
 vim.keymap.set('n', '<leader>gj', function()
   local path = vim.fn.expand '%:p:~'
-  local start_index = path:find 'components' + string.len 'components'
-  local result = path:sub(start_index + 1)
+  local last_slash_index = path:reverse():find('/', 1, true)
+  local result = path:sub(#path - last_slash_index + 2)
   local new_result = string.gsub(result, '%.%w+$', '.js')
-  print(new_result)
   require('fzf-lua').files { query = new_result }
 end, { desc = 'related js files' })
 vim.keymap.set('n', '<leader>gh', function()
   local path = vim.fn.expand '%:p:~'
-  local start_index = path:find 'components' + string.len 'components'
-  local result = path:sub(start_index + 1)
+  local last_slash_index = path:reverse():find('/', 1, true)
+  local result = path:sub(#path - last_slash_index + 2)
   local new_result = string.gsub(result, '%.%w+$', '.hbs')
-  print(new_result)
   require('fzf-lua').files { query = new_result }
 end, { desc = 'related hbs files' })
 vim.keymap.set('n', '<leader>gc', function()
   local path = vim.fn.expand '%:p:~'
-  local start_index = path:find 'components' + string.len 'components'
-  local result = path:sub(start_index + 1)
+  local last_slash_index = path:reverse():find('/', 1, true)
+  local result = path:sub(#path - last_slash_index + 2)
   local new_result = string.gsub(result, '%.%w+$', '.scss')
-  print(new_result)
   require('fzf-lua').files { query = new_result }
 end, { desc = 'related css files' })
 vim.keymap.set('n', '<leader>gt', function()
   local path = vim.fn.expand '%:p:~'
-  local start_index = path:find 'components' + string.len 'components'
-  local result = path:sub(start_index + 1)
+  local last_slash_index = path:reverse():find('/', 1, true)
+  local result = path:sub(#path - last_slash_index + 2)
   local new_result = string.gsub(result, '%.%w+$', '-test.js')
-  print(new_result)
   require('fzf-lua').files { query = new_result }
 end, { desc = 'related test files' })
 
@@ -519,6 +514,7 @@ require('lazy').setup({
   -- better typescript integration
   {
     'pmizio/typescript-tools.nvim',
+    event = { 'BufReadPost', 'BufNewFile' },
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     opts = {},
   },
@@ -1204,6 +1200,7 @@ require('lazy').setup({
       local darkerBg = '#101019'
 
       require('cokeline').setup {
+        pick = { use_filename = false },
         default_hl = {
           fg = function(buffer)
             if is_picking_focus() then
@@ -1364,7 +1361,15 @@ require('lazy').setup({
     end,
   },
 
-  -- plugin end
+  {
+    'hedyhli/outline.nvim',
+    config = function()
+      vim.keymap.set('n', '<leader>o', '<cmd>Outline<CR>', { desc = 'Toggle Outline' })
+
+      require('outline').setup {}
+    end,
+  },
+  -- zzz
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
