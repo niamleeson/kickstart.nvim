@@ -130,8 +130,6 @@ vim.keymap.set('n', '<C-f>', '<C-f>zz')
 vim.keymap.set('n', '<C-b>', '<C-b>zz')
 
 vim.keymap.set({ 'n', 'x', 'o' }, 'f', '<cmd>lua require("flash").jump()<CR>', { noremap = true, desc = 'flash' })
--- vim.keymap.set('n', '<leader><leader>', '<cmd>lua require("flash").jump()<CR>', { noremap = true, desc = 'flash' })
-vim.keymap.set('v', '<leader><leader>', '<cmd>lua require("flash").jump()<CR>', { noremap = true, desc = 'flash' })
 
 vim.keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'toggle file explorer' }) -- toggle file explorer
 vim.keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'collapse file explorer' }) -- collapse file explorer
@@ -284,6 +282,8 @@ vim.keymap.set('n', '<leader>vd', '<cmd>lua require("gitsigns").diffthis()<CR>',
 vim.keymap.set('n', '<leader><leader>', function()
   require('cokeline.mappings').pick 'focus'
 end, { desc = 'Pick a buffer to focus' })
+
+-- vim.keymap.set('n', '<leader>o', '<cmd>AerialToggle!<CR>', { desc = 'toggle outline' })
 
 -- Add console.log with cursor on ) if the line is just spaces or tabs
 vim.keymap.set('n', '<leader>cc', function()
@@ -487,7 +487,7 @@ require('lazy').setup({
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
-        tsserver = {}, -- npm i -g typescript typescript-language-server
+        -- tsserver = {}, -- npm i -g typescript typescript-language-server
         -- eslint = {}, -- npm i -g vscode-langservers-extracted
         ember = {}, -- npm install -g @lifeart/ember-language-server
         html = {}, -- npm i -g vscode-langservers-extracted
@@ -519,11 +519,11 @@ require('lazy').setup({
   },
 
   -- better typescript integration
-  -- {
-  --   'pmizio/typescript-tools.nvim',
-  --   dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-  --   opts = {},
-  -- },
+  {
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {},
+  },
 
   { -- Autoformat
     'stevearc/conform.nvim',
@@ -1137,7 +1137,8 @@ require('lazy').setup({
 
   {
     'kevinhwang91/nvim-ufo',
-    event = 'BufRead',
+    build = ':TSUpdate',
+    event = 'BufReadPost',
     dependencies = 'kevinhwang91/promise-async',
     config = function()
       vim.o.foldcolumn = '1' -- '0' is not bad
@@ -1364,6 +1365,18 @@ require('lazy').setup({
       vim.g.navic_silence = true
     end,
   },
+
+  -- {
+  --   'stevearc/aerial.nvim',
+  --   build = ':TSUpdate',
+  --   opts = {
+  --     backends = { 'lsp', 'treesitter', 'markdown', 'asciidoc', 'man' },
+  --   },
+  --   dependencies = {
+  --     'nvim-treesitter/nvim-treesitter',
+  --     'nvim-tree/nvim-web-devicons',
+  --   },
+  -- },
 
   -- plugin end
 }, {
