@@ -461,6 +461,9 @@ require('lazy').setup({
             name = 'git',
           },
         },
+        j = {
+          name = 'arrow',
+        },
         g = {
           name = 'go to related files',
         },
@@ -1510,7 +1513,7 @@ require('lazy').setup({
     opts = {
       -- hide_handbook = true,
       show_icons = true,
-      leader_key = 'h',
+      leader_key = '<leader>j',
       buffer_leader_key = 'm',
       separate_save_and_remove = true,
       index_keys = 'asdfjklghncvbzowerutyqpASDFJKLGHNMXCVBZIOWERTYQP',
@@ -1518,7 +1521,7 @@ require('lazy').setup({
         edit = 'i',
         delete_mode = 'x',
         clear_all_items = 'C',
-        toggle = 'h', -- used as save if separate_save_and_remove is true
+        toggle = 'j', -- used as save if separate_save_and_remove is true
         open_vertical = ' ',
         open_horizontal = ' ',
         quit = 'q',
