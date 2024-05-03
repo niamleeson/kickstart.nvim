@@ -1202,42 +1202,7 @@ require('lazy').setup({
       'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      -- local function harpoon_sorter()
-      --   local harpoon = require('harpoon'):marks()
-      --   local cache = {}
-      --
-      --   local function marknum(buf, force)
-      --     local b = cache[buf.number]
-      --     if b == nil or force then
-      --       b = harpoon.get_index_of(buf.path)
-      --       cache[buf.number] = b
-      --     end
-      --     return b
-      --   end
-      --
-      --   harpoon.on('changed', function()
-      --     for _, buf in ipairs(require('cokeline.buffers').get_visible()) do
-      --       cache[buf.number] = marknum(buf, true)
-      --     end
-      --   end)
-      --
-      --   -- Use this in `config.buffers.new_buffers_position`
-      --   return function(a, b)
-      --     local ma = marknum(a)
-      --     local mb = marknum(b)
-      --     if ma and not mb then
-      --       return true
-      --     elseif mb and not ma then
-      --       return false
-      --     elseif ma == nil and mb == nil then
-      --       -- switch the a and b.index to place non-harpoon buffers on the left
-      --       -- side of the tabline - this puts them on the right.
-      --       ma = a._valid_index
-      --       mb = b._valid_index
-      --     end
-      --     return ma < mb
-      --   end
-      -- end
+      vim.o.mousemoveevent = true
 
       local is_picking_focus = require('cokeline.mappings').is_picking_focus
       local get_hex = require('cokeline.hlgroups').get_hl_attr
