@@ -1523,16 +1523,16 @@ require('lazy').setup({
       leader_key = ';',
       buffer_leader_key = 'm',
       separate_save_and_remove = true,
-      index_keys = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERTYQP',
+      index_keys = 'asdfjklghncvbzowerutyqpASDFJKLGHNMXCVBZIOWERTYQP',
       mappings = {
-        edit = 'e',
-        delete_mode = 'd',
+        edit = 'i',
+        delete_mode = 'x',
         clear_all_items = 'C',
-        toggle = 's', -- used as save if separate_save_and_remove is true
-        open_vertical = 'v',
-        open_horizontal = '-',
+        toggle = 'm', -- used as save if separate_save_and_remove is true
+        open_vertical = '9',
+        open_horizontal = '0',
         quit = 'q',
-        remove = 'x', -- only used if separate_save_and_remove is true
+        remove = '8', -- only used if separate_save_and_remove is true
         next_item = ']',
         prev_item = '[',
       },
