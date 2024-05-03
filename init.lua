@@ -180,7 +180,7 @@ local fzf = 'f'
 vim.keymap.set('n', '<leader>p', "<cmd>lua require('fzf-lua').files({fzf_cli_args='-i'})<CR>", { silent = true, desc = 'files' })
 
 vim.keymap.set('n', '<leader>' .. fzf .. 'f', "<cmd>lua require('fzf-lua').files({fzf_cli_args='-i'})<CR>", { silent = true, desc = 'files' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'p', "<cmd>lua require('fzf-lua').oldfiles()<CR>", { silent = true, desc = 'previous files' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'h', "<cmd>lua require('fzf-lua').oldfiles()<CR>", { silent = true, desc = 'previous files' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'g', "<cmd>lua require('fzf-lua').grep_project()<CR>", { silent = true, desc = 'grep' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'l', "<cmd>lua require('fzf-lua').live_grep_glob()<CR>", { silent = true, desc = 'live grep' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'r', "<cmd>lua require('fzf-lua').resume()<CR>", { silent = true, desc = 'resume' })
