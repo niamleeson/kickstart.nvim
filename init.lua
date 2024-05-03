@@ -129,8 +129,23 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<C-f>', '<C-f>zz')
 vim.keymap.set('n', '<C-b>', '<C-b>zz')
 
-vim.keymap.set({ 'n', 'x', 'o' }, 'f', '<cmd>lua require("flash").jump()<CR>', { noremap = true, desc = 'flash' })
-vim.keymap.set({ 'n', 'x', 'o' }, 't', '<cmd>lua require("flash").jump()<CR>', { noremap = true, desc = 'flash' })
+vim.keymap.set({ 'n', 'x', 'o' }, 'f', function()
+  require('flash').jump {
+    label = {
+      before = { 0, 0 }, -- { row, col } offset
+    },
+  }
+end, { noremap = true, desc = 'flash' })
+vim.keymap.set({ 'n', 'x', 'o' }, 't', function()
+  require('flash').jump {
+    label = {
+      before = { 0, -1 }, -- { row, col } offset
+    },
+    jump = {
+      offset = -1, -- after jumping, move cursor left by 1
+    },
+  }
+end, { noremap = true, desc = 'flash' })
 vim.keymap.set('o', 'r', '<cmd>lua require("flash").remote()<CR>', { noremap = true, desc = 'flash in remote mode' })
 
 vim.keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'toggle file explorer' }) -- toggle file explorer
@@ -1100,6 +1115,28 @@ require('lazy').setup({
       modes = {
         char = {
           enabled = false, -- disable f, F, t, T override
+        },
+      },
+      label = {
+        uppercase = false,
+        before = true,
+        after = false,
+      },
+      -- jump = {
+      --   autojump = true,
+      -- },
+      highlight = {
+        -- show a backdrop with hl FlashBackdrop
+        backdrop = true,
+        -- Highlight the search matches
+        matches = true,
+        -- extmark priority
+        priority = 5000,
+        groups = {
+          match = 'Search', -- first match color
+          current = 'Search', -- what you typed
+          backdrop = 'Comment', -- non-match text color
+          label = 'FlashCurrent', -- jump key color
         },
       },
     },
