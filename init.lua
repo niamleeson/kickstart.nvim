@@ -1412,10 +1412,49 @@ require('lazy').setup({
 
   {
     'stevearc/aerial.nvim',
-    opts = {},
+    opts = {
+      backends = { 'lsp', 'treesitter', 'markdown', 'asciidoc', 'man' },
+      filter_kind = {
+        -- 'Array',
+        -- 'Boolean',
+        'Class',
+        'Constant',
+        'Constructor',
+        'Enum',
+        'EnumMember',
+        -- 'Event',
+        'Field',
+        -- 'File',
+        'Function',
+        'Interface',
+        -- 'Key',
+        'Method',
+        'Module',
+        'Namespace',
+        -- 'Null',
+        -- 'Number',
+        -- 'Object',
+        'Operator',
+        -- 'Package',
+        'Property',
+        -- 'String',
+        -- 'Struct',
+        -- 'TypeParameter',
+        -- 'Variable',
+      },
+    },
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
       'nvim-tree/nvim-web-devicons',
+    },
+  },
+
+  {
+    'otavioschwanck/arrow.nvim',
+    opts = {
+      show_icons = true,
+      leader_key = ';', -- Recommended to be a single key
+      buffer_leader_key = 'm', -- Per Buffer Mappings
     },
   },
 
