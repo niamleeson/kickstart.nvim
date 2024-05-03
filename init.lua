@@ -202,6 +202,7 @@ vim.keymap.set('n', '<leader>' .. fzf .. 'mm', "<cmd>lua require('fzf-lua').mark
 vim.keymap.set('n', '<leader>' .. fzf .. 'mk', "<cmd>lua require('fzf-lua').keymaps()<CR>", { silent = true, desc = 'keymaps' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mt', "<cmd>lua require('fzf-lua').tabs()<CR>", { silent = true, desc = 'tabs' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mh', "<cmd>lua require('fzf-lua').helptags()<CR>", { silent = true, desc = 'help' })
+vim.keymap.set('n', '<leader>' .. fzf .. 'v', "<cmd>lua require('fzf-lua').git_status()<CR>", { silent = true, desc = 'changed files' })
 -- vim.keymap.set('n', '<leader>' .. tele .. 'n', function()
 --   require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' }
 -- end, { desc = 'neovim files' })
@@ -593,7 +594,8 @@ require('lazy').setup({
 
       cmp.setup {
         completion = {
-          completeopt = 'menu,menuone,preview,select',
+          -- completeopt = 'menu,menuone,preview,select', -- auto select the first entry
+          completeopt = 'menu,menuone,preview,noselect', -- dont select the first entry
         },
         snippet = {
           -- REQUIRED - you must specify a snippet engine
@@ -605,10 +607,6 @@ require('lazy').setup({
             -- vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
           end,
         },
-        window = {
-          -- completion = cmp.config.window.bordered(),
-          -- documentation = cmp.config.window.bordered(),
-        },
         mapping = cmp.mapping.preset.insert {
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
@@ -617,11 +615,12 @@ require('lazy').setup({
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.abort(),
           ['<C-Enter>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ['<CR>'] = cmp.mapping.confirm { select = false },
           -- ['<Tab>'] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
-              -- cmp.select_next_item()
-              cmp.confirm { select = true }
+              cmp.select_next_item()
+              -- cmp.confirm { select = true }
             elseif vim.fn['vsnip#available'](1) == 1 then
               feedkey('<Plug>(vsnip-expand-or-jump)', '')
             elseif has_words_before() then
