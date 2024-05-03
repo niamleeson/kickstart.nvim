@@ -323,7 +323,20 @@ vim.keymap.set('n', '<leader>cc', function()
     vim.cmd 'normal! o'
     vim.cmd('normal! i' .. indent .. 'console.log("' .. word .. ':", ' .. word .. ');')
   end
-end, { desc = 'Add console.log' })
+end, { desc = 'add console.log' })
+vim.keymap.set('n', '<leader>cC', function()
+  local word = vim.fn.expand '<cword>'
+  local line = vim.fn.getline '.'
+  local indent = string.match(line, '^%s*')
+
+  if line:match '^%s*$' then
+    vim.cmd('normal! I' .. indent .. 'console.log();')
+    vim.cmd 'normal! hi'
+  else
+    vim.cmd 'normal! O'
+    vim.cmd('normal! i' .. indent .. 'console.log("' .. word .. ':", ' .. word .. ');')
+  end
+end, { desc = 'add console.log above' })
 
 vim.keymap.set('v', '<leader>cc', function()
   local line = vim.fn.getline '.'
@@ -335,11 +348,22 @@ vim.keymap.set('v', '<leader>cc', function()
   vim.cmd('normal! i' .. indent .. 'console.log("' .. word .. ':", ' .. word .. ');')
   vim.cmd 'normal! gv'
   vim.api.nvim_input '<esc>'
-end)
+end, { desc = 'add console.log' })
+vim.keymap.set('v', '<leader>cC', function()
+  local line = vim.fn.getline '.'
+  local indent = string.match(line, '^%s*')
+  vim.cmd 'normal! "vy'
+  local char = 'v'
+  local word = vim.api.nvim_exec([[echo getreg(']] .. char .. [[')]], true)
+  vim.cmd 'normal! O'
+  vim.cmd('normal! i' .. indent .. 'console.log("' .. word .. ':", ' .. word .. ');')
+  vim.cmd 'normal! gv'
+  vim.api.nvim_input '<esc>'
+end, { desc = 'add console.log above' })
 
 vim.keymap.set('n', '<leader>cD', function()
   vim.cmd '%s/console\\.log(\\(.*\\));//'
-end, { desc = 'Remove console.log' })
+end, { desc = 'remove console.log' })
 
 -- Add "await this.pauseTest();" depending on whether the current line has text or not
 vim.keymap.set('n', '<leader>cpt', function()
@@ -352,12 +376,12 @@ vim.keymap.set('n', '<leader>cpt', function()
     vim.cmd 'normal! o'
     vim.cmd('normal! i' .. indent .. 'await this.pauseTest();')
   end
-end, { desc = 'Add pauseTest' })
+end, { desc = 'add pauseTest' })
 
 -- Delete all instances of "await this.pauseTest();" and remove the line
 vim.keymap.set('n', '<leader>cpd', function()
   vim.cmd 'g/await\\s*this\\.pauseTest();/d'
-end, { desc = 'Delete pauseTest' })
+end, { desc = 'delete pauseTest' })
 
 local getNewPath = function(ext)
   local path = vim.fn.expand '%:p:~'
