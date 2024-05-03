@@ -201,7 +201,8 @@ vim.keymap.set('n', '<leader>' .. fzf .. 'b', "<cmd>lua require('fzf-lua').buffe
 vim.keymap.set('n', '<leader>' .. fzf .. 'mm', "<cmd>lua require('fzf-lua').marks()<CR>", { silent = true, desc = 'marks' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mk', "<cmd>lua require('fzf-lua').keymaps()<CR>", { silent = true, desc = 'keymaps' })
 vim.keymap.set('n', '<leader>' .. fzf .. 'mt', "<cmd>lua require('fzf-lua').tabs()<CR>", { silent = true, desc = 'tabs' })
-vim.keymap.set('n', '<leader>' .. fzf .. 'mh', "<cmd>lua require('fzf-lua').helptags()<CR>", { silent = true, desc = 'tabs' }) -- vim.keymap.set('n', '<leader>' .. tele .. 'n', function()
+vim.keymap.set('n', '<leader>' .. fzf .. 'mh', "<cmd>lua require('fzf-lua').helptags()<CR>", { silent = true, desc = 'help' })
+-- vim.keymap.set('n', '<leader>' .. tele .. 'n', function()
 --   require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' }
 -- end, { desc = 'neovim files' })
 -- vim.keymap.set('n', '<leader>' .. fzf .. 'w', "<cmd>lua require('fzf-lua').lsp_workspace_symbols()<CR>", { silent = true, desc = 'workspace symbols' })
