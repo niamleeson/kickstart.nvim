@@ -286,9 +286,11 @@ vim.keymap.set('n', '<leader><leader>', function()
   require('cokeline.mappings').pick 'focus'
 end, { desc = 'Pick a buffer to focus' })
 
-vim.keymap.set('n', '<leader>cm', "<cmd>:lua require('treesj').toggle()<cr>", { desc = 'split/join code toggle' })
-vim.keymap.set('n', '<leader>cs', "<cmd>:lua require('treesj').split()<cr>", { desc = 'split code' })
-vim.keymap.set('n', '<leader>cj', "<cmd>:lua require('treesj').join()<cr>", { desc = 'join code' })
+vim.keymap.set('n', '<leader>cm', "<cmd>lua require('treesj').toggle()<cr>", { desc = 'split/join code toggle' })
+vim.keymap.set('n', '<leader>cs', "<cmd>lua require('treesj').split()<cr>", { desc = 'split code' })
+vim.keymap.set('n', '<leader>cj', "<cmd>lua require('treesj').join()<cr>", { desc = 'join code' })
+
+vim.keymap.set('n', '<leader>o', '<cmd>AerialToggle!<cr>', { desc = 'toggle outline' })
 
 -- Add console.log with cursor on ) if the line is just spaces or tabs
 vim.keymap.set('n', '<leader>cc', function()
@@ -489,7 +491,7 @@ require('lazy').setup({
       local servers = {
         -- tsserver = {}, -- npm i -g typescript typescript-language-server
         -- eslint = {}, -- npm i -g vscode-langservers-extracted
-        ember = {}, -- npm install -g @lifeart/ember-language-server
+        -- ember = {}, -- npm install -g @lifeart/ember-language-server
         html = {}, -- npm i -g vscode-langservers-extracted
         cssls = {}, -- npm i -g vscode-langservers-extracted
         svelte = {}, -- npm install -g svelte-language-server
@@ -1408,13 +1410,22 @@ require('lazy').setup({
     end,
   },
 
-  {
-    'hedyhli/outline.nvim',
-    config = function()
-      vim.keymap.set('n', '<leader>o', '<cmd>Outline<CR>', { desc = 'Toggle Outline' })
+  -- {
+  --   'hedyhli/outline.nvim',
+  --   config = function()
+  --     vim.keymap.set('n', '<leader>o', '<cmd>Outline<CR>', { desc = 'Toggle Outline' })
+  --
+  --     require('outline').setup {}
+  --   end,
+  -- },
 
-      require('outline').setup {}
-    end,
+  {
+    'stevearc/aerial.nvim',
+    opts = {},
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
+    },
   },
 
   {
