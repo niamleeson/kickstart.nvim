@@ -1046,6 +1046,9 @@ require('lazy').setup({
                 vim.api.nvim_buf_delete(buf, {})
               end
             end
+
+            -- if arrow session is erroring out
+            -- require("arrow.persist").load_cache_file()
           end,
         },
       }
@@ -1453,8 +1456,10 @@ require('lazy').setup({
     'otavioschwanck/arrow.nvim',
     opts = {
       show_icons = true,
-      leader_key = ';', -- Recommended to be a single key
-      buffer_leader_key = 'm', -- Per Buffer Mappings
+      leader_key = ';',
+      buffer_leader_key = 'm',
+      separate_save_and_remove = true,
+      index_keys = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERTYQP',
     },
   },
 
