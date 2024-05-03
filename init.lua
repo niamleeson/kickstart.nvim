@@ -1510,7 +1510,7 @@ require('lazy').setup({
     opts = {
       -- hide_handbook = true,
       show_icons = true,
-      leader_key = ';',
+      leader_key = 'h',
       buffer_leader_key = 'm',
       separate_save_and_remove = true,
       index_keys = 'asdfjklghncvbzowerutyqpASDFJKLGHNMXCVBZIOWERTYQP',
@@ -1518,11 +1518,11 @@ require('lazy').setup({
         edit = 'i',
         delete_mode = 'x',
         clear_all_items = 'C',
-        toggle = 'm', -- used as save if separate_save_and_remove is true
-        open_vertical = '9',
-        open_horizontal = '0',
+        toggle = 'h', -- used as save if separate_save_and_remove is true
+        open_vertical = ' ',
+        open_horizontal = ' ',
         quit = 'q',
-        remove = '8', -- only used if separate_save_and_remove is true
+        remove = ' ', -- only used if separate_save_and_remove is true
         next_item = ']',
         prev_item = '[',
       },
