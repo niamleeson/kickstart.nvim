@@ -280,9 +280,6 @@ vim.keymap.set('n', '<leader>vp', '<cmd>lua require("gitsigns").preview_hunk()<C
 vim.keymap.set('n', '<leader>vl', '<cmd>lua require("gitsigns").blame_line { full = true }<CR>', { desc = 'show blame commit' })
 vim.keymap.set('n', '<leader>vb', '<cmd>lua require("gitsigns").toggle_current_line_blame()<CR>', { desc = 'toggle line blame' })
 vim.keymap.set('n', '<leader>vd', '<cmd>lua require("gitsigns").diffthis()<CR>', { desc = 'diff file' })
-vim.keymap.set('n', '<leader>vD', function()
-  require('gitsigns').diffthis '~'
-end)
 
 vim.keymap.set('n', '<leader><leader>', function()
   require('cokeline.mappings').pick 'focus'
@@ -437,6 +434,12 @@ require('lazy').setup({
           v = {
             name = 'git',
           },
+        },
+        g = {
+          name = 'go to related files',
+        },
+        v = {
+          name = 'version control',
         },
       }, { prefix = '<leader>' })
     end,
