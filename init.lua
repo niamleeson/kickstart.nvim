@@ -1456,11 +1456,24 @@ require('lazy').setup({
   {
     'otavioschwanck/arrow.nvim',
     opts = {
+      hide_handbook = true,
       show_icons = true,
       leader_key = ';',
       buffer_leader_key = 'm',
       separate_save_and_remove = true,
       index_keys = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERTYQP',
+      mappings = {
+        edit = 'e',
+        delete_mode = 'd',
+        clear_all_items = 'C',
+        toggle = 's', -- used as save if separate_save_and_remove is true
+        open_vertical = 'v',
+        open_horizontal = '-',
+        quit = 'q',
+        remove = 'x', -- only used if separate_save_and_remove is true
+        next_item = ']',
+        prev_item = '[',
+      },
     },
   },
 
