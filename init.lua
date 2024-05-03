@@ -1494,7 +1494,7 @@ require('lazy').setup({
   {
     'otavioschwanck/arrow.nvim',
     opts = {
-      hide_handbook = true,
+      -- hide_handbook = true,
       show_icons = true,
       leader_key = ';',
       buffer_leader_key = 'm',
