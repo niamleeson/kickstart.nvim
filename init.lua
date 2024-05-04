@@ -286,7 +286,11 @@ vim.keymap.set('n', '<leader>vd', '<cmd>lua require("gitsigns").diffthis()<CR>',
 
 vim.keymap.set('n', '<leader><leader>', function()
   require('cokeline.mappings').pick 'focus'
-end, { desc = 'Pick a buffer to focus' })
+end, { desc = 'pick a buffer to focus' })
+vim.keymap.set('n', '<leader>b[', '<Plug>(cokeline-switch-prev)', { silent = true, desc = 'move left' })
+vim.keymap.set('n', '<leader>b]', '<Plug>(cokeline-switch-next)', { silent = true, desc = 'move right' })
+vim.keymap.set('n', '<leader>[', '<Plug>(cokeline-focus-prev)', { silent = true, desc = 'go to left' })
+vim.keymap.set('n', '<leader>]', '<Plug>(cokeline-focus-next)', { silent = true, desc = 'go to right' })
 
 vim.keymap.set('n', '<leader>cm', "<cmd>lua require('treesj').toggle()<cr>", { desc = 'split/join code toggle' })
 vim.keymap.set('n', '<leader>cs', "<cmd>lua require('treesj').split()<cr>", { desc = 'split code' })
@@ -1036,7 +1040,7 @@ require('lazy').setup({
 
       nvimtree.setup {
         view = {
-          width = '23%',
+          width = '20%',
           relativenumber = true,
         },
         -- change folder arrow icons
