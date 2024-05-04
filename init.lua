@@ -118,8 +118,6 @@ vim.keymap.set('n', 'Q', '<nop>')
 -- quickfixlist shortcuts
 vim.keymap.set('n', '[q', '<cmd>cprev<CR>zz', { desc = 'prev quickfix' })
 vim.keymap.set('n', ']q', '<cmd>cnext<CR>zz', { desc = 'next quickfix' })
-vim.keymap.set('n', '[b', '<cmd>bprev<CR>zz', { desc = 'prev buffer' })
-vim.keymap.set('n', ']b', '<cmd>bnext<CR>zz', { desc = 'next buffer' })
 
 -- replace word on cursor
 vim.keymap.set('n', '<leader>0', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
@@ -1003,6 +1001,9 @@ require('lazy').setup({
         },
         oldfiles = {
           formatter = 'path.filename_first',
+        },
+        buffers = {
+          sort_lastused = false,
         },
         winopts = {
           fullscreen = true,
