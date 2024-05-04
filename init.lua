@@ -58,13 +58,6 @@ vim.opt.scrolloff = 10
 
 vim.opt.helpheight = 9999
 
-vim.opt.foldcolumn = '1' -- '0' is not bad
-vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.opt.foldlevelstart = 1
-vim.opt.foldnestmax = 3
-vim.opt.foldenable = true
-vim.opt.foldtext = ''
-
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -306,6 +299,12 @@ vim.keymap.set('n', '<leader>cj', "<cmd>lua require('treesj').join()<cr>", { des
 vim.keymap.set('n', '<leader>o', '<cmd>AerialToggle!<cr>', { desc = 'toggle outline' })
 
 vim.keymap.set('n', '<leader>cy', "<cmd>lua require('neoclip.fzf')()<cr>", { desc = 'show all yanks' })
+
+vim.keymap.set('n', 'z1', '<cmd>lua vim.opt.foldlevel = 1<cr>', { desc = 'fold 1' })
+vim.keymap.set('n', 'z2', '<cmd>lua vim.opt.foldlevel = 2<cr>', { desc = 'fold 2' })
+vim.keymap.set('n', 'z3', '<cmd>lua vim.opt.foldlevel = 3<cr>', { desc = 'fold 3' })
+vim.keymap.set('n', 'z4', '<cmd>lua vim.opt.foldlevel = 4<cr>', { desc = 'fold 4' })
+vim.keymap.set('n', 'z5', '<cmd>lua vim.opt.foldlevel = 5<cr>', { desc = 'fold 5' })
 
 -- Add console.log with cursor on ) if the line is just spaces or tabs
 vim.keymap.set('n', '<leader>cc', function()
@@ -1260,10 +1259,12 @@ require('lazy').setup({
     event = 'BufReadPost',
     dependencies = 'kevinhwang91/promise-async',
     config = function()
-      vim.o.foldcolumn = '1' -- '0' is not bad
-      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
+      vim.opt.foldcolumn = '1' -- '0' is not bad
+      vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+      vim.opt.foldlevelstart = 99 -- dont fold anything at start
+      vim.opt.foldnestmax = 3
+      vim.opt.foldenable = true
+      vim.opt.foldtext = ''
 
       vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
       vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
