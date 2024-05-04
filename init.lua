@@ -1523,7 +1523,7 @@ require('lazy').setup({
       leader_key = '<leader>j',
       buffer_leader_key = 'm',
       separate_save_and_remove = true,
-      index_keys = 'asdfjklghncvbzowerutyqpASDFJKLGHNMXCVBZIOWERTYQP',
+      index_keys = 'asdfklghncvbzowerutyqpASDFJKLGHNMXCVBZIOWERTYQP',
       mappings = {
         edit = 'i',
         delete_mode = 'x',
