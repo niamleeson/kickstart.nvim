@@ -60,7 +60,8 @@ vim.opt.helpheight = 9999
 
 vim.opt.foldcolumn = '1' -- '0' is not bad
 vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-vim.opt.foldlevelstart = 99
+vim.opt.foldlevelstart = 1
+vim.opt.foldnestmax = 3
 vim.opt.foldenable = true
 vim.opt.foldtext = ''
 
@@ -750,14 +751,22 @@ require('lazy').setup({
     lazy = false,
     name = 'catppuccin',
     priority = 1000,
-    opts = {
-      flavour = 'mocha',
-      no_italic = true,
-      no_bold = true,
-      no_underline = true,
-    },
+    opts = {},
     init = function()
       -- colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+
+      require('catppuccin').setup {
+        flavour = 'mocha',
+        no_italic = true,
+        no_bold = true,
+        no_underline = true,
+        custom_highlights = function(colors)
+          return {
+            Folded = { bg = '#1e1e2e' }, -- colors.flamingo },
+          }
+        end,
+      }
+
       vim.cmd.colorscheme 'catppuccin-mocha'
     end,
   },
