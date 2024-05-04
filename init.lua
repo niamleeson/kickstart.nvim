@@ -983,6 +983,9 @@ require('lazy').setup({
             ['--history'] = vim.fn.stdpath 'data' .. '/fzf-lua-files-history',
           },
         },
+        oldfiles = {
+          formatter = 'path.filename_first',
+        },
         winopts = {
           fullscreen = true,
           preview = {
