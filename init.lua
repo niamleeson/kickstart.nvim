@@ -205,12 +205,16 @@ vim.keymap.set('n', '<leader>cpp', function()
   end
 end, { desc = 'add pauseTest' })
 
+vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' })
 -- Delete all instances of "await this.pauseTest();" and remove the line
 vim.keymap.set('n', '<leader>cpd', function()
   vim.cmd 'g/await\\s*this\\.pauseTest();/d'
 end, { desc = 'delete pauseTest' })
 if vim.g.vscode then
   -- vim.cmd [[source $HOME/.config/nvim/vscode/settings.vim]]
+
+  vim.keymap.set('n', 'H', "<cmd>lua require('vscode-neovim').action('workbench.action.previousEditor')<CR>", { desc = 'prev editor' })
+  vim.keymap.set('n', 'L', "<cmd>lua require('vscode-neovim').action('workbench.action.nextEditor')<CR>", { desc = 'next editor' })
 else
   -- Don't show the mode, since it's already in the status line
   vim.opt.showmode = false
@@ -230,7 +234,6 @@ else
   vim.keymap.set('n', '<leader>q', '<cmd>qa<CR>', { desc = 'quitall' })
   vim.keymap.set('n', '<leader>x', '<cmd>q<CR>', { desc = 'quit' })
   vim.keymap.set('n', '<leader>Q', '<cmd>qa!<CR>', { desc = 'quitall force' })
-  vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' })
   vim.keymap.set('n', '<leader>bd', function()
     require('cokeline.buffers').get_current():delete()
   end, { desc = 'close buffer' })
@@ -1799,24 +1802,24 @@ require('lazy').setup({
     end,
   },
 
-  {
-    'gbprod/yanky.nvim',
-    cond = function()
-      return not vim.g.vscode
-    end,
-    opts = {
-      ring = { history_length = 20 },
-      highlight = { timer = 250 },
-    },
-    keys = {
-      { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' }, desc = 'Put yanked text after cursor' },
-      { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' }, desc = 'Put yanked text before cursor' },
-      { '=p', '<Plug>(YankyPutAfterLinewise)', desc = 'Put yanked text in line below' },
-      { '=P', '<Plug>(YankyPutBeforeLinewise)', desc = 'Put yanked text in line above' },
-      { '[y', '<Plug>(YankyCycleForward)', desc = 'Cycle forward through yank history' },
-      { ']y', '<Plug>(YankyCycleBackward)', desc = 'Cycle backward through yank history' },
-    },
-  },
+  -- {
+  --   'gbprod/yanky.nvim',
+  --   cond = function()
+  --     return not vim.g.vscode
+  --   end,
+  --   opts = {
+  --     ring = { history_length = 20 },
+  --     highlight = { timer = 250 },
+  --   },
+  --   keys = {
+  --     { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' }, desc = 'Put yanked text after cursor' },
+  --     { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' }, desc = 'Put yanked text before cursor' },
+  --     { '=p', '<Plug>(YankyPutAfterLinewise)', desc = 'Put yanked text in line below' },
+  --     { '=P', '<Plug>(YankyPutBeforeLinewise)', desc = 'Put yanked text in line above' },
+  --     { '[y', '<Plug>(YankyCycleForward)', desc = 'Cycle forward through yank history' },
+  --     { ']y', '<Plug>(YankyCycleBackward)', desc = 'Cycle backward through yank history' },
+  --   },
+  -- },
 
   {
     'stevearc/overseer.nvim',
