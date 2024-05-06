@@ -1,4 +1,3 @@
--- vim.keymap.set('', '<Space>', '<Nop>')
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -12,10 +11,7 @@ vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
-vim.opt.mousescroll = 'ver:10'
-
--- Don't show the mode, since it's already in the status line
-vim.opt.showmode = false
+vim.opt.mousescroll = 'ver:8,hor:6'
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -62,6 +58,27 @@ vim.opt.helpheight = 9999
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set({ 'n', 'v' }, '<CR>', ':', { noremap = true, desc = 'enter command line mode' })
+
+-- Movement around wrapped lines
+vim.keymap.set('n', 'j', 'v:count ? "j" : "gj"', { noremap = true, expr = true, desc = 'Move down (including wrapping lines)' })
+vim.keymap.set('n', 'k', 'v:count ? "k" : "gk"', { noremap = true, expr = true, desc = 'Move up (including wrapping lines)' })
+vim.keymap.set('n', '<Up>', 'v:count ? "k" : "gk"', { noremap = true, expr = true, desc = 'Move up (including wrapping lines)' })
+vim.keymap.set('n', '<Down>', 'v:count ? "j" : "gj"', { noremap = true, expr = true, desc = 'Move down (including wrapping lines)' })
+vim.keymap.set('i', '<Up>', 'pumvisible() ? "k" : "<C-o>gk"', { noremap = true, expr = true, desc = 'Move up (including wrapping lines)' })
+vim.keymap.set('i', '<Down>', 'pumvisible() ? "j" : "<C-o>gj"', { noremap = true, expr = true, desc = 'Move down (including wrapping lines)' })
+
+-- Make behavior more like in common editors
+vim.keymap.set({ '', 'i' }, '<C-s>', vim.cmd.write, { noremap = true, desc = 'Save' })
+vim.keymap.set('i', '<C-z>', '<C-o>u', { noremap = true, desc = 'Undo' })
+vim.keymap.set('i', '<C-v>', '<C-g>u<Cmd>set paste<CR><C-r>+<Cmd>set nopaste<CR>', { noremap = true, desc = 'Paste' })
+vim.keymap.set('c', '<C-v>', '<C-r>+', { noremap = true, desc = 'Paste' })
+vim.keymap.set('t', '<C-v>', '<C-\\><C-N>pi', { noremap = true, desc = 'Paste' })
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, desc = 'Go back to normal mode' })
+vim.keymap.set('i', '<S-Left>', '<Esc>vb', { noremap = true, desc = 'Select character left' })
+vim.keymap.set('i', '<S-Right>', '<Esc>ve', { noremap = true, desc = 'Select character right' })
+vim.keymap.set('', '<C-a>', 'gg2vG$', { noremap = true, desc = 'Select all' })
+vim.keymap.set({ 'v', 'i' }, '<C-a>', '<Esc>gg0vG$', { noremap = true, desc = 'Select all' })
 
 vim.keymap.set('x', 'p', '"_dP', { desc = 'paste in visual mode' })
 
@@ -77,17 +94,45 @@ vim.keymap.set('v', '>', '>gv', { desc = 'stay in indent mode' })
 -- redo
 vim.keymap.set('n', 'U', '<C-r>', { desc = 'redo' })
 
+-- Move lines
+vim.keymap.set('n', 'J', '<cmd>move+1<CR>', { noremap = true, desc = 'move line down' })
+vim.keymap.set('n', 'K', '<cmd>move-2<CR>', { noremap = true, desc = 'move line up' })
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'move block down' })
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'move block up' })
 
+-- Cmdline shortcuts
+vim.keymap.set('c', '<C-h>', '<Home>', { noremap = true, desc = 'Go to beginning' })
+vim.keymap.set('c', '<C-l>', '<End>', { noremap = true, desc = 'Go to end' })
+
+-- Increment / decrement
+-- vim.keymap.set('n', '<C-=>', '<C-a>', { noremap = true, desc = 'Decrease number' })
+-- vim.keymap.set('n', '<C-->', '<C-x>', { noremap = true, desc = 'Increase number' })
+-- vim.keymap.set('v', '<C-=>', '<C-a>', { noremap = true, desc = 'Decrease number' })
+-- vim.keymap.set('v', '<C-->', '<C-x>', { noremap = true, desc = 'Increase number' })
+-- vim.keymap.set('v', 'g<C-=>', 'g<C-a>', { noremap = true, desc = 'Column decrease number' })
+-- vim.keymap.set('v', 'g<C-->', 'g<C-x>', { noremap = true, desc = 'Column increase number' })
+
+-- Other
+-- vim.keymap.set('', '<Leader>cd', '<Cmd>cd %:h<CR>', { noremap = true, desc = 'Change directory to current file folder' })
+vim.keymap.set('', '<Backspace>', '<Cmd>buffer #<CR>', { noremap = true, desc = 'Back to previous buffer' })
+
 -- keep cursor when using J
-vim.keymap.set('n', 'J', 'mzJ`z')
+vim.keymap.set('n', '<C-J>', 'mzJ`z')
 
 vim.keymap.set('n', 'Q', '<nop>')
 
 -- quickfixlist shortcuts
 vim.keymap.set('n', '[q', '<cmd>cprev<CR>zz', { desc = 'prev quickfix' })
 vim.keymap.set('n', ']q', '<cmd>cnext<CR>zz', { desc = 'next quickfix' })
+
+-- yank highlight
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
 
 -- Add console.log with cursor on ) if the line is just spaces or tabs
 vim.keymap.set('n', '<leader>cc', function()
@@ -145,7 +190,7 @@ vim.keymap.set('n', '<leader>cD', function()
 end, { desc = 'remove console.log' })
 
 -- Add "await this.pauseTest();" depending on whether the current line has text or not
-vim.keymap.set('n', '<leader>cpt', function()
+vim.keymap.set('n', '<leader>cpp', function()
   local line = vim.fn.getline '.'
   local indent = string.match(line, '^%s*')
 
@@ -164,6 +209,9 @@ end, { desc = 'delete pauseTest' })
 if vim.g.vscode then
   -- vim.cmd [[source $HOME/.config/nvim/vscode/settings.vim]]
 else
+  -- Don't show the mode, since it's already in the status line
+  vim.opt.showmode = false
+
   -- disable automatic comment insertion
   -- vim.cmd [[autocmd FileType * set formatoptions-=cro]]
   vim.api.nvim_create_autocmd('BufEnter', {
@@ -293,16 +341,19 @@ else
   --   { silent = true, desc = 'git commits current file' }
   -- )
 
-  -- vim.keymap.set('n', '<leader>a', '<cmd>lua require("harpoon"):list():add()<CR>', { desc = 'harpoon file' })
-  -- vim.keymap.set('n', '<leader>h', '<cmd>lua require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())<CR>', { desc = 'harpoon quick menu' })
-  -- vim.keymap.set('n', '[h', '<cmd>lua require("harpoon"):list():prev()<CR>', { desc = 'prev harpoon' })
-  -- vim.keymap.set('n', ']h', '<cmd>lua require("harpoon"):list():next()<CR>', { desc = 'next harpoon' })
-  -- vim.keymap.set('n', '<leader>1', '<cmd>lua require("harpoon"):list():select(1)<CR>', { desc = 'harpoon to file 1' })
-  -- vim.keymap.set('n', '<leader>2', '<cmd>lua require("harpoon"):list():select(2)<CR>', { desc = 'harpoon to file 2' })
-  -- vim.keymap.set('n', '<leader>3', '<cmd>lua require("harpoon"):list():select(3)<CR>', { desc = 'harpoon to file 3' })
-  -- vim.keymap.set('n', '<leader>4', '<cmd>lua require("harpoon"):list():select(4)<CR>', { desc = 'harpoon to file 4' })
-  -- vim.keymap.set('n', '<leader>5', '<cmd>lua require("harpoon"):list():select(5)<CR>', { desc = 'harpoon to file 5' })
-  -- vim.keymap.set('n', '<leader>6', '<cmd>lua require("harpoon"):list():select(6)<CR>', { desc = 'harpoon to file 6' })
+  vim.keymap.set('n', '<leader>a', '<cmd>lua require("harpoon"):list():add()<CR>', { desc = 'harpoon file' })
+  vim.keymap.set('n', '<leader>h', '<cmd>lua require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())<CR>', { desc = 'harpoon quick menu' })
+  vim.keymap.set('n', '[h', '<cmd>lua require("harpoon"):list():prev()<CR>', { desc = 'prev harpoon' })
+  vim.keymap.set('n', ']h', '<cmd>lua require("harpoon"):list():next()<CR>', { desc = 'next harpoon' })
+  vim.keymap.set('n', '<leader>1', '<cmd>lua require("harpoon"):list():select(1)<CR>', { desc = 'harpoon to file 1' })
+  vim.keymap.set('n', '<leader>2', '<cmd>lua require("harpoon"):list():select(2)<CR>', { desc = 'harpoon to file 2' })
+  vim.keymap.set('n', '<leader>3', '<cmd>lua require("harpoon"):list():select(3)<CR>', { desc = 'harpoon to file 3' })
+  vim.keymap.set('n', '<leader>4', '<cmd>lua require("harpoon"):list():select(4)<CR>', { desc = 'harpoon to file 4' })
+  vim.keymap.set('n', '<leader>5', '<cmd>lua require("harpoon"):list():select(5)<CR>', { desc = 'harpoon to file 5' })
+  vim.keymap.set('n', '<leader>6', '<cmd>lua require("harpoon"):list():select(6)<CR>', { desc = 'harpoon to file 6' })
+  vim.keymap.set('n', '<leader>7', '<cmd>lua require("harpoon"):list():select(7)<CR>', { desc = 'harpoon to file 7' })
+  vim.keymap.set('n', '<leader>8', '<cmd>lua require("harpoon"):list():select(8)<CR>', { desc = 'harpoon to file 8' })
+  vim.keymap.set('n', '<leader>9', '<cmd>lua require("harpoon"):list():select(9)<CR>', { desc = 'harpoon to file 9' })
 
   vim.keymap.set('n', '<A-h>', "<cmd>lua require('smart-splits').resize_left()<CR>")
   vim.keymap.set('n', '<A-j>', "<cmd>lua require('smart-splits').resize_down()<CR>")
@@ -408,14 +459,6 @@ else
     local new_result = getNewPath '-test.js'
     require('fzf-lua').files { query = new_result }
   end, { desc = 'related test files' })
-  -- auto command --
-  vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Highlight when yanking (copying) text',
-    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-    callback = function()
-      vim.highlight.on_yank()
-    end,
-  })
 end
 
 -- lazy vim config --
@@ -477,9 +520,9 @@ require('lazy').setup({
             name = 'git',
           },
         },
-        j = {
-          name = 'arrow',
-        },
+        -- j = {
+        --   name = 'arrow',
+        -- },
         g = {
           name = 'go to related files',
         },
@@ -814,7 +857,8 @@ require('lazy').setup({
       require('github-theme').setup {
         groups = {
           all = {
-            Folded = { bg = '#1e1e2e' },
+            Folded = { bg = '#22272e' },
+            Variables = { fg = '#00ff00' },
           },
         },
       }
@@ -890,17 +934,17 @@ require('lazy').setup({
               ['ik'] = { query = '@class.inner', desc = 'select inner part of a class' },
             },
           },
-          -- swap = {
-          --   enable = true,
-          --   swap_next = {
-          --     ['<leader>na'] = '@parameter.inner', -- swap parameters/argument with next
-          --     ['<leader>nm'] = '@function.outer', -- swap function with next
-          --   },
-          --   swap_previous = {
-          --     ['<leader>pa'] = '@parameter.inner', -- swap parameters/argument with prev
-          --     ['<leader>pm'] = '@function.outer', -- swap function with previous
-          --   },
-          -- },
+          swap = {
+            enable = true,
+            swap_next = {
+              ['<leader>man'] = { query = '@parameter.inner', desc = 'swap parameters/argument with next' },
+              ['<leader>mmn'] = { query = '@function.outer', desc = 'swap function with next' },
+            },
+            swap_previous = {
+              ['<leader>map'] = { query = '@parameter.inner', desc = 'swap parameters/argument with prev' },
+              ['<leader>mmp'] = { query = '@function.outer', desc = 'swap function with previous' },
+            },
+          },
           move = {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
@@ -1072,6 +1116,7 @@ require('lazy').setup({
         },
         buffers = {
           sort_lastused = false,
+          formatter = 'path.filename_first',
         },
         winopts = {
           fullscreen = true,
@@ -1152,6 +1197,7 @@ require('lazy').setup({
             window_picker = {
               enable = false,
             },
+            eject = true, -- prevent new file from opening in the tree
           },
         },
         filters = {
@@ -1265,17 +1311,17 @@ require('lazy').setup({
   },
 
   -- mark files to quickly switch back and forth
-  -- {
-  --   'ThePrimeagen/harpoon',
-  -- cond = function()
-  --   return not vim.g.vscode
-  -- end,
-  --   branch = 'harpoon2',
-  --   dependencies = { 'nvim-lua/plenary.nvim' },
-  --   config = function()
-  --     require('harpoon'):setup()
-  --   end,
-  -- },
+  {
+    'ThePrimeagen/harpoon',
+    cond = function()
+      return not vim.g.vscode
+    end,
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('harpoon'):setup()
+    end,
+  },
 
   -- make command line look nice
   {
@@ -1426,6 +1472,63 @@ require('lazy').setup({
     config = function()
       vim.o.mousemoveevent = true
 
+      local function harpoon_sorter()
+        local cache = {}
+        local setup = false
+
+        local function marknum(buf, force)
+          local harpoon = require 'harpoon'
+          local b = cache[buf.number]
+          if b == nil or force then
+            local path = require('plenary.path'):new(buf.path):make_relative(vim.uv.cwd())
+            for i, mark in ipairs(harpoon:list():display()) do
+              if mark == path then
+                b = i
+                cache[buf.number] = b
+                break
+              end
+            end
+          end
+          return b
+        end
+
+        -- Use this in `config.buffers.new_buffers_position`
+        return function(a, b)
+          -- Only run this if harpoon is loaded, otherwise just use the default sorting.
+          -- This could be used to only run if a user has harpoon installed, but
+          -- I'm mainly using it to avoid loading harpoon on UiEnter.
+          local has_harpoon = package.loaded['harpoon'] ~= nil
+          if not has_harpoon then
+            ---@diagnostic disable-next-line: undefined-field
+            return a._valid_index < b._valid_index
+          elseif not setup then
+            local refresh = function()
+              cache = {}
+            end
+            require('harpoon'):extend {
+              ADD = refresh,
+              REMOVE = refresh,
+              REORDER = refresh,
+              LIST_CHANGE = refresh,
+            }
+            setup = true
+          end
+          -- switch the a and b._valid_index to place non-harpoon buffers on the left
+          -- side of the tabline - this puts them on the right.
+          local ma = marknum(a)
+          local mb = marknum(b)
+          if ma and not mb then
+            return true
+          elseif mb and not ma then
+            return false
+          elseif ma == nil and mb == nil then
+            ma = a._valid_index
+            mb = b._valid_index
+          end
+          return ma < mb
+        end
+      end
+
       local is_picking_focus = require('cokeline.mappings').is_picking_focus
       local get_hex = require('cokeline.hlgroups').get_hl_attr
       local pickFg = '#e1e4ed'
@@ -1436,9 +1539,9 @@ require('lazy').setup({
       local darkerBg = '#101019'
 
       require('cokeline').setup {
-        -- buffers = {
-        --   new_buffers_position = harpoon_sorter(),
-        -- },
+        buffers = {
+          new_buffers_position = harpoon_sorter(),
+        },
         pick = { use_filename = false },
         default_hl = {
           fg = function(buffer)
@@ -1654,32 +1757,32 @@ require('lazy').setup({
     },
   },
 
-  {
-    'otavioschwanck/arrow.nvim',
-    cond = function()
-      return not vim.g.vscode
-    end,
-    opts = {
-      -- hide_handbook = true,
-      show_icons = true,
-      leader_key = '<leader>j',
-      buffer_leader_key = 'm',
-      separate_save_and_remove = true,
-      index_keys = 'asdfklghncvbzowerutyqpASDFJKLGHNMXCVBZIOWERTYQP',
-      mappings = {
-        edit = 'i',
-        delete_mode = 'x',
-        clear_all_items = 'C',
-        toggle = 'j', -- used as save if separate_save_and_remove is true
-        open_vertical = ' ',
-        open_horizontal = ' ',
-        quit = 'q',
-        remove = ' ', -- only used if separate_save_and_remove is true
-        next_item = ']',
-        prev_item = '[',
-      },
-    },
-  },
+  -- {
+  --   'otavioschwanck/arrow.nvim',
+  --   cond = function()
+  --     return not vim.g.vscode
+  --   end,
+  --   opts = {
+  --     -- hide_handbook = true,
+  --     show_icons = true,
+  --     leader_key = '<leader>j',
+  --     buffer_leader_key = 'm',
+  --     separate_save_and_remove = true,
+  --     index_keys = 'asdfklghncvbzowerutyqpASDFJKLGHNMXCVBZIOWERTYQP',
+  --     mappings = {
+  --       edit = 'i',
+  --       delete_mode = 'x',
+  --       clear_all_items = 'C',
+  --       toggle = 'j', -- used as save if separate_save_and_remove is true
+  --       open_vertical = ' ',
+  --       open_horizontal = ' ',
+  --       quit = 'q',
+  --       remove = ' ', -- only used if separate_save_and_remove is true
+  --       next_item = ']',
+  --       prev_item = '[',
+  --     },
+  --   },
+  -- },
 
   {
     'Wansmer/treesj',
