@@ -100,6 +100,9 @@ vim.keymap.set('n', 'K', '<cmd>move-2<CR>', { noremap = true, desc = 'move line 
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'move block down' })
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'move block up' })
 
+vim.keymap.set('i', '<C-h>', '<ESC>^i', { noremap = true, desc = 'Go to beginning' })
+vim.keymap.set('i', '<C-l>', '<ESC>$a', { noremap = true, desc = 'Go to end' })
+
 -- Cmdline shortcuts
 vim.keymap.set('c', '<C-h>', '<Home>', { noremap = true, desc = 'Go to beginning' })
 vim.keymap.set('c', '<C-l>', '<End>', { noremap = true, desc = 'Go to end' })
@@ -418,6 +421,8 @@ else
   vim.keymap.set('n', '<leader>b]', '<Plug>(cokeline-switch-next)', { silent = true, desc = 'move right' })
   vim.keymap.set('n', '<leader>[', '<Plug>(cokeline-focus-prev)', { silent = true, desc = 'go to left' })
   vim.keymap.set('n', '<leader>]', '<Plug>(cokeline-focus-next)', { silent = true, desc = 'go to right' })
+  vim.keymap.set('n', 'H', '<Plug>(cokeline-focus-prev)', { silent = true, desc = 'go to left' })
+  vim.keymap.set('n', 'L', '<Plug>(cokeline-focus-next)', { silent = true, desc = 'go to right' })
 
   vim.keymap.set('n', '<leader>cm', "<cmd>lua require('treesj').toggle()<cr>", { desc = 'split/join code toggle' })
   vim.keymap.set('n', '<leader>cs', "<cmd>lua require('treesj').split()<cr>", { desc = 'split code' })
