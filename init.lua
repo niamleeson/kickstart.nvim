@@ -1304,7 +1304,6 @@ require('lazy').setup({
           current = 'Search', -- what you typed
           backdrop = 'Comment', -- non-match text color
           label = 'FlashCurrent', -- jump key color
-          -- label = '#ff0000', -- jump key color
         },
       },
     },
