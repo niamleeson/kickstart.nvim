@@ -1299,12 +1299,13 @@ require('lazy').setup({
         matches = true,
         -- extmark priority
         priority = 5000,
-        -- groups = {
-        --   match = 'Search', -- first match color
-        --   current = 'Search', -- what you typed
-        --   backdrop = 'Comment', -- non-match text color
-        --   label = 'FlashCurrent', -- jump key color
-        -- },
+        groups = {
+          match = 'Search', -- first match color
+          current = 'Search', -- what you typed
+          backdrop = 'Comment', -- non-match text color
+          label = 'FlashCurrent', -- jump key color
+          -- label = '#ff0000', -- jump key color
+        },
       },
     },
   },
