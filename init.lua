@@ -68,18 +68,6 @@ vim.keymap.set('n', '<Down>', 'v:count ? "j" : "gj"', { noremap = true, expr = t
 vim.keymap.set('i', '<Up>', 'pumvisible() ? "k" : "<C-o>gk"', { noremap = true, expr = true, desc = 'Move up (including wrapping lines)' })
 vim.keymap.set('i', '<Down>', 'pumvisible() ? "j" : "<C-o>gj"', { noremap = true, expr = true, desc = 'Move down (including wrapping lines)' })
 
--- Make behavior more like in common editors
-vim.keymap.set({ '', 'i' }, '<C-s>', vim.cmd.write, { noremap = true, desc = 'Save' })
-vim.keymap.set('i', '<C-z>', '<C-o>u', { noremap = true, desc = 'Undo' })
-vim.keymap.set('i', '<C-v>', '<C-g>u<Cmd>set paste<CR><C-r>+<Cmd>set nopaste<CR>', { noremap = true, desc = 'Paste' })
-vim.keymap.set('c', '<C-v>', '<C-r>+', { noremap = true, desc = 'Paste' })
-vim.keymap.set('t', '<C-v>', '<C-\\><C-N>pi', { noremap = true, desc = 'Paste' })
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, desc = 'Go back to normal mode' })
-vim.keymap.set('i', '<S-Left>', '<Esc>vb', { noremap = true, desc = 'Select character left' })
-vim.keymap.set('i', '<S-Right>', '<Esc>ve', { noremap = true, desc = 'Select character right' })
-vim.keymap.set('', '<C-a>', 'gg2vG$', { noremap = true, desc = 'Select all' })
-vim.keymap.set({ 'v', 'i' }, '<C-a>', '<Esc>gg0vG$', { noremap = true, desc = 'Select all' })
-
 vim.keymap.set('x', 'p', '"_dP', { desc = 'paste in visual mode' })
 
 -- Stay in indent mode
@@ -108,10 +96,10 @@ vim.keymap.set('c', '<C-h>', '<Home>', { noremap = true, desc = 'Go to beginning
 vim.keymap.set('c', '<C-l>', '<End>', { noremap = true, desc = 'Go to end' })
 
 -- Increment / decrement
--- vim.keymap.set('n', '<C-=>', '<C-a>', { noremap = true, desc = 'Decrease number' })
--- vim.keymap.set('n', '<C-->', '<C-x>', { noremap = true, desc = 'Increase number' })
--- vim.keymap.set('v', '<C-=>', '<C-a>', { noremap = true, desc = 'Decrease number' })
--- vim.keymap.set('v', '<C-->', '<C-x>', { noremap = true, desc = 'Increase number' })
+vim.keymap.set('n', '<C-=>', '<C-a>', { noremap = true, desc = 'Decrease number' })
+vim.keymap.set('n', '<C-->', '<C-x>', { noremap = true, desc = 'Increase number' })
+vim.keymap.set('v', '<C-=>', '<C-a>', { noremap = true, desc = 'Decrease number' })
+vim.keymap.set('v', '<C-->', '<C-x>', { noremap = true, desc = 'Increase number' })
 -- vim.keymap.set('v', 'g<C-=>', 'g<C-a>', { noremap = true, desc = 'Column decrease number' })
 -- vim.keymap.set('v', 'g<C-->', 'g<C-x>', { noremap = true, desc = 'Column increase number' })
 
@@ -254,6 +242,18 @@ if vim.g.vscode then
   vim.keymap.set('n', 'H', "<cmd>lua require('vscode-neovim').action('workbench.action.previousEditor')<CR>", { desc = 'prev editor' })
   vim.keymap.set('n', 'L', "<cmd>lua require('vscode-neovim').action('workbench.action.nextEditor')<CR>", { desc = 'next editor' })
 else
+  -- Make behavior more like in common editors
+  vim.keymap.set({ '', 'i' }, '<C-s>', vim.cmd.write, { noremap = true, desc = 'Save' })
+  vim.keymap.set('i', '<C-z>', '<C-o>u', { noremap = true, desc = 'Undo' })
+  vim.keymap.set('i', '<C-v>', '<C-g>u<Cmd>set paste<CR><C-r>+<Cmd>set nopaste<CR>', { noremap = true, desc = 'Paste' })
+  vim.keymap.set('c', '<C-v>', '<C-r>+', { noremap = true, desc = 'Paste' })
+  vim.keymap.set('t', '<C-v>', '<C-\\><C-N>pi', { noremap = true, desc = 'Paste' })
+  vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, desc = 'Go back to normal mode' })
+  vim.keymap.set('i', '<S-Left>', '<Esc>vb', { noremap = true, desc = 'Select character left' })
+  vim.keymap.set('i', '<S-Right>', '<Esc>ve', { noremap = true, desc = 'Select character right' })
+  vim.keymap.set('', '<C-a>', 'gg2vG$', { noremap = true, desc = 'Select all' })
+  vim.keymap.set({ 'v', 'i' }, '<C-a>', '<Esc>gg0vG$', { noremap = true, desc = 'Select all' })
+
   -- Don't show the mode, since it's already in the status line
   vim.opt.showmode = false
 
