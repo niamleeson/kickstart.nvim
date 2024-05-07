@@ -128,6 +128,25 @@ vim.keymap.set('n', 'Q', '<nop>')
 vim.keymap.set('n', '[q', '<cmd>cprev<CR>zz', { desc = 'prev quickfix' })
 vim.keymap.set('n', ']q', '<cmd>cnext<CR>zz', { desc = 'next quickfix' })
 
+vim.keymap.set({ 'n', 'x', 'o' }, 's', function()
+  require('flash').jump {
+    label = {
+      before = { 0, 0 }, -- { row, col } offset
+    },
+  }
+end, { noremap = true, desc = 'flash' })
+-- vim.keymap.set({ 'n', 'x', 'o' }, 't', function()
+--   require('flash').jump {
+--     label = {
+--       before = { 0, -1 }, -- { row, col } offset
+--     },
+--     jump = {
+--       offset = -1, -- after jumping, move cursor left by 1
+--     },
+--   }
+-- end, { noremap = true, desc = 'flash' })
+vim.keymap.set('o', 'r', '<cmd>lua require("flash").remote()<CR>', { noremap = true, desc = 'flash in remote mode' })
+
 -- yank highlight
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -153,6 +172,25 @@ vim.keymap.set('n', '<leader>cc', function()
 end, { desc = 'add console.log' })
 vim.keymap.set('n', '<leader>cC', function()
   local word = vim.fn.expand '<cword>'
+  local line = vim.fn.getline '.'
+  local indent = string.match(line, '^%s*')
+
+  if line:match '^%s*$' then
+    vim.cmd('normal! I' .. indent .. 'console.log();')
+    vim.cmd 'normal! hi'
+  else
+    vim.cmd 'normal! O'
+    vim.cmd('normal! i' .. indent .. 'console.log("' .. word .. ':", ' .. word .. ');')
+  end
+end, { desc = 'add console.log above' })
+
+vim.keymap.set('v', '<leader>cc', function()
+  local line = vim.fn.getline '.'
+  local indent = string.match(line, '^%s*')
+  vim.cmd 'normal! "vy'
+  local char = 'v'
+  local word = vim.api.nvim_exec([[echo getreg(']] .. char .. [[')]], true)
+  vim.cmd 'normal! o'
   local line = vim.fn.getline '.'
   local indent = string.match(line, '^%s*')
 
@@ -233,25 +271,6 @@ else
   -- keymap start
   vim.keymap.set('n', '<leader>q', '<cmd>qa<CR>', { desc = 'quitall' })
   vim.keymap.set('n', '<leader>x', '<cmd>q<CR>', { desc = 'quit' })
-  vim.keymap.set('n', '<leader>Q', '<cmd>qa!<CR>', { desc = 'quitall force' })
-  vim.keymap.set('n', '<leader>bd', function()
-    require('cokeline.buffers').get_current():delete()
-  end, { desc = 'close buffer' })
-  vim.keymap.set('n', '<leader>;', ':', { desc = 'command' })
-
-  -- Diagnostic keymaps
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'prev diagnostic message' })
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'next diagnostic message' })
-  vim.keymap.set('n', '<leader>dm', vim.diagnostic.open_float, { desc = 'show diagnostic error messages' })
-  vim.keymap.set('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'open diagnostic quickfix list' })
-
-  -- window management
-  vim.keymap.set('n', '<leader>sv', '<C-w>s', { desc = 'split window top and bottom' }) -- split window vertically
-  vim.keymap.set('n', '<leader>sh', '<C-w>v', { desc = 'split window left and right' }) -- split window horizontally
-  vim.keymap.set('n', '<leader>se', '<C-w>=', { desc = 'make splits equal size' }) -- make split windows equal width & height
-  vim.keymap.set('n', '<leader>sq', '<cmd>close<CR>', { desc = 'close current split' }) -- close current split window
-
-  -- replace word on cursor
   vim.keymap.set('n', '<leader>0', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
   -- Keep window centered when going up/down
@@ -259,25 +278,6 @@ else
   vim.keymap.set('n', '<C-u>', '<C-u>zz')
   vim.keymap.set('n', '<C-f>', '<C-f>zz')
   vim.keymap.set('n', '<C-b>', '<C-b>zz')
-
-  vim.keymap.set({ 'n', 'x', 'o' }, 's', function()
-    require('flash').jump {
-      label = {
-        before = { 0, 0 }, -- { row, col } offset
-      },
-    }
-  end, { noremap = true, desc = 'flash' })
-  -- vim.keymap.set({ 'n', 'x', 'o' }, 't', function()
-  --   require('flash').jump {
-  --     label = {
-  --       before = { 0, -1 }, -- { row, col } offset
-  --     },
-  --     jump = {
-  --       offset = -1, -- after jumping, move cursor left by 1
-  --     },
-  --   }
-  -- end, { noremap = true, desc = 'flash' })
-  vim.keymap.set('o', 'r', '<cmd>lua require("flash").remote()<CR>', { noremap = true, desc = 'flash in remote mode' })
 
   vim.keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'toggle file explorer' }) -- toggle file explorer
   vim.keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'collapse file explorer' }) -- collapse file explorer
@@ -1299,12 +1299,12 @@ require('lazy').setup({
         matches = true,
         -- extmark priority
         priority = 5000,
-        groups = {
-          match = 'Search', -- first match color
-          current = 'Search', -- what you typed
-          backdrop = 'Comment', -- non-match text color
-          label = 'FlashCurrent', -- jump key color
-        },
+        -- groups = {
+        --   match = 'Search', -- first match color
+        --   current = 'Search', -- what you typed
+        --   backdrop = 'Comment', -- non-match text color
+        --   label = 'FlashCurrent', -- jump key color
+        -- },
       },
     },
   },
