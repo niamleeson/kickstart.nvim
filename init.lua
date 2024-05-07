@@ -233,7 +233,6 @@ vim.keymap.set('n', '<leader>cpp', function()
   end
 end, { desc = 'add pauseTest' })
 
-vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' })
 -- Delete all instances of "await this.pauseTest();" and remove the line
 vim.keymap.set('n', '<leader>cpd', function()
   vim.cmd 'g/await\\s*this\\.pauseTest();/d'
@@ -241,6 +240,7 @@ end, { desc = 'delete pauseTest' })
 if vim.g.vscode then
   -- vim.cmd [[source $HOME/.config/nvim/vscode/settings.vim]]
 
+  vim.keymap.set('n', '<leader>w', "<cmd>lua require('vscode-neovim').action('saveAll')<CR>", { desc = 'save' })
   vim.keymap.set('n', 'H', "<cmd>lua require('vscode-neovim').action('workbench.action.previousEditor')<CR>", { desc = 'prev editor' })
   vim.keymap.set('n', 'L', "<cmd>lua require('vscode-neovim').action('workbench.action.nextEditor')<CR>", { desc = 'next editor' })
   vim.keymap.set('n', '<leader>a', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.addEditor')<CR>", { desc = '' })
@@ -256,6 +256,7 @@ if vim.g.vscode then
   vim.keymap.set('n', '<leader>8', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor8')<CR>", { desc = '' })
   vim.keymap.set('n', '<leader>9', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor9')<CR>", { desc = '' })
 else
+  vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' })
   -- Make behavior more like in common editors
   vim.keymap.set({ '', 'i' }, '<C-s>', vim.cmd.write, { noremap = true, desc = 'Save' })
   vim.keymap.set('i', '<C-z>', '<C-o>u', { noremap = true, desc = 'Undo' })
