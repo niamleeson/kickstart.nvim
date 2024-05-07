@@ -60,6 +60,8 @@ vim.opt.helpheight = 9999
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', 'cw', 'ciw')
+vim.keymap.set('n', 'yw', 'yiw')
 vim.keymap.set({ 'n', 'v' }, '<CR>', ':', { noremap = true, desc = 'enter command line mode' })
 
 -- Movement around wrapped lines
@@ -112,7 +114,7 @@ vim.keymap.set('', '<Backspace>', '<Cmd>buffer #<CR>', { noremap = true, desc = 
 -- keep cursor when using J
 vim.keymap.set('n', '<C-J>', 'mzJ`z')
 
-vim.keymap.set('n', 'Q', '<nop>')
+vim.keymap.set('n', 'Q', '@q')
 
 -- quickfixlist shortcuts
 vim.keymap.set('n', '[q', '<cmd>cprev<CR>zz', { desc = 'prev quickfix' })
