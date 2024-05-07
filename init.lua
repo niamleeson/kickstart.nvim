@@ -1,5 +1,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+-- vim.g.mapleader = '\\'
+-- vim.g.maplocalleader = '\\'
 
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
@@ -241,6 +243,18 @@ if vim.g.vscode then
 
   vim.keymap.set('n', 'H', "<cmd>lua require('vscode-neovim').action('workbench.action.previousEditor')<CR>", { desc = 'prev editor' })
   vim.keymap.set('n', 'L', "<cmd>lua require('vscode-neovim').action('workbench.action.nextEditor')<CR>", { desc = 'next editor' })
+  vim.keymap.set('n', '<leader>a', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.addEditor')<CR>", { desc = '' })
+  vim.keymap.set('n', '<leader>e', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.editEditors')<CR>", { desc = '' })
+  vim.keymap.set('n', '<leader>h', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.editorQuickPick')<CR>", { desc = '' })
+  vim.keymap.set('n', '<leader>1', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor1')<CR>", { desc = '' })
+  vim.keymap.set('n', '<leader>2', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor2')<CR>", { desc = '' })
+  vim.keymap.set('n', '<leader>3', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor3')<CR>", { desc = '' })
+  vim.keymap.set('n', '<leader>4', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor4')<CR>", { desc = '' })
+  vim.keymap.set('n', '<leader>5', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor5')<CR>", { desc = '' })
+  vim.keymap.set('n', '<leader>6', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor6')<CR>", { desc = '' })
+  vim.keymap.set('n', '<leader>7', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor7')<CR>", { desc = '' })
+  vim.keymap.set('n', '<leader>8', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor8')<CR>", { desc = '' })
+  vim.keymap.set('n', '<leader>9', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor9')<CR>", { desc = '' })
 else
   -- Make behavior more like in common editors
   vim.keymap.set({ '', 'i' }, '<C-s>', vim.cmd.write, { noremap = true, desc = 'Save' })
