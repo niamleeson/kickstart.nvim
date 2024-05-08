@@ -444,9 +444,9 @@ else
   vim.keymap.set('n', 'H', '<Plug>(cokeline-focus-prev)', { silent = true, desc = 'go to left' })
   vim.keymap.set('n', 'L', '<Plug>(cokeline-focus-next)', { silent = true, desc = 'go to right' })
 
-  vim.keymap.set('n', '<leader>cm', "<cmd>lua require('treesj').toggle()<cr>", { desc = 'split/join code toggle' })
-  vim.keymap.set('n', '<leader>cs', "<cmd>lua require('treesj').split()<cr>", { desc = 'split code' })
-  vim.keymap.set('n', '<leader>cj', "<cmd>lua require('treesj').join()<cr>", { desc = 'join code' })
+  vim.keymap.set('n', '<leader>ct', "<cmd>lua require('treesj').toggle()<cr>", { desc = 'split/join code toggle' })
+  -- vim.keymap.set('n', '<leader>cs', "<cmd>lua require('treesj').split()<cr>", { desc = 'split code' })
+  -- vim.keymap.set('n', '<leader>cj', "<cmd>lua require('treesj').join()<cr>", { desc = 'join code' })
 
   vim.keymap.set('n', '<leader>o', '<cmd>AerialToggle!<cr>', { desc = 'toggle outline' })
 
