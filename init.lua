@@ -139,6 +139,8 @@ end, { noremap = true, desc = 'flash' })
 -- end, { noremap = true, desc = 'flash' })
 vim.keymap.set('o', 'r', '<cmd>lua require("flash").remote()<CR>', { noremap = true, desc = 'flash in remote mode' })
 
+vim.keymap.set('n', '<leader>ct', "<cmd>lua require('treesj').toggle()<cr>", { desc = 'split/join code toggle' })
+
 -- yank highlight
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -245,6 +247,7 @@ if vim.g.vscode then
   vim.keymap.set('n', '<leader>w', "<cmd>lua require('vscode-neovim').action('saveAll')<CR>", { desc = 'save' })
   vim.keymap.set('n', 'H', "<cmd>lua require('vscode-neovim').action('workbench.action.previousEditor')<CR>", { desc = 'prev editor' })
   vim.keymap.set('n', 'L', "<cmd>lua require('vscode-neovim').action('workbench.action.nextEditor')<CR>", { desc = 'next editor' })
+else
   vim.keymap.set('n', '<leader>a', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.addEditor')<CR>", { desc = '' })
   vim.keymap.set('n', '<leader>e', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.editEditors')<CR>", { desc = '' })
   vim.keymap.set('n', '<leader>h', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.editorQuickPick')<CR>", { desc = '' })
@@ -257,7 +260,6 @@ if vim.g.vscode then
   vim.keymap.set('n', '<leader>7', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor7')<CR>", { desc = '' })
   vim.keymap.set('n', '<leader>8', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor8')<CR>", { desc = '' })
   vim.keymap.set('n', '<leader>9', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.gotoEditor9')<CR>", { desc = '' })
-else
   vim.keymap.set('n', '<leader>w', '<cmd>wa<CR>', { desc = 'save' })
   -- Make behavior more like in common editors
   vim.keymap.set({ '', 'i' }, '<C-s>', vim.cmd.write, { noremap = true, desc = 'Save' })
@@ -443,8 +445,6 @@ else
   vim.keymap.set('n', '<leader>]', '<Plug>(cokeline-focus-next)', { silent = true, desc = 'go to right' })
   vim.keymap.set('n', 'H', '<Plug>(cokeline-focus-prev)', { silent = true, desc = 'go to left' })
   vim.keymap.set('n', 'L', '<Plug>(cokeline-focus-next)', { silent = true, desc = 'go to right' })
-
-  vim.keymap.set('n', '<leader>ct', "<cmd>lua require('treesj').toggle()<cr>", { desc = 'split/join code toggle' })
 
   vim.keymap.set('n', '<leader>o', '<cmd>AerialToggle!<cr>', { desc = 'toggle outline' })
 
