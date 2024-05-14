@@ -139,8 +139,6 @@ end, { noremap = true, desc = 'flash' })
 -- end, { noremap = true, desc = 'flash' })
 vim.keymap.set('o', 'r', '<cmd>lua require("flash").remote()<CR>', { noremap = true, desc = 'flash in remote mode' })
 
-vim.keymap.set('n', '<leader>ct', "<cmd>lua require('treesj').toggle()<cr>", { desc = 'split/join code toggle' })
-
 -- yank highlight
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -445,6 +443,8 @@ else
   vim.keymap.set('n', '<leader>]', '<Plug>(cokeline-focus-next)', { silent = true, desc = 'go to right' })
   vim.keymap.set('n', 'H', '<Plug>(cokeline-focus-prev)', { silent = true, desc = 'go to left' })
   vim.keymap.set('n', 'L', '<Plug>(cokeline-focus-next)', { silent = true, desc = 'go to right' })
+
+  vim.keymap.set('n', '<leader>ct', "<cmd>lua require('treesj').toggle()<cr>", { desc = 'split/join code toggle' })
 
   vim.keymap.set('n', '<leader>o', '<cmd>AerialToggle!<cr>', { desc = 'toggle outline' })
 
