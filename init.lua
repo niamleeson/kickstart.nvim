@@ -245,6 +245,12 @@ if vim.g.vscode then
   vim.keymap.set('n', '<leader>w', "<cmd>lua require('vscode-neovim').action('saveAll')<CR>", { desc = 'save' })
   vim.keymap.set('n', 'H', "<cmd>lua require('vscode-neovim').action('workbench.action.previousEditor')<CR>", { desc = 'prev editor' })
   vim.keymap.set('n', 'L', "<cmd>lua require('vscode-neovim').action('workbench.action.nextEditor')<CR>", { desc = 'next editor' })
+
+  -- Keep window centered when going up/down
+  vim.keymap.set('n', '<C-d>', '<C-d>zz')
+  vim.keymap.set('n', '<C-u>', '<C-u>zz')
+  vim.keymap.set('n', '<C-f>', '<C-f>zz')
+  vim.keymap.set('n', '<C-b>', '<C-b>zz')
 else
   vim.keymap.set('n', '<leader>a', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.addEditor')<CR>", { desc = '' })
   vim.keymap.set('n', '<leader>e', "<cmd>lua require('vscode-neovim').action('vscode-harpoon.editEditors')<CR>", { desc = '' })
@@ -289,12 +295,6 @@ else
   vim.keymap.set('n', '<leader>q', '<cmd>qa<CR>', { desc = 'quitall' })
   vim.keymap.set('n', '<leader>x', '<cmd>q<CR>', { desc = 'quit' })
   vim.keymap.set('n', '<leader>0', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-
-  -- Keep window centered when going up/down
-  vim.keymap.set('n', '<C-d>', '<C-d>zz')
-  vim.keymap.set('n', '<C-u>', '<C-u>zz')
-  vim.keymap.set('n', '<C-f>', '<C-f>zz')
-  vim.keymap.set('n', '<C-b>', '<C-b>zz')
 
   vim.keymap.set('n', '<leader>ee', '<cmd>NvimTreeToggle<CR>', { desc = 'toggle file explorer' }) -- toggle file explorer
   vim.keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'collapse file explorer' }) -- collapse file explorer
@@ -2170,6 +2170,6 @@ return config
 
 
 -- key repeat in macos
-defaults write -g InitialKeyRepeat -int 13 # normal minimum is 15 (225 ms)
+defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 --]]
