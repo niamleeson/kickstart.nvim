@@ -240,6 +240,19 @@ vim.keymap.set('n', '<leader>cpd', function()
   -- vim.cmd 'g/await\\s*this\\.pauseTest();/d'
   vim.cmd ':%s/await this.pauseTest();//g'
 end, { desc = 'delete pauseTest' })
+
+vim.keymap.set('n', '<leader>cts', function()
+  vim.cmd 'normal! ^ct(test.skip'
+end, { desc = 'skip test' })
+
+vim.keymap.set('n', '<leader>cto', function()
+  vim.cmd 'normal! ^ct(test.only'
+end, { desc = 'only test' })
+
+vim.keymap.set('n', '<leader>ctd', function()
+  vim.cmd 'normal! ^ct(test'
+end, { desc = 'revert to just test' })
+
 if vim.g.vscode then
   -- vim.cmd [[source $HOME/.config/nvim/vscode/settings.vim]]
 
