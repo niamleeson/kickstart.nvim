@@ -57,6 +57,9 @@ vim.opt.scrolloff = 10
 
 vim.opt.helpheight = 9999
 
+-- Allow selecting with Shift + arrow and escape visual mode on pressing arrow
+vim.opt.keymodel='startsel,stopsel'
+
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -92,8 +95,8 @@ vim.keymap.set('n', 'K', '<cmd>move-2<CR>', { noremap = true, desc = 'move line 
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'move block down' })
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'move block up' })
 
-vim.keymap.set('i', '<C-h>', '<ESC>^i', { noremap = true, desc = 'Go to beginning' })
-vim.keymap.set('i', '<C-l>', '<ESC>$a', { noremap = true, desc = 'Go to end' })
+vim.keymap.set('i', '<C-h>', '<ESC>I', { noremap = true, desc = 'Go to beginning' })
+vim.keymap.set('i', '<C-l>', '<ESC>A', { noremap = true, desc = 'Go to end' })
 
 -- Cmdline shortcuts
 vim.keymap.set('c', '<C-h>', '<Home>', { noremap = true, desc = 'Go to beginning' })
@@ -109,7 +112,7 @@ vim.keymap.set('v', '<C-->', '<C-x>', { noremap = true, desc = 'Increase number'
 
 -- Other
 -- vim.keymap.set('', '<Leader>cd', '<Cmd>cd %:h<CR>', { noremap = true, desc = 'Change directory to current file folder' })
-vim.keymap.set('', '<Backspace>', '<Cmd>buffer #<CR>', { noremap = true, desc = 'Back to previous buffer' })
+-- vim.keymap.set('', '<Backspace>', '<Cmd>buffer #<CR>', { noremap = true, desc = 'Back to previous buffer' })
 
 -- keep cursor when using J
 vim.keymap.set('n', '<C-J>', 'mzJ`z')
@@ -257,8 +260,8 @@ if vim.g.vscode then
   -- vim.cmd [[source $HOME/.config/nvim/vscode/settings.vim]]
 
   vim.keymap.set('n', '<leader>w', "<cmd>lua require('vscode-neovim').action('saveAll')<CR>", { desc = 'save' })
-  vim.keymap.set('n', 'H', "<cmd>lua require('vscode-neovim').action('workbench.action.previousEditor')<CR>", { desc = 'prev editor' })
-  vim.keymap.set('n', 'L', "<cmd>lua require('vscode-neovim').action('workbench.action.nextEditor')<CR>", { desc = 'next editor' })
+  vim.keymap.set('n', '<C-h>', "<cmd>lua require('vscode-neovim').action('workbench.action.previousEditor')<CR>", { desc = 'prev editor' })
+  vim.keymap.set('n', '<C-l>', "<cmd>lua require('vscode-neovim').action('workbench.action.nextEditor')<CR>", { desc = 'next editor' })
 
   -- Keep window centered when going up/down
   vim.keymap.set('n', '<C-d>', '<C-d>zz')
