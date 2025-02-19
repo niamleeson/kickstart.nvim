@@ -2068,6 +2068,12 @@ require('lazy').setup({
 
   -- use https://github.com/nanozuki/tabby.nvim for working on frontend and backend together and have two separate workspace --
 
+  {
+	'inkarkat/vim-ReplaceWithRegister',
+	-- config = function()
+		-- vim.api.nvim_set_keymap('n', '<leader>gr', '"0gr', { noremap = false, silent = true })
+	-- end,
+  },
   -- zzz
 }, {
   ui = {
