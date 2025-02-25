@@ -1321,9 +1321,9 @@ require('lazy').setup({
         before = true,
         after = false,
       },
-      jump = {
-        autojump = true,
-      },
+      -- jump = {
+      --   autojump = true,
+      -- },
       highlight = {
         -- show a backdrop with hl FlashBackdrop
         backdrop = true,
