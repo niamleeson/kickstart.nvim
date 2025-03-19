@@ -2093,8 +2093,8 @@ require('lazy').setup({
 		map.motion("[p", "<Plug>(VindentBlockEdgeMotion_XX_prev)")
 		map.motion("]p", "<Plug>(VindentBlockEdgeMotion_XX_next)")
 		map.object("ii", "<Plug>(VindentObject_XX_ii)")
-		map.object("ai", "<Plug>(VindentObject_XX_ai)")
-		map.object("aI", "<Plug>(VindentObject_XX_aI)")
+		map.object("aI", "<Plug>(VindentObject_XX_ai)")
+		map.object("ai", "<Plug>(VindentObject_XX_aI)")
 	end
   },
   -- zzz
