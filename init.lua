@@ -2219,4 +2219,27 @@ return config
 -- key repeat in macos
 defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+
+
+-- karabiner elements Complex Modifications
+{
+    "description": "Caps lock",
+    "manipulators": [
+        {
+            "from": {
+                "key_code": "caps_lock",
+                "modifiers": { "optional": ["any"] }
+            },
+            "parameters": {
+                "basic.to_if_alone_timeout_milliseconds": 250,
+                "basic.to_if_held_down_threshold_milliseconds": 250
+            },
+            "to": [{ "key_code": "left_control" }],
+            "to_if_alone": [{ "key_code": "escape" }],
+            "type": "basic"
+        }
+    ]
+}
+
+
 --]]
