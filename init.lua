@@ -123,7 +123,7 @@ vim.keymap.set('n', 'Q', '@q')
 vim.keymap.set('n', '[q', '<cmd>cprev<CR>zz', { desc = 'prev quickfix' })
 vim.keymap.set('n', ']q', '<cmd>cnext<CR>zz', { desc = 'next quickfix' })
 
-vim.keymap.set({ 'n', 'x', 'o' }, 's', function()
+vim.keymap.set({ 'n', 'x', 'o' }, 'f', function()
   require('flash').jump {
     label = {
       before = { 0, 0 }, -- { row, col } offset
@@ -140,7 +140,7 @@ end, { noremap = true, desc = 'flash' })
 --     },
 --   }
 -- end, { noremap = true, desc = 'flash' })
-vim.keymap.set('o', 'r', '<cmd>lua require("flash").remote()<CR>', { noremap = true, desc = 'flash in remote mode' })
+-- vim.keymap.set('o', 'r', '<cmd>lua require("flash").remote()<CR>', { noremap = true, desc = 'flash in remote mode' })
 
 -- yank highlight
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -1311,33 +1311,35 @@ require('lazy').setup({
     'folke/flash.nvim',
     event = 'VeryLazy',
     opts = {
-      -- modes = {
-      --   char = {
-      --     enabled = false, -- disable f, F, t, T override
-      --   },
-      -- },
-      label = {
-        uppercase = false,
-        before = true,
-        after = false,
+	-- search = {
+	-- 	mode = 'fuzzy'
+	-- },
+      modes = {
+        char = {
+          enabled = false, -- disable f, F, t, T override
+        },
       },
+      -- label = {
+      --   uppercase = false,
+      --   before = true,
+      --   after = false,
+      -- },
       -- jump = {
       --   autojump = true,
       -- },
-      highlight = {
+      -- highlight = {
         -- show a backdrop with hl FlashBackdrop
-        backdrop = true,
+        -- backdrop = true,
         -- Highlight the search matches
-        matches = true,
-        -- extmark priority
-        priority = 5000,
-        groups = {
-          match = 'Search', -- first match color
-          current = 'Search', -- what you typed
-          backdrop = 'Comment', -- non-match text color
-          label = 'FlashCurrent', -- jump key color
-        },
-      },
+        -- matches = true,
+        -- priority = 5000,
+        -- groups = {
+        --   match = 'Search', -- first match color
+        --   current = 'Search', -- what you typed
+        --   backdrop = 'Comment', -- non-match text color
+        --   label = 'FlashCurrent', -- jump key color
+        -- },
+      -- },
     },
   },
 
@@ -2216,12 +2218,12 @@ smart_splits.apply_to_config(config, {
 return config
 
 
--- key repeat in macos
+-- key repeat in macos (Have to restart to apply)
 defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
 defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
 
 
--- karabiner elements Complex Modifications
+-- karabiner elements (Add to "Complex Modifications")
 {
     "description": "Caps lock",
     "manipulators": [
