@@ -110,6 +110,12 @@ vim.keymap.set('v', '<C-->', '<C-x>', { noremap = true, desc = 'Increase number'
 -- vim.keymap.set('v', 'g<C-=>', 'g<C-a>', { noremap = true, desc = 'Column decrease number' })
 -- vim.keymap.set('v', 'g<C-->', 'g<C-x>', { noremap = true, desc = 'Column increase number' })
 
+-- Selecting text
+vim.keymap.set('v', '<Up>', 'k', { noremap = true, desc = 'Select up' })
+vim.keymap.set('v', '<Down>', 'j', { noremap = true, desc = 'Select down' })
+vim.keymap.set('v', '<Left>', 'h', { noremap = true, desc = 'Select left' })
+vim.keymap.set('v', '<Right>', 'l', { noremap = true, desc = 'Select right' })
+
 -- Other
 -- vim.keymap.set('', '<Leader>cd', '<Cmd>cd %:h<CR>', { noremap = true, desc = 'Change directory to current file folder' })
 -- vim.keymap.set('', '<Backspace>', '<Cmd>buffer #<CR>', { noremap = true, desc = 'Back to previous buffer' })
